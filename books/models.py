@@ -115,6 +115,7 @@ def audio_file_path(instance, filename):
 
 
 def scraped_file_path(instance, filename):
+    # Keep for historical migration compatibility (0001_initial).
     ext = os.path.splitext(filename)[1]
     return f'books/scraped/{uuid.uuid4().hex}{ext}'
 
@@ -513,39 +514,6 @@ class SearchLog(models.Model):
 
     def __str__(self):
         return f"{self.query} ({self.results_count} results)"
-
-
-class ScrapedBook(models.Model):
-    """Books discovered by the smart scraper"""
-    STATUS_CHOICES = [
-        ('discovered', 'مكتشف'),
-        ('verified', 'مؤكد'),
-        ('rejected', 'مرفوض'),
-        ('imported', 'تم الاستيراد'),
-        ('failed', 'فشل'),
-    ]
-
-    source_url = models.URLField(max_length=191, unique=True, verbose_name='رابط المصدر')
-    source_site = models.CharField(max_length=200, verbose_name='موقع المصدر')
-    title = models.CharField(max_length=500, verbose_name='العنوان')
-    author = models.CharField(max_length=300, blank=True, null=True, verbose_name='المؤلف')
-    language = models.CharField(max_length=50, blank=True, null=True, verbose_name='اللغة')
-    file_url = models.URLField(max_length=1000, blank=True, null=True, verbose_name='رابط الملف')
-    file_path = models.FileField(upload_to=scraped_file_path, blank=True, null=True, verbose_name='اسم الملف المحلي')
-    description = models.TextField(blank=True, null=True, verbose_name='الوصف')
-    ai_analysis = models.JSONField(default=dict, blank=True, verbose_name='تحليل الذكاء الاصطناعي')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='discovered', verbose_name='الحالة')
-    imported_book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True, related_name='scraped_source', verbose_name='الكتاب المستورد')
-    scraped_at = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ السحب')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='تاريخ التحديث')
-
-    class Meta:
-        verbose_name = 'كتاب مسحوب'
-        verbose_name_plural = 'الكتب المسحوبة'
-        ordering = ['-scraped_at']
-
-    def __str__(self):
-        return f"[{self.status}] {self.title} ({self.source_site})"
 
 
 class SovereignGlossary(models.Model):

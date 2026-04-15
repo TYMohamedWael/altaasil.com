@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import path
 from django.http import JsonResponse
-from .models import Category, Book, Feedback, Favorite, ReadingProgress, AudioVersion, SocialPost, SearchLog, SovereignGlossary, ScrapedBook, Language, SiteText
+from .models import Category, Book, Feedback, Favorite, ReadingProgress, AudioVersion, SocialPost, SearchLog, SovereignGlossary, Language, SiteText
 
 admin.site.site_header = "إدارة الموقع"
 admin.site.site_title = "إدارة الموقع"
