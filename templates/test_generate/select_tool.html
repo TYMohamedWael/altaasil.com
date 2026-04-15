@@ -1,0 +1,166 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}توليد البيانات الذكي — اختر الأداة{% endblock %}
+
+{% block content %}
+<div style="max-width: 760px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, sans-serif; direction: rtl;">
+
+    ⚙️ توليد البيانات الذكي
+  </h1>
+
+  <div style="background: #e8f4fd; border-left: 4px solid #417690; padding: 14px 18px; border-radius: 6px; margin-bottom: 24px;">
+    <strong>الكتب المحددة ({{ books.count }}):</strong>
+    <ul style="margin: 8px 0 0 0; padding-right: 20px;">
+      {% for book in books %}
+        <li>
+          <strong>{{ book.title }}</strong>
+          — {{ book.language_code }}
+          {% if book.pdf_file %}<span style="color:#417690;">📄 PDF</span>{% endif %}
+          {% if book.word_file %}<span style="color:#6c5ce7;">📝 Word</span>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <h2 style="color: #333; margin-bottom: 16px;">اختر أداة الاستخراج:</h2>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+      <thead>
+        <tr style="background: #417690; color: #fff; text-align: right;">
+          <th style="padding: 10px 16px; width: 50px;"></th>
+          <th style="padding: 10px 16px;">الأداة</th>
+          <th style="padding: 10px 16px;">الاستخدام الأمثل</th>
+          <th style="padding: 10px 16px;">نوع الملف</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="pymupdf" id="t_pymupdf" checked style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_pymupdf"><strong>PyMuPDF</strong></label></td>
+          <td style="padding: 10px 16px;">استخراج سريع للنصوص</td>
+          <td style="padding: 10px 16px;">📄 PDF</td>
+        </tr>
+
+        <tr style="background: #fff; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="pdfplumber" id="t_pdfplumber" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_pdfplumber"><strong>pdfplumber</strong></label></td>
+          <td style="padding: 10px 16px;">ملفات PDF نصية عالية الدقة</td>
+          <td style="padding: 10px 16px;">📄 PDF</td>
+        </tr>
+
+        <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="tables" id="t_tables" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_tables"><strong>pdfplumber — جداول</strong></label></td>
+          <td style="padding: 10px 16px;">استخراج جداول من الكتب</td>
+          <td style="padding: 10px 16px;">📄 PDF</td>
+        </tr>
+
+        <tr style="background: #fff; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="doctr" id="t_doctr" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_doctr"><strong>docTR (OCR)</strong></label></td>
+          <td style="padding: 10px 16px;">كتب مصورة (Scanned PDFs)</td>
+          <td style="padding: 10px 16px;">📄 PDF مصور</td>
+        </tr>
+
+        <tr style="background: #f9f9f9; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="unstructured" id="t_unstructured" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_unstructured"><strong>Unstructured</strong></label></td>
+          <td style="padding: 10px 16px;">محتوى مختلط (نصوص + صور + عناوين)</td>
+          <td style="padding: 10px 16px;">📄 PDF / Word</td>
+        </tr>
+
+        <tr style="background: #fff; border-bottom: 1px solid #ddd;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="mammoth" id="t_mammoth" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_mammoth"><strong>Mammoth</strong></label></td>
+          <td style="padding: 10px 16px;">Word → نص نظيف</td>
+          <td style="padding: 10px 16px;">📝 Word</td>
+        </tr>
+
+        <tr style="background: #f9f9f9;">
+          <td style="padding: 10px 16px; text-align: center;">
+            <input type="radio" name="tool" value="python_docx" id="t_docx" style="transform: scale(1.3);">
+          </td>
+          <td style="padding: 10px 16px;"><label for="t_docx"><strong>python-docx</strong></label></td>
+          <td style="padding: 10px 16px;">ملفات Word القياسية</td>
+          <td style="padding: 10px 16px;">📝 Word</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div style="margin-bottom: 24px;">
+      <label for="max_pages" style="font-weight: bold; display: block; margin-bottom: 6px;">
+        عدد الصفحات القصوى للمعالجة (حماية من الذاكرة):
+      </label>
+      <input
+        type="number"
+        name="max_pages"
+        id="max_pages"
+        value="20"
+        min="1"
+        max="200"
+        style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 100px; font-size: 1rem;"
+      >
+      <span style="color: #666; margin-right: 8px;">صفحة (الافتراضي: 20)</span>
+    </div>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <button
+        type="submit"
+        style="
+          background: #417690;
+          color: #fff;
+          border: none;
+          padding: 12px 28px;
+          font-size: 1rem;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#2c5364'"
+        onmouseout="this.style.background='#417690'"
+      >
+        🚀 ابدأ المعالجة
+      </button>
+
+      <a
+        href="../"
+        style="
+          background: #ccc;
+          color: #333;
+          border: none;
+          padding: 12px 24px;
+          font-size: 1rem;
+          border-radius: 6px;
+          cursor: pointer;
+          text-decoration: none;
+          font-weight: bold;
+          display: inline-block;
+          line-height: 1;
+        "
+      >
+        ❌ إلغاء
+      </a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

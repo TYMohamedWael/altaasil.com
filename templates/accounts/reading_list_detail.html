@@ -1,0 +1,83 @@
+﻿{% extends 'base.html' %}
+{% load i18n site_text %}
+{% block title %}{{ reading_list.name }} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <h1 class="text-2xl font-bold text-primary">📋 {{ reading_list.name }}</h1>
+                    {% if reading_list.is_public %}
+                    <span class="bg-green-50 text-green-600 text-[10px] px-2 py-0.5 rounded-full border border-green-200">🌍 {% trans "Jama'a" %}</span>
+                    {% else %}
+                    <span class="bg-gray-50 text-gray-500 text-[10px] px-2 py-0.5 rounded-full border border-gray-200">🔒 {% trans "Sirri" %}</span>
+                    {% endif %}
+                </div>
+                {% if reading_list.description %}
+                <p class="text-sm text-gray-500">{{ reading_list.description }}</p>
+                {% endif %}
+                <p class="text-xs text-gray-400 mt-2">
+                    {% blocktrans with count=reading_list.books.count %}Littattafai {{ count }}{% endblocktrans %}
+                </p>
+            </div>
+            <div class="flex items-center gap-2">
+                {% if reading_list.is_public %}
+                <button onclick="shareList()" id="shareBtn" class="bg-primary/10 text-primary px-4 py-2 rounded-lg text-sm hover:bg-primary/20 transition-colors">
+                    📤 {% trans "Raba" %}
+                </button>
+                {% endif %}
+                <a href="{% url 'books:profile' %}" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors">
+                    ← {% trans "Koma" %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Books Grid -->
+    {% if books %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for book in books %}
+        <div class="relative group">
+            {% include 'books/_book_card.html' with book=book %}
+            {% if is_owner %}
+            <form method="POST" action="{% url 'books:remove_from_reading_list' list_id=reading_list.id slug=book.seo_slug %}" class="absolute top-2 left-2 z-10">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white w-8 h-8 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-lg" title="{% trans 'Cire' %}">
+                    ✕
+                </button>
+            </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl p-12 text-center border border-gray-100">
+        <div class="text-5xl mb-4">📚</div>
+        <p class="text-gray-500 mb-4">{% trans "Babu littattafai a cikin wannan jerin" %}</p>
+        <a href="{% url 'books:book_list' %}" class="inline-block bg-primary text-white px-6 py-2 rounded-lg text-sm hover:bg-primary-light transition-colors">
+            {% trans "Bincika Littattafai" %} →
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function shareList() {
+    var btn = document.getElementById('shareBtn');
+    var url = window.location.href;
+    if (navigator.share) {
+        navigator.share({title: '{{ reading_list.name|escapejs }}', url: url});
+    } else {
+        navigator.clipboard.writeText(url).then(function(){
+            btn.innerHTML = '✅ {% trans "An kwafi!" %}';
+            setTimeout(function(){ btn.innerHTML = '📤 {% trans "Raba" %}'; }, 2000);
+        });
+    }
+}
+</script>
+{% endblock %}

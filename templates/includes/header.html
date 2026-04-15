@@ -1,0 +1,164 @@
+{% load i18n site_text %}
+{% get_current_language as CURRENT_LANG %}
+<!-- Top bar -->
+<div class="bg-primary-dark text-xs py-1 px-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center text-white">
+        <span class="text-gold">{% site_text "topbar_basmala" default="بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ" %}</span>
+        <div class="flex items-center gap-3">
+            <button onclick="toggleDark()" id="darkBtn" class="hover:text-gold transition-colors tap-target" aria-label="{% trans 'Canza yanayin duhu' %}" title="Dark Mode">🌙</button>
+            <!-- Language Switcher (Custom Dropdown) -->
+            <div class="relative" id="langSwitcher">
+                <button onclick="toggleLangDropdown()" type="button" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-2.5 py-1 text-xs cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/40" aria-label="{% trans 'Zaɓi harshe' %}" aria-expanded="false" aria-haspopup="listbox" id="langToggleBtn">
+                    <span id="langCurrentFlag" class="text-sm leading-none">{% for lang in language_menu %}{% if active_language_code == lang.code %}{{ lang.flag_emoji }}{% endif %}{% endfor %}</span>
+                    <span id="langCurrentName" class="text-white font-medium hidden sm:inline">{% for lang in language_menu %}{% if active_language_code == lang.code %}{{ lang.name_native }}{% endif %}{% endfor %}</span>
+                    <svg class="w-3 h-3 text-white/60 transition-transform duration-200" id="langChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div id="langDropdown" class="hidden absolute right-0 top-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-[100] min-w-[180px]" role="listbox" aria-label="{% trans 'Zaɓi harshe' %}" style="direction:ltr;">
+                    <div class="px-3 py-2 bg-gray-50 border-b border-gray-100">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">🌍 {% trans "Zaɓi harshe" %}</p>
+                    </div>
+                    {% for lang in language_menu %}
+                    <form action="{% url 'set_language' %}" method="post" class="lang-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="hidden" name="language" value="{{ lang.code }}">
+                        <button type="submit" role="option" {% if active_language_code == lang.code %}aria-selected="true"{% endif %}
+                            class="w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-all duration-150 hover:bg-primary/5 {% if active_language_code == lang.code %}bg-primary/5 border-r-[3px] border-gold{% endif %}">
+                            <span class="text-lg leading-none">{{ lang.flag_emoji }}</span>
+                            <span class="flex-1 text-left {% if active_language_code == lang.code %}text-primary font-bold{% else %}text-gray-700 font-medium{% endif %}">{{ lang.name_native }}</span>
+                            {% if active_language_code == lang.code %}
+                            <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            {% endif %}
+                        </button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="bg-primary text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+            <a href="{% url 'books:home' %}" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-gold rounded-lg flex items-center justify-center group-hover:bg-gold-light transition-colors">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">{% trans "Littattafan Hausa" %}</h1>
+                    <p class="text-[10px] text-gold tracking-wider">{% trans "DAKIN KARATU NA ILIMI" %}</p>
+                </div>
+            </a>
+
+            <!-- Search (desktop) -->
+            <form method="GET" action="{% url 'books:book_list' %}" class="hidden md:flex flex-1 max-w-md mx-8">
+                <div class="relative w-full">
+                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="q" placeholder="{% trans "Nemo littafi, marubuci, ko maudu'i..." %}" class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-sm placeholder-white/50 focus:bg-white/20 focus:outline-none focus:border-gold transition-all">
+                </div>
+            </form>
+
+            <!-- Right nav items -->
+            <div class="flex items-center gap-2">
+                {% if user.is_authenticated %}
+                <!-- Notifications Bell -->
+                <div class="relative" id="notifWrapper">
+                    <button onclick="toggleNotifications()" class="relative hover:text-gold transition-colors tap-target" aria-label="{% trans 'Sanarwa' %}" title="{% trans "Sanarwa" %}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                        <span id="notifBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div id="notifDropdown" class="notif-dropdown bg-white rounded-xl shadow-2xl border border-gray-100 mt-2">
+                        <div class="p-3 border-b border-gray-100 flex items-center justify-between">
+                            <h3 class="font-bold text-sm text-primary">{% trans "Sanarwa" %}</h3>
+                            <a href="{% url 'books:notifications' %}" class="text-xs text-gold hover:text-gold-dark">{% trans "Duba duka" %}</a>
+                        </div>
+                        <div id="notifList" class="divide-y divide-gray-50">
+                            <div class="p-4 text-center text-xs text-gray-400">{% trans "Ana loda..." %}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-gold transition-colors tap-target" aria-label="{% trans 'Buɗe menu' %}" aria-expanded="false" id="mobileMenuBtn">
+                    <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg id="menuCloseIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <!-- Desktop nav -->
+                <nav class="hidden md:flex items-center gap-4 text-sm" role="navigation" aria-label="{% trans 'Babban kewayawa' %}">
+                    <a href="{% url 'books:home' %}" class="hover:text-gold transition-colors">{% trans "Gida" %}</a>
+                    {% if header_menu %}
+                    {% for item in header_menu %}
+                    <a href="{{ item.get_url }}" class="hover:text-gold transition-colors" {% if item.open_in_new_tab %}target="_blank"{% endif %}>{{ item.get_label }}</a>
+                    {% endfor %}
+                    {% else %}
+                    <a href="{% url 'books:book_list' %}" class="hover:text-gold transition-colors">{% trans "Littattafai" %}</a>
+                    <a href="{% url 'books:category_list' %}" class="hover:text-gold transition-colors">{% trans "Rukunoni" %}</a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                    <!-- <a href="{% url 'books:analytics' %}" class="hover:text-gold transition-colors">📊</a> -->
+                    {% endif %}
+                    <a href="{% url 'books:profile' %}" class="flex items-center gap-2 bg-gold/20 text-gold px-3 py-1 rounded-full text-xs hover:bg-gold/30 transition-colors">
+                        {% if user.profile.avatar_url %}
+                        <img src="{{ user.profile.avatar_url }}" alt="" class="w-6 h-6 rounded-full object-cover border border-gold/40">
+                        {% else %}
+                        <span class="w-6 h-6 rounded-full bg-gold/30 flex items-center justify-center text-[11px] font-bold">{{ user.first_name|default:user.username|first|upper }}</span>
+                        {% endif %}
+                        {{ user.first_name|default:user.username }}
+                    </a>
+                    {% else %}
+                    <a href="{% url 'books:login' %}" class="hover:text-gold transition-colors">{% trans "Shiga" %}</a>
+                    <a href="{% url 'books:register' %}" class="bg-gold text-primary px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gold-light transition-colors">{% trans "Yi Rajista" %}</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden bg-primary-dark border-t border-white/10" role="navigation" aria-label="{% trans 'Kewayawa ta wayar hannu' %}">
+        <div class="px-4 py-3 flex flex-col gap-3 text-sm">
+            <a href="{% url 'books:home' %}" class="text-white hover:text-gold py-2 tap-target">🏠 {% trans "Gida" %}</a>
+            {% if header_menu %}
+            {% for item in header_menu %}
+            <a href="{{ item.get_url }}" class="text-white hover:text-gold py-2 tap-target" {% if item.open_in_new_tab %}target="_blank"{% endif %}>{% if item.icon %}<span class="material-icons text-sm mr-1">{{ item.icon }}</span>{% endif %}{{ item.get_label }}</a>
+            {% endfor %}
+            {% else %}
+            <a href="{% url 'books:book_list' %}" class="text-white hover:text-gold py-2 tap-target">📚 {% trans "Littattafai" %}</a>
+            <a href="{% url 'books:category_list' %}" class="text-white hover:text-gold py-2 tap-target">📂 {% trans "Rukunoni" %}</a>
+            {% endif %}
+            <!-- Mobile search -->
+            <form method="GET" action="{% url 'books:book_list' %}" class="mt-1">
+                <div class="relative">
+                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="q" placeholder="{% trans "Nemo littafi..." %}" class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-sm placeholder-white/50 focus:bg-white/20 focus:outline-none">
+                </div>
+            </form>
+            <hr class="border-white/10">
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <!-- <a href="{% url 'books:analytics' %}" class="text-white hover:text-gold py-2 tap-target">📊 Analytics</a> -->
+            {% endif %}
+            <a href="{% url 'books:notifications' %}" class="text-white hover:text-gold py-2 tap-target">🔔 {% trans "Sanarwa" %} <span id="mobileNotifBadge" class="hidden bg-red-500 text-white text-[9px] px-1.5 rounded-full ml-1"></span></a>
+            <a href="{% url 'books:profile' %}" class="text-gold py-2 tap-target flex items-center gap-2">
+                {% if user.profile.avatar_url %}
+                <img src="{{ user.profile.avatar_url }}" alt="" class="w-7 h-7 rounded-full object-cover border border-gold/40">
+                {% else %}
+                <span class="w-7 h-7 rounded-full bg-gold/30 flex items-center justify-center text-xs font-bold">{{ user.first_name|default:user.username|first|upper }}</span>
+                {% endif %}
+                {{ user.first_name|default:user.username }}
+            </a>
+            {% else %}
+            <a href="{% url 'books:login' %}" class="text-white hover:text-gold py-2 tap-target">🔑 {% trans "Shiga" %}</a>
+            <a href="{% url 'books:register' %}" class="bg-gold text-primary px-3 py-2 rounded-lg text-xs font-bold text-center hover:bg-gold-light transition-colors tap-target">{% trans "Yi Rajista" %}</a>
+            {% endif %}
+        </div>
+    </div>
+</header>

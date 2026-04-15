@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load site_text %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
+{% block title %}{% trans "Rukunoni" %} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Header with subtle decoration -->
+    <div class="relative mb-10">
+        <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/5 rounded-full blur-xl"></div>
+        <div class="absolute -top-2 right-8 w-16 h-16 bg-gold/10 rounded-full blur-lg"></div>
+        <div class="relative">
+            <h1 class="text-3xl md:text-4xl font-bold text-primary">{% trans "Rukunoni" %}</h1>
+            <p class="text-gray-500 mt-2 text-sm">{% trans "Zaɓi rukunin ilimi da kake so" %}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for cat in categories %}
+        <a href="{% url 'books:book_list' %}?category={{ cat.slug }}" class="block h-full">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-yellow-300/40 transition-all duration-300 group card-hover h-full flex flex-col">
+                <!-- Icon area with gradient -->
+                <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style="background:linear-gradient(135deg,#1a5632,#2d7a4a);">
+                    <svg class="w-6 h-6" style="color:#c8a84e;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+
+                <!-- Category name -->
+                <h2 class="text-xl font-bold text-primary mb-1 group-hover:text-primary-light transition-colors">{{ cat.localized_name }}</h2>
+
+                {% if cat.alternate_name %}
+                <p class="text-sm text-gray-400 mb-1" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}">{{ cat.alternate_name }}</p>
+                {% endif %}
+
+                {% if cat.name %}
+                <p class="text-xs text-gray-400 mb-4">{{ cat.name }}</p>
+                {% endif %}
+
+                <!-- Spacer -->
+                <div class="flex-1"></div>
+
+                <!-- Footer -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                    <span class="text-sm font-semibold" style="color:#c8a84e;">{% blocktrans with count=cat.book_count %}{{ count }} littattafai{% endblocktrans %}</span>
+                    <span class="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors" style="color:#c8a84e;">→</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

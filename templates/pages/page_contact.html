@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+    <h1 class="text-2xl md:text-3xl font-bold text-primary mb-6 text-center">
+        {% if page.icon %}{{ page.icon }} {% endif %}{{ page_title }}
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Content Side -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <article class="prose max-w-none prose-headings:text-primary">
+                {{ page_content|safe }}
+            </article>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-lg font-bold text-primary mb-4">📬 {% trans "Aika Saƙo" %}</h2>
+            <form method="POST" action="{% url 'books:page_detail' slug=page.slug %}" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "Suna" %}</label>
+                    <input type="text" name="name" required
+                           class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "Imel" %}</label>
+                    <input type="email" name="email" required
+                           class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "Maudu'i" %}</label>
+                    <input type="text" name="subject"
+                           class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "Saƙo" %}</label>
+                    <textarea name="message" rows="5" required
+                              class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none"></textarea>
+                </div>
+                <button type="submit"
+                        class="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary-light transition-colors">
+                    {% trans "Aika" %} 📤
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

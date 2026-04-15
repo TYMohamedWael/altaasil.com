@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load site_text %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
+{% block title %}{% trans "Littattafai" %} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Page Header -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-primary">{% trans "Littattafai" %}</h1>
+            <p class="text-gray-500 mt-1 text-sm">{% trans "Duk littattafan da ke cikin dakin karatu na mu" %}</p>
+        </div>
+        <!-- View Toggle -->
+        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1 bg-white rounded-lg border border-gray-200 p-1 shadow-sm">
+                <button onclick="setView('grid')" id="viewGridBtn"
+                   class="px-3 py-1.5 rounded text-sm tap-target {% if view_mode == 'grid' %}bg-primary text-white{% else %}text-gray-500 hover:text-primary{% endif %} transition-colors">▦</button>
+                <button onclick="setView('list')" id="viewListBtn"
+                   class="px-3 py-1.5 rounded text-sm tap-target {% if view_mode == 'list' %}bg-primary text-white{% else %}text-gray-500 hover:text-primary{% endif %} transition-colors">☰</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="mb-6">
+        <form method="GET" action="{% url 'books:book_list' %}" class="relative">
+            {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+            <input type="hidden" name="view" value="{{ view_mode }}">
+            <input type="hidden" name="sort" value="{{ sort }}">
+            <div class="relative">
+                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" name="q" value="{{ search_query|default:'' }}" placeholder="{% trans "Nemo littafi, marubuci, ko maudu'i..." %}" class="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 shadow-sm transition-all">
+            </div>
+        </form>
+    </div>
+
+    <!-- Sort & Language Filters -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <!-- Sort options -->
+        <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs text-gray-400 font-medium">{% trans "Tsara:" %}</span>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=newest"
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'newest' or not sort %}active{% endif %}">
+                {% trans "Sabbin" %}
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=most_viewed"
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_viewed' %}active{% endif %}">
+                {% trans "Mafi kallo" %}
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=highest_rated"
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'highest_rated' %}active{% endif %}">
+                {% trans "Mafi ƙima" %}
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=most_downloaded"
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_downloaded' %}active{% endif %}">
+                {% trans "Mafi saukewa" %}
+            </a>
+        </div>
+        <!-- Language filters -->
+        <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs text-gray-400 font-medium">{% trans "Harshe:" %}</span>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}"
+               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if not current_language %}active{% endif %}">
+                {% trans "Duka" %}
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=ha"
+               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'ha' %}active{% endif %}">
+                🇳🇬 Hausa
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=ar"
+               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'ar' %}active{% endif %}">
+                🇸🇦 العربية
+            </a>
+            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=en"
+               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'en' %}active{% endif %}">
+                🇬🇧 English
+            </a>
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-60 shrink-0">
+            <!-- Mobile toggle -->
+            <button onclick="toggleFilterSidebar()" class="md:hidden w-full flex items-center justify-between bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-3 tap-target">
+                <span class="font-bold text-sm text-primary">{% trans "Rukunoni" %}</span>
+                <svg class="w-4 h-4 text-gray-400 transition-transform" id="filterArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="filter-sidebar collapsed md:!max-h-none md:!opacity-100" id="filterSidebar">
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-sm text-primary mb-3 hidden md:block">{% trans "Rukunoni" %}</h3>
+                    <div class="flex flex-col gap-1">
+                        <a href="{% url 'books:book_list' %}?view={{ view_mode }}&sort={{ sort }}" class="text-sm py-2.5 px-3 rounded-lg tap-target transition-colors {% if not current_category %}bg-primary text-white font-medium shadow-sm{% else %}hover:bg-cream text-gray-600{% endif %}">
+                            {% trans "Duka" %}
+                        </a>
+                        {% for cat in categories %}
+                        <a href="{% url 'books:book_list' %}?category={{ cat.slug }}&view={{ view_mode }}&sort={{ sort }}" class="text-sm py-2.5 px-3 rounded-lg tap-target transition-colors {% if current_category == cat.slug %}bg-primary text-white font-medium shadow-sm{% else %}hover:bg-cream text-gray-600{% endif %}">
+                            {{ cat.localized_name }} <span class="text-xs opacity-60">({{ cat.book_count }})</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Books -->
+        <div class="flex-1">
+            {% if search_query %}
+            <div class="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 mb-4 flex items-center justify-between">
+                <p class="text-sm text-blue-700">{% blocktrans with query=search_query %}Sakamakon bincike: "{{ query }}"{% endblocktrans %}</p>
+                <a href="{% url 'books:book_list' %}?view={{ view_mode }}&sort={{ sort }}" class="text-xs text-blue-500 hover:text-blue-700">✕ {% trans "Share" %}</a>
+            </div>
+            {% endif %}
+
+            <div id="booksContainer">
+            {% if view_mode == 'list' %}
+            <!-- LIST VIEW -->
+            <div class="space-y-3" id="booksList">
+                {% for book in books %}
+                <a href="{% url 'books:book_detail' slug=book.seo_slug %}" class="view-transition block">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md hover:border-yellow-300/40 transition-all flex gap-4 tap-target">
+                        <div class="w-16 h-20 bg-gradient-to-br from-primary to-primary-light rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                            {% if book.cover %}
+                            <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-cover rounded-lg">
+                            {% else %}
+                            <span class="text-gold/60 text-2xl">📖</span>
+                            {% endif %}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-primary text-base line-clamp-1">{{ book.localized_title }}</h3>
+                            {% if book.alternate_title %}
+                            <p class="text-[11px] text-gray-400" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}">{{ book.alternate_title }}</p>
+                            {% endif %}
+                            <p class="text-xs text-gray-400 mt-0.5">{{ book.author }} {% if book.year %}· {{ book.year }}{% endif %}</p>
+                            <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ book.description|truncatewords:30 }}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                {% if book.category %}<span class="text-[10px] bg-cream text-primary px-2 py-0.5 rounded-full font-medium">{{ book.category.localized_name }}</span>{% endif %}
+                                <span class="text-[10px] text-gray-400">👁 {{ book.view_count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% empty %}
+                <!-- Empty State -->
+                <div class="bg-white rounded-2xl p-12 text-center border border-gray-100 shadow-sm">
+                    <div class="text-6xl mb-4">🔍</div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">{% trans "Ba a sami littattafai ba." %}</h3>
+                    <p class="text-sm text-gray-400 mb-6">{% trans "Gwada canza sharadi ko bincika wani abu" %}</p>
+                    <a href="{% url 'books:book_list' %}" class="inline-block bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-light transition-colors">{% trans "Duba duk littattafai" %}</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <!-- GRID VIEW -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="booksGrid">
+                {% for book in books %}
+                <div class="view-transition">
+                {% include 'books/_book_card.html' with book=book %}
+                </div>
+                {% empty %}
+                <!-- Empty State -->
+                <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-gray-100 shadow-sm">
+                    <div class="text-6xl mb-4">🔍</div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">{% trans "Ba a sami littattafai ba." %}</h3>
+                    <p class="text-sm text-gray-400 mb-6">{% trans "Gwada canza sharadi ko bincika wani abu" %}</p>
+                    <a href="{% url 'books:book_list' %}" class="inline-block bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-light transition-colors">{% trans "Duba duk littattafai" %}</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            </div>
+
+            <!-- Load More / Pagination -->
+            {% if has_next %}
+            <div class="text-center mt-10" id="loadMoreContainer">
+                <button onclick="loadMore()" id="loadMoreBtn" class="bg-primary text-white px-10 py-3 rounded-xl font-bold hover:bg-primary-light transition-all shadow-md hover:shadow-lg tap-target">
+                    {% trans "Ƙara nuna" %} ↓
+                </button>
+                <div id="loadMoreSpinner" class="hidden">
+                    <div class="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full mx-auto"></div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if books.has_other_pages and not has_next %}
+            <!-- Fallback pagination -->
+            <div class="flex items-center justify-center gap-2 mt-10">
+                {% if books.has_previous %}
+                <a href="?page={{ books.previous_page_number }}&view={{ view_mode }}&sort={{ sort }}{% if current_category %}&category={{ current_category }}{% endif %}" class="bg-white border border-gray-200 px-5 py-2.5 rounded-lg text-sm hover:border-primary hover:shadow-sm transition-all tap-target">← {% trans "Baya" %}</a>
+                {% endif %}
+                <span class="bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm">{{ books.number }}</span>
+                {% if books.has_next %}
+                <a href="?page={{ books.next_page_number }}&view={{ view_mode }}&sort={{ sort }}{% if current_category %}&category={{ current_category }}{% endif %}" class="bg-white border border-gray-200 px-5 py-2.5 rounded-lg text-sm hover:border-primary hover:shadow-sm transition-all tap-target">{% trans "Gaba" %} →</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var currentPage = 1;
+    var loading = false;
+
+    function setView(mode) {
+        var url = new URL(window.location);
+        url.searchParams.set('view', mode);
+        window.location = url;
+    }
+
+    function toggleFilterSidebar() {
+        var sidebar = document.getElementById('filterSidebar');
+        var arrow = document.getElementById('filterArrow');
+        if (sidebar.classList.contains('collapsed')) {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('expanded');
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            sidebar.classList.remove('expanded');
+            sidebar.classList.add('collapsed');
+            arrow.style.transform = '';
+        }
+    }
+
+    function loadMore() {
+        if (loading) return;
+        loading = true;
+        var btn = document.getElementById('loadMoreBtn');
+        var spinner = document.getElementById('loadMoreSpinner');
+        btn.classList.add('hidden');
+        spinner.classList.remove('hidden');
+
+        currentPage++;
+        var url = new URL(window.location);
+        url.searchParams.set('page', currentPage);
+        url.searchParams.set('ajax', '1');
+
+        fetch(url)
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+                var container = document.getElementById('booksContainer');
+                var grid = container.querySelector('#booksGrid') || container.querySelector('#booksList');
+                if (grid) {
+                    var tmp = document.createElement('div');
+                    tmp.innerHTML = html;
+                    var items = tmp.querySelectorAll('.view-transition');
+                    items.forEach(function(item) {
+                        item.classList.add('view-enter');
+                        grid.appendChild(item);
+                        requestAnimationFrame(function() {
+                            item.classList.remove('view-enter');
+                        });
+                    });
+                }
+                spinner.classList.add('hidden');
+                if (html.indexOf('data-has-next="true"') > -1) {
+                    btn.classList.remove('hidden');
+                } else {
+                    document.getElementById('loadMoreContainer').classList.add('hidden');
+                }
+                loading = false;
+            })
+            .catch(function(err) {
+                spinner.classList.add('hidden');
+                btn.classList.remove('hidden');
+                loading = false;
+                if (typeof showToast === 'function') showToast('{% trans "Ba a iya loda ƙarin littattafai" %}', 'error');
+            });
+    }
+</script>
+{% endblock %}

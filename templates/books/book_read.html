@@ -1,0 +1,443 @@
+﻿{% extends 'base.html' %}
+{% load site_text %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
+{% block title %}{% trans "Karanta" %}: {{ book.localized_title }}{% endblock %}
+
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Book Header -->
+<div class="book-cover-gradient text-white no-print">
+    <div class="max-w-5xl mx-auto px-4 py-6">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+            <div class="flex items-center gap-4">
+                <a href="{% url 'books:book_detail' slug=book.seo_slug %}" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg transition-colors tap-target">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold">{{ book.localized_title }}</h1>
+                    {% if book.alternate_title %}
+                    <p class="text-white/70 text-xs" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}">{{ book.alternate_title }}</p>
+                    {% endif %}
+                    <p class="text-white/60 text-sm">{{ book.author }} {% if book.year %}• {{ book.year }}{% endif %}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+                {% if total_pages %}
+                <div class="reading-time-badge">
+                    ⏱️ {% blocktrans with mins=total_pages %}~{{ mins }} {% endblocktrans %}{% trans "min" %}
+                </div>
+                {% endif %}
+                {% if reading %}
+                <div class="bg-white/10 px-3 py-1.5 rounded-lg text-xs">
+                    📖 {% blocktrans with page=reading.current_page %}Shafi {{ page }}{% endblocktrans %} {% if total_pages %}/ {{ total_pages }}{% endif %}
+                    {% if reading.progress_percent %} • {{ reading.progress_percent }}%{% endif %}
+                </div>
+                {% endif %}
+                {% if book.file %}
+                <a href="{{ book.file.url }}" download class="bg-gold text-primary px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-gold/90 transition-colors tap-target">
+                    ⬇️ {% trans "Sauke PDF" %}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reader Tabs & Controls -->
+<div class="bg-white border-b border-gray-100 sticky top-0 z-30 no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between flex-wrap gap-3 reader-controls-bar">
+            <!-- View Tabs -->
+            <div class="flex gap-2">
+                <button onclick="{% if book.file %}switchTab('pdf'){% endif %}" id="tabPdf" class="reader-tab active px-4 py-1.5 rounded-lg text-sm font-medium tap-target {% if not book.file %}opacity-50 cursor-not-allowed{% endif %}" {% if not book.file %}disabled aria-disabled="true"{% endif %}>
+                    📄 PDF
+                </button>
+                <button onclick="{% if book.file %}switchTab('embed'){% endif %}" id="tabEmbed" class="reader-tab px-4 py-1.5 rounded-lg text-sm font-medium tap-target {% if not book.file %}opacity-50 cursor-not-allowed{% endif %}" {% if not book.file %}disabled aria-disabled="true"{% endif %}>
+                    🖥️ Embed
+                </button>
+                <button onclick="switchTab('drive')" id="tabDrive" class="reader-tab px-4 py-1.5 rounded-lg text-sm font-medium tap-target">
+                    ☁️ Drive
+                </button>
+            </div>
+
+            <!-- Reading Controls -->
+            <div class="flex items-center gap-3 flex-wrap">
+                <!-- Bookmarks toggle -->
+                <button onclick="toggleBookmarksPanel()" class="bg-gray-100 hover:bg-gray-200 p-1.5 rounded-lg transition-colors tap-target" title="{% trans "Alamomin shafi" %}">
+                    🔖
+                </button>
+
+                <!-- Keyboard shortcuts -->
+                <button onclick="toggleShortcuts()" class="bg-gray-100 hover:bg-gray-200 p-1.5 rounded-lg transition-colors tap-target" title="{% trans "Gajerun hanyoyi" %}">
+                    ⌨️
+                </button>
+
+                <!-- Fullscreen -->
+                <button onclick="toggleFullscreen()" class="bg-gray-100 hover:bg-gray-200 p-1.5 rounded-lg transition-colors tap-target" title="{% trans "Cika Allo" %}">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                </button>
+
+                <!-- Print -->
+                <button onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 p-1.5 rounded-lg transition-colors tap-target" title="{% trans "Buga" %}">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Bar -->
+{% if total_pages %}
+<div class="h-1 bg-gray-100 no-print">
+    <div id="progressBar" class="h-full bg-gradient-to-r from-primary to-gold transition-all duration-300" style="width: {% if reading %}{{ reading.progress_percent }}{% else %}0{% endif %}%"></div>
+</div>
+{% endif %}
+
+<!-- ====== PDF.JS VIEWER ====== -->
+<div id="viewPdf" class=" max-w-5xl mx-auto px-4 py-4">
+    <div id="pdfContainer" class="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-auto flex justify-center" style="height:80vh; background: #525659;">
+        <canvas id="pdfCanvas" class="block"></canvas>
+        <div id="pdfLoading" class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-white">
+                <div class="animate-spin w-10 h-10 border-4 border-white border-t-transparent rounded-full mx-auto mb-3"></div>
+                <p class="text-sm">{% trans "Ana loda PDF..." %}</p>
+            </div>
+        </div>
+    </div>
+    <!-- PDF Controls -->
+    <div class="flex items-center justify-center gap-4 mt-4 no-print flex-wrap">
+        <button onclick="prevPage()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-light text-sm font-bold tap-target">← {% trans "Baya" %}</button>
+        <input type="number" id="pageInput" min="1" value="1" onchange="goToPage(this.value)"
+               class="w-16 text-center border border-gray-200 rounded-lg py-2 text-sm focus:border-primary focus:outline-none">
+        <span id="totalPagesLabel" class="text-gray-500 text-sm">/ ?</span>
+        <button onclick="nextPage()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-light text-sm font-bold tap-target">{% trans "Gaba" %} →</button>
+
+        <!-- Zoom Controls -->
+        <div class="zoom-controls bg-gray-100 rounded-lg px-3 py-1.5">
+            <button onclick="zoomOut()" class="text-sm font-bold text-gray-600 hover:text-primary tap-target" title="{% trans "Rage girma" %}">➖</button>
+            <input type="range" id="zoomSlider" min="50" max="300" value="100" class="zoom-slider" oninput="setZoom(this.value)">
+            <button onclick="zoomIn()" class="text-sm font-bold text-gray-600 hover:text-primary tap-target" title="{% trans "Ƙara girma" %}">➕</button>
+            <span id="zoomLabel" class="text-xs text-gray-500 ml-1">100%</span>
+        </div>
+
+        <!-- Bookmark current PDF page -->
+        <button onclick="toggleBookmark(pageNum)" class="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors tap-target" title="{% trans "Alamar shafi" %}" id="pdfBookmarkBtn">
+            🔖
+        </button>
+    </div>
+</div>
+
+<!-- ====== EMBED VIEWER ====== -->
+<div id="viewEmbed" class="hidden max-w-5xl mx-auto px-4 py-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden" style="height:85vh;">
+        {% if book.file %}
+        <iframe id="pdfIframe" src="" class="w-full h-full border-0"></iframe>
+        {% else %}
+        <div class="h-full flex items-center justify-center p-6 text-center text-gray-500">
+            <div>
+                <p class="text-4xl mb-3">📄</p>
+                <p>{% trans "Babu PDF local don Embed view." %}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ====== DRIVE VIEWER ====== -->
+<div id="viewDrive" class="hidden max-w-5xl mx-auto px-4 py-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden" style="height:85vh;">
+        {% if drive_embed_url %}
+        <iframe id="driveIframe" src="" class="w-full h-full border-0" allow="autoplay"></iframe>
+        {% else %}
+        <div class="h-full flex items-center justify-center p-6 text-center text-gray-500">
+            <div>
+                <p class="text-4xl mb-3">☁️</p>
+                <p>{% trans "Babu Google Drive link don wannan littafin." %}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ====== BOOKMARKS PANEL ====== -->
+<div id="bookmarksPanel" class="bookmarks-panel no-print">
+    <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <h3 class="font-bold text-primary text-sm">🔖 {% trans "Alamomin shafi" %}</h3>
+        <button onclick="toggleBookmarksPanel()" class="text-gray-400 hover:text-gray-600 tap-target">✕</button>
+    </div>
+    <div id="bookmarksList" class="p-4">
+        <p class="text-xs text-gray-400">{% trans "Babu alamomin shafi tukuna" %}</p>
+    </div>
+</div>
+<!-- Bookmarks overlay -->
+<div id="bookmarksOverlay" class="fixed inset-0 bg-black/30 z-[99] hidden" onclick="toggleBookmarksPanel()"></div>
+
+<!-- ====== KEYBOARD SHORTCUTS PANEL ====== -->
+<div id="shortcutsPanel" class="shortcuts-panel no-print">
+    <h4 class="font-bold text-sm text-primary mb-3">⌨️ {% trans "Gajerun hanyoyi" %}</h4>
+    <div class="shortcut-row"><span>{% trans "Shafi na gaba" %}</span><span class="shortcut-key">→</span></div>
+    <div class="shortcut-row"><span>{% trans "Shafi na baya" %}</span><span class="shortcut-key">←</span></div>
+    <div class="shortcut-row"><span>{% trans "Ƙara zoom" %}</span><span class="shortcut-key">+</span></div>
+    <div class="shortcut-row"><span>{% trans "Rage zoom" %}</span><span class="shortcut-key">-</span></div>
+    <div class="shortcut-row"><span>{% trans "Cika allo" %}</span><span class="shortcut-key">F</span></div>
+    <div class="shortcut-row"><span>{% trans "Alamar shafi" %}</span><span class="shortcut-key">B</span></div>
+    <div class="shortcut-row"><span>{% trans "Rufe" %}</span><span class="shortcut-key">Esc</span></div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    var PDF_URL = '{% if book.file %}{{ book.file.url|escapejs }}{% endif %}';
+    var DRIVE_URL = '{{ drive_embed_url|default_if_none:""|escapejs }}';
+    var HAS_PDF = !!PDF_URL;
+    var HAS_DRIVE = !!DRIVE_URL;
+    var BOOK_SLUG = '{{ book.seo_slug }}';
+    var pdfDoc = null, pageNum = {{ reading.current_page|default:1 }}, pdfLoaded = false;
+    var currentZoom = 100;
+    var canvas = document.getElementById('pdfCanvas');
+    var ctx = canvas ? canvas.getContext('2d') : null;
+
+    // ===== Tab Switching =====
+    function switchTab(tab) {
+        if ((tab === 'pdf' || tab === 'embed') && !HAS_PDF && HAS_DRIVE) {
+            tab = 'drive';
+        }
+        ['Pdf', 'Embed', 'Drive'].forEach(function(t) {
+            document.getElementById('view' + t).classList.add('hidden');
+            document.getElementById('tab' + t).classList.remove('active');
+        });
+        var tabMap = {'pdf': 'Pdf', 'embed': 'Embed', 'drive': 'Drive'};
+        var mappedTab = tabMap[tab];
+        if (!mappedTab) return;
+
+        document.getElementById('view' + mappedTab).classList.remove('hidden');
+        document.getElementById('tab' + mappedTab).classList.add('active');
+
+        if (tab === 'pdf' && !pdfLoaded && HAS_PDF) { loadPdf(); }
+        if (tab === 'embed') {
+            var iframe = document.getElementById('pdfIframe');
+            if (iframe && HAS_PDF && (!iframe.src || iframe.src === window.location.href)) {
+                iframe.src = PDF_URL;
+            }
+        }
+        if (tab === 'drive') {
+            var driveIframe = document.getElementById('driveIframe');
+            if (driveIframe && HAS_DRIVE && (!driveIframe.src || driveIframe.src === window.location.href)) {
+                driveIframe.src = DRIVE_URL;
+            }
+        }
+    }
+
+    // ===== PDF Loading & Rendering =====
+    function loadPdf() {
+        if (!HAS_PDF) return;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        pdfjsLib.getDocument(PDF_URL).promise.then(function(pdf) {
+            pdfDoc = pdf; pdfLoaded = true;
+            document.getElementById('pdfLoading').classList.add('hidden');
+            document.getElementById('totalPagesLabel').textContent = '/ ' + pdf.numPages;
+            document.getElementById('pageInput').max = pdf.numPages;
+            if (pageNum > pdf.numPages) pageNum = 1;
+            renderPage(pageNum);
+        }).catch(function(err) {
+            var fallbackTab = HAS_DRIVE ? 'drive' : 'embed';
+            var fallbackLabel = HAS_DRIVE ? 'Drive' : 'Embed';
+            document.getElementById('pdfLoading').innerHTML =
+                '<div class="text-white text-center"><p class="mb-3">❌ ' + err.message +
+                '</p><button onclick="switchTab(&quot;' + fallbackTab + '&quot;)" class="bg-gold text-primary px-4 py-2 rounded-lg text-sm font-bold">' +
+                fallbackLabel + ' →</button></div>';
+        });
+    }
+
+    function renderPage(num) {
+        if (!pdfDoc) return;
+        pdfDoc.getPage(num).then(function(page) {
+            var container = document.getElementById('pdfContainer');
+            var cw = container.clientWidth - 20;
+            var uv = page.getViewport({scale: 1});
+            var baseScale = Math.min(cw / uv.width, 2);
+            var sc = baseScale * (currentZoom / 100);
+            var vp = page.getViewport({scale: sc});
+            canvas.height = vp.height; canvas.width = vp.width;
+            page.render({canvasContext: ctx, viewport: vp});
+            document.getElementById('pageInput').value = num;
+            pageNum = num;
+            container.scrollTop = 0;
+            updateProgress(num, pdfDoc.numPages);
+            updatePdfBookmarkBtn();
+        });
+    }
+
+    function prevPage() { if (pageNum > 1) renderPage(pageNum - 1); }
+    function nextPage() { if (pdfDoc && pageNum < pdfDoc.numPages) renderPage(pageNum + 1); }
+    function goToPage(n) { n = parseInt(n); if (pdfDoc && n >= 1 && n <= pdfDoc.numPages) renderPage(n); }
+
+    // ===== Zoom =====
+    function setZoom(val) {
+        currentZoom = parseInt(val);
+        document.getElementById('zoomSlider').value = currentZoom;
+        document.getElementById('zoomLabel').textContent = currentZoom + '%';
+        if (pdfDoc) renderPage(pageNum);
+    }
+    function zoomIn() { setZoom(Math.min(currentZoom + 25, 300)); }
+    function zoomOut() { setZoom(Math.max(currentZoom - 25, 50)); }
+
+    // ===== Progress =====
+    function updateProgress(page, total) {
+        var pct = Math.round((page / total) * 100);
+        var bar = document.getElementById('progressBar');
+        if (bar) bar.style.width = pct + '%';
+        {% if user.is_authenticated %}
+        fetch('{% url "books:save_progress" slug=book.seo_slug %}', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCSRF()},
+            body: 'page=' + page + '&total=' + total
+        }).catch(function(err){
+            console.warn('Progress save failed:', err);
+        });
+        {% endif %}
+    }
+
+    function toggleFullscreen() {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen();
+    }
+
+    // ===== Bookmarks =====
+    function getBookmarks() {
+        var key = 'bookmarks_' + BOOK_SLUG;
+        try { return JSON.parse(localStorage.getItem(key)) || []; }
+        catch(e) { return []; }
+    }
+
+    function saveBookmarks(bm) {
+        localStorage.setItem('bookmarks_' + BOOK_SLUG, JSON.stringify(bm));
+    }
+
+    function toggleBookmark(page) {
+        var bm = getBookmarks();
+        var idx = bm.indexOf(page);
+        if (idx > -1) bm.splice(idx, 1);
+        else bm.push(page);
+        bm.sort(function(a,b){ return a - b; });
+        saveBookmarks(bm);
+        renderBookmarkButtons();
+        renderBookmarksList();
+        updatePdfBookmarkBtn();
+    }
+
+    function renderBookmarkButtons() {
+        var bm = getBookmarks();
+        document.querySelectorAll('.bookmark-btn').forEach(function(btn) {
+            var pg = parseInt(btn.dataset.page);
+            btn.classList.toggle('bookmarked', bm.indexOf(pg) > -1);
+        });
+    }
+
+    function updatePdfBookmarkBtn() {
+        var btn = document.getElementById('pdfBookmarkBtn');
+        if (!btn) return;
+        var bm = getBookmarks();
+        btn.style.background = bm.indexOf(pageNum) > -1 ? '#c8a84e' : '';
+    }
+
+    function renderBookmarksList() {
+        var bm = getBookmarks();
+        var list = document.getElementById('bookmarksList');
+        if (bm.length === 0) {
+            list.innerHTML = '<p class="text-xs text-gray-400">{% trans "Babu alamomin shafi tukuna" %}</p>';
+            return;
+        }
+        var html = '<div class="space-y-2">';
+        bm.forEach(function(pg) {
+            html += '<div class="flex items-center justify-between bg-cream rounded-lg px-3 py-2">';
+            html += '<button onclick="goToBookmark(' + pg + ')" class="text-sm text-primary font-medium hover:text-primary-light">📄 {% trans "Shafi" %} ' + pg + '</button>';
+            html += '<button onclick="toggleBookmark(' + pg + ')" class="text-gray-400 hover:text-red-500 text-xs tap-target">✕</button>';
+            html += '</div>';
+        });
+        html += '</div>';
+        list.innerHTML = html;
+    }
+
+    function goToBookmark(page) {
+        if (pdfDoc) {
+            switchTab('pdf');
+            goToPage(page);
+        } else if (HAS_DRIVE) {
+            switchTab('drive');
+        }
+        toggleBookmarksPanel();
+    }
+
+    function toggleBookmarksPanel() {
+        var panel = document.getElementById('bookmarksPanel');
+        var overlay = document.getElementById('bookmarksOverlay');
+        panel.classList.toggle('open');
+        overlay.classList.toggle('hidden');
+        if (panel.classList.contains('open')) renderBookmarksList();
+    }
+
+    // ===== Keyboard Shortcuts =====
+    function toggleShortcuts() {
+        document.getElementById('shortcutsPanel').classList.toggle('open');
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'ArrowRight') { nextPage(); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { prevPage(); e.preventDefault(); }
+        if (e.key === '+' || e.key === '=') { zoomIn(); e.preventDefault(); }
+        if (e.key === '-') { zoomOut(); e.preventDefault(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); e.preventDefault(); }
+        if (e.key === 'b' || e.key === 'B') { toggleBookmark(pageNum); e.preventDefault(); }
+        if (e.key === 'Escape') {
+            document.getElementById('shortcutsPanel').classList.remove('open');
+            var bp = document.getElementById('bookmarksPanel');
+            if (bp.classList.contains('open')) toggleBookmarksPanel();
+        }
+    });
+
+    // ===== Touch/Swipe for PDF =====
+    (function() {
+        var pdfContainer = document.getElementById('pdfContainer');
+        if (!pdfContainer) return;
+        var touchStartX = 0, touchStartY = 0, touchEndX = 0;
+
+        pdfContainer.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        pdfContainer.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            var touchEndY = e.changedTouches[0].screenY;
+            var diffX = touchEndX - touchStartX;
+            var diffY = Math.abs(touchEndY - touchStartY);
+            // Only trigger on horizontal swipes (> 60px, more horizontal than vertical)
+            if (Math.abs(diffX) > 60 && diffX !== 0 && Math.abs(diffX) > diffY) {
+                if (diffX < 0) nextPage();
+                else prevPage();
+            }
+        }, { passive: true });
+    })();
+
+    // ===== Init =====
+    (function() {
+        renderBookmarkButtons();
+
+        if (HAS_PDF) {
+            loadPdf();
+        } else if (HAS_DRIVE) {
+            switchTab('drive');
+        } else {
+            switchTab('embed');
+        }
+    })();
+</script>
+{% endblock %}

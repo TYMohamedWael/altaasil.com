@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<div class="w-full">
+
+    <!-- Hero Section -->
+    {% if page.cover_image %}
+    <div class="relative h-64 md:h-80 bg-primary">
+        <img src="{{ page.cover_image.url }}" alt="{{ page_title }}" class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 flex items-center justify-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-white text-center px-4">
+                {% if page.icon %}{{ page.icon }} {% endif %}{{ page_title }}
+            </h1>
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-primary py-12 md:py-16 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-white">
+            {% if page.icon %}{{ page.icon }} {% endif %}{{ page_title }}
+        </h1>
+    </div>
+    {% endif %}
+
+    <!-- Content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <article class="prose prose-lg max-w-none prose-headings:text-primary">
+            {{ page_content|safe }}
+        </article>
+    </div>
+
+</div>
+{% endblock %}

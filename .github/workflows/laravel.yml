@@ -1,0 +1,59 @@
+name: Laravel Deploy
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+
+  deploy-sub:
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Subdomain
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: 66.29.148.140
+          username: user_upload_2@altaasil.com
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/tests/**
+            .env
+            .env.example
+            error_log
+
+
+  deploy-main:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+
+      - name: Deploy to Production
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: 66.29.148.140
+          username: user_upload_2@altaasil.com
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/tests/**
+            .env
+            .env.example
+            error_log

@@ -1,0 +1,42 @@
+﻿{% extends 'base.html' %}
+{% load site_text %}
+{% load i18n %}
+{% block title %}{% trans "Game da mu" %} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-primary mb-4">{% trans "Game da Littattafan Hausa" %}</h1>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8">
+        <p class="text-gray-600 leading-relaxed mb-6">
+            {% trans "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)." %}
+        </p>
+        <p class="text-gray-600 leading-relaxed">
+            {% trans "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari." %}
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-3 text-gold text-xl">📚</div>
+            <h3 class="font-bold text-primary mb-2">{% trans "Tattara Ilimi" %}</h3>
+            <p class="text-sm text-gray-500">{% trans "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya." %}</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-3 text-gold text-xl">🌍</div>
+            <h3 class="font-bold text-primary mb-2">{% trans "Fassara Duniya" %}</h3>
+            <p class="text-sm text-gray-500">{% trans "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa." %}</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-3 text-gold text-xl">🛡️</div>
+            <h3 class="font-bold text-primary mb-2">{% trans "Daidaiton Ilimi" %}</h3>
+            <p class="text-sm text-gray-500">{% trans "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani." %}</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mb-3 text-gold text-xl">⚡</div>
+            <h3 class="font-bold text-primary mb-2">{% trans "Fasaha ta AI" %}</h3>
+            <p class="text-sm text-gray-500">{% trans "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO." %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

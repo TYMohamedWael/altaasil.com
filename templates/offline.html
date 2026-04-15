@@ -1,0 +1,12 @@
+﻿{% extends 'base.html' %}
+{% load site_text %}
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16 text-center">
+    <div class="text-6xl mb-4">📡</div>
+    <h1 class="text-2xl font-bold text-primary mb-2">{% trans "Ba a haɗa da yanar gizo ba" %}</h1>
+    <p class="text-gray-500 mb-6">{% trans "Ka duba haɗin yanar gizo ka sake gwadawa" %}</p>
+    <button onclick="location.reload()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-light">
+        {% trans "Sake gwadawa" %}
+    </button>
+</div>
+{% endblock %}

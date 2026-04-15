@@ -1,0 +1,959 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-14 10:58+0200\n"
+"PO-Revision-Date: 2026-03-17 08:47+0000\n"
+"Last-Translator:   <admin@admin.com>\n"
+"Language: sw\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+msgid "الاسم الكامل"
+msgstr "Jina Kamili"
+
+msgid "البريد الإلكتروني"
+msgstr "Barua pepe"
+
+msgid "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+msgstr "Kauli mbiu haipaswi kuwa na herufi chini ya 4."
+
+msgid "هذا البريد الإلكتروني مستخدم بالفعل."
+msgstr "Barua pepe hii tayari imetumika."
+
+msgid "اسم المستخدم هذا مستخدم بالفعل."
+msgstr "Jina la mtumiaji hili tayari limeshachukuliwa."
+
+msgid "الاسم الكامل (Display Name)"
+msgstr "Jina Kamili (Jina la Kuonyesha)"
+
+msgid "اسم المستخدم (Username)"
+msgstr "Jina la Mtumiaji"
+
+msgid "البريد الإلكتروني (Email)"
+msgstr "Barua pepe"
+
+msgid "الصورة الشخصية"
+msgstr "Picha ya kibinafsi"
+
+msgid "الدولة"
+msgstr "Nchi"
+
+msgid "اليوم"
+msgstr "Leo"
+
+msgid "الشهر"
+msgstr "Mwezi"
+
+msgid "السنة"
+msgstr "Mwaka"
+
+msgid "كلمة المرور الحالية"
+msgstr "Neno la siri la sasa"
+
+msgid "كلمة المرور الجديدة"
+msgstr "Nenosiri mpya"
+
+msgid "تأكيد كلمة المرور الجديدة"
+msgstr "Thibitisha neno la siri mpya"
+
+msgid "Wannan adireshin email yana amfani da shi."
+msgstr "Wannan anwani ya barua pepe inatumiwa."
+
+msgid "Wannan sunan mai amfani yana amfani da shi."
+msgstr "Huu ni jina la mtumiaji linalotumika na mtumiaji."
+
+msgid "يجب عليك كتابة كلمة المرور الحالية."
+msgstr "Lazima uandike neno la siri la sasa."
+
+msgid "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+msgstr "Neno la siri lililo sasa si sahihi. Jaribu tena."
+
+msgid "كلمتا المرور غير متطابقتين."
+msgstr "Neno la siri la kurudia haliwezi kuthibitishwa."
+
+msgid "Hausa"
+msgstr "Kihausa"
+
+msgid "العربية"
+msgstr "Kiarabu"
+
+msgid "English"
+msgstr "Kiingereza"
+
+msgid "Amharic"
+msgstr "Kiarmenia"
+
+msgid "Swahili"
+msgstr "Kiswahili"
+
+msgid "Arabic"
+msgstr ""
+
+msgid "Shiga"
+msgstr "Ingia"
+
+msgid "Littattafan Hausa"
+msgstr "Vitabu vya Kihausa"
+
+msgid "Shiga Asusun ka"
+msgstr "Ingia kwenye akaunti yako"
+
+msgid "Sunan mai amfani (Username)"
+msgstr "Jina la mtumiaji"
+
+msgid "Kalmar sirri"
+msgstr "Nywila"
+
+msgid "Ba ka da asusu?"
+msgstr "Huna akaunti?"
+
+msgid "Yi Rajista"
+msgstr "Jisajili"
+
+msgid "Barka da zuwa!"
+msgstr "Karibu!"
+
+msgid "Gyara Bayanai"
+msgstr "Rudi kwenye Maelezo"
+
+msgid "Ana Karatu"
+msgstr "Inasomwa Sasa"
+
+msgid "Shafi %(page)s"
+msgstr ""
+
+msgid "Jerin Karatu na"
+msgstr "Orodha zangu za Kusoma"
+
+msgid "Ƙirƙiri sabon jeri"
+msgstr "Unda orodha mpya"
+
+msgid "Sunan jeri"
+msgstr "Jina la orodha"
+
+msgid "Bayani (zaɓi)"
+msgstr "Maelezo (hiari)"
+
+msgid "Ƙirƙira"
+msgstr "Unda"
+
+msgid "%(count)s littattafai"
+msgstr "Vitabu"
+
+msgid "Na jama'a"
+msgstr ""
+
+msgid "Ba ka da jerin karatu tukuna."
+msgstr "Huna orodha za kusoma bado."
+
+msgid "Littattafai da na fi so"
+msgstr "Vitabu ninavyovipenda"
+
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr "Bado haujachagua vitabu vyovyote."
+
+msgid "Bincika Littattafai"
+msgstr "Gundua Vitabu"
+
+msgid "..."
+msgstr ""
+
+msgid "Foto Profil"
+msgstr "Picha ya Profili"
+
+msgid "Bayanan Asali"
+msgstr "Maelezo ya Kitabu"
+
+msgid "Ƙasa da Ranar Haihuwa"
+msgstr "Nchi na Tarehe ya Kuzaliwa"
+
+msgid "Zaɓi Ƙasa"
+msgstr "Chaguzi za Taifa"
+
+msgid "Wata ƙasa..."
+msgstr "Andika jibu..."
+
+msgid "Ƙasa"
+msgstr "Nchi"
+
+msgid "Rana"
+msgstr "Siku"
+
+msgid "Wata"
+msgstr ""
+
+msgid "Shekara"
+msgstr "Mwaka"
+
+msgid "Canza Kalmar Sirri"
+msgstr "Nywila"
+
+msgid "Bari fanko idan ba ka son canza"
+msgstr "Bari fanko idan ba ka son canza \n\nNi wani neman da aka yi wa mutum ya koma ba ya son canza, ko kuma ya koma ba ya son sauya."
+
+msgid "Sharuddan"
+msgstr "Kutokana na"
+
+msgid "Haruffa 4 aƙalla"
+msgstr "Herufi 4 aƙalla"
+
+msgid "Lambobi kawai yana yiwuwa"
+msgstr "Lambobi pekee ndizo zilizo na uwezo"
+
+msgid "Adana Canje-canje"
+msgstr "Adana Kubadilishana"
+
+msgid "Koma Bayanina"
+msgstr "Rudi kwenye Maelezo"
+
+msgid "Jama'a"
+msgstr "Watu"
+
+msgid "Sirri"
+msgstr "Binafsi"
+
+msgid "Littattafai %(count)s"
+msgstr "Vitabu"
+
+msgid "Raba"
+msgstr "Shiriki"
+
+msgid "Koma"
+msgstr "Rudi"
+
+msgid "Cire"
+msgstr "Ondoa"
+
+msgid "Babu littattafai a cikin wannan jerin"
+msgstr "Hakuna vitabu katika orodha hii"
+
+msgid "An kwafi!"
+msgstr "Imenakiliwa!"
+
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr "Fungua akaunti mpya"
+
+msgid "Sharuddan Kalmar Sirri"
+msgstr "Nywila"
+
+msgid "Yana iya zama kamar bayanan sirri"
+msgstr "Ina uwezo wa kudumu kama bayanan sirri"
+
+msgid "Yana iya zama shahararre"
+msgstr "Imeshindwa kupakia arifa"
+
+msgid "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+msgstr "Herufi, nambari, da alama kawai — zitaelezea a URL"
+
+msgid "Kana da asusu?"
+msgstr "Tayari una akaunti?"
+
+msgid "Models in the %(name)s application"
+msgstr "Mioyo katika programu ya %(name)s"
+
+msgid "Model name"
+msgstr "Jina la muundo"
+
+msgid "Add link"
+msgstr "Ongeza kiungo"
+
+msgid "Change or view list link"
+msgstr "Badilisha au angalia orodha ya kiungo"
+
+msgid "Add"
+msgstr "Ongeza"
+
+msgid "View"
+msgstr "Angalia"
+
+msgid "Change"
+msgstr "Badilisha"
+
+msgid "You don’t have permission to view or edit anything."
+msgstr "Huna ruhusa ya kuona au kuhariri chochote."
+
+msgid "Translations (Rosetta)"
+msgstr "Tafsiri (Rosetta)"
+
+msgid "Manage translations"
+msgstr "Usimamizi wa tafsiri"
+
+msgid "Open"
+msgstr "Fungua"
+
+msgid "Littattafan Hausa - Dakin Karatu na Ilimi na Musulunci"
+msgstr "Vitabu vya Kihausa - Maktaba ya Elimu ya Kiislamu"
+
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr "Maombi ya vitabu vya Kiislamu vya Kihausa."
+
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr "Maktaba ya Elimu ya Kiislamu"
+
+msgid "DAKIN KARATU NA ILIMI"
+msgstr "MAKTABA YA ELIMU"
+
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr "Tafuta kitabu, mwandishi au mada..."
+
+msgid "Sanarwa"
+msgstr "Arifa"
+
+msgid "Duba duka"
+msgstr "Tazama zote"
+
+msgid "Ana loda..."
+msgstr "Inapakia..."
+
+msgid "Gida"
+msgstr "Nyumbani"
+
+msgid "Littattafai"
+msgstr "Vitabu"
+
+msgid "Rukunoni"
+msgstr "Kategoria"
+
+msgid "Nemo littafi..."
+msgstr "Tafuta kitabu..."
+
+msgid "Ni"
+msgstr "Mimi"
+
+msgid "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr "Programu ya vitabu vya Kiislamu katika lugha ya Kihausa. Tunakusanya, kutafsiri, na kueneza maarifa ya Kiislamu kwa Kihausa ulimwenguni kote."
+
+msgid "Hanyoyi"
+msgstr "Viungo"
+
+msgid "Game da mu"
+msgstr "Kuhusu sisi"
+
+msgid "Akida"
+msgstr "Aqidah"
+
+msgid "Fikhu"
+msgstr "Fiqh"
+
+msgid "Hadisi"
+msgstr "Hadithi"
+
+msgid "Tafsiri"
+msgstr "Tafsiri"
+
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr "&copy; 2026 Vitabu vya Kihausa. Haki zote zimehifadhiwa."
+
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr "Imejengwa kwa ❤️ kwa ajili ya jamii ya Kihausa"
+
+msgid "Babu sanarwa"
+msgstr "Hakuna arifa"
+
+msgid "Ba a iya loda sanarwa"
+msgstr "Imeshindwa kupakia arifa"
+
+msgid "?"
+msgstr ""
+
+msgid "Karanta"
+msgstr "Soma"
+
+msgid "Game da Littattafan Hausa"
+msgstr "Kuhusu Vitabu vya Kihausa"
+
+msgid "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr "Littattafan Hausa ni mpango wa elimu ya kidijitali unaotunza vitabu vya Kiislamu katika lugha ya Hausa. Lengo letu ni kutoa fursa ya kupata elimu ya Kiislamu kwa jamii ya Hausa duniani kote, kwa njia ya teknolojia ya kisasa na usaidizi wa Akili Bandia (AI)."
+
+msgid "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr "Tunafanya kazi kukusanya vitabu 1,780+, kuvitafsiri, na kuvichapisha mtandaoni na maelezo kamili na faharisi ili kurahisisha utafutaji na uchunguzi."
+
+msgid "Tattara Ilimi"
+msgstr "Kusanya Maarifa"
+
+msgid "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+msgstr "Mkusanyiko mkubwa zaidi wa vitabu vya Kiislamu kwa lugha ya Kihausa. Imekusanywa, kutafsiriwa, na kupangwa kwa teknolojia ya kisasa."
+
+msgid "Fassara Duniya"
+msgstr "Tafsiri Dunia"
+
+msgid "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr "Tunatafsiri vitabu katika lugha 10 ili kufikisha ujumbe wa Kiislamu kwa kila mtu."
+
+msgid "Daidaiton Ilimi"
+msgstr "Usawa wa Elimu"
+
+msgid "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+msgstr "Kila kitabu huchunguzwa na wataalam wa elimu ili kuhakikisha ubora wa habari."
+
+msgid "Fasaha ta AI"
+msgstr "Teknolojia ya AI"
+
+msgid "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+msgstr "Tunatumia Akili Bandia kufaharisi, kufupisha, na kutoa SEO."
+
+msgid "Ƙididdigar"
+msgstr "Takwimu"
+
+msgid "Ƙididdigar (Analytics)"
+msgstr "Takwimu (Analytics)"
+
+msgid "Duba yadda ake amfani da dakin karatu"
+msgstr "Angalia jinsi ya kutumia maktaba"
+
+msgid "7 kwanaki"
+msgstr "Siku 7"
+
+msgid "30 kwanaki"
+msgstr "Siku 30"
+
+msgid "90 kwanaki"
+msgstr "Siku 90"
+
+msgid "Duka"
+msgstr "Zote"
+
+msgid "Fitar da CSV"
+msgstr "Hamisha CSV"
+
+msgid "Ayyukan Masu Amfani"
+msgstr "Vitendo vya Watumiaji"
+
+msgid "Masu karatu masu aiki"
+msgstr "Wasomaji hai"
+
+msgid "Matsakaicin lokacin karatu"
+msgstr "Wastani wa muda wa kusoma"
+
+msgid "Bita'i"
+msgstr ""
+
+msgid "Sharhi"
+msgstr "Maoni"
+
+msgid "Ayyuka na Yau da Kullum"
+msgstr "Shughuli za Kila Siku"
+
+msgid "Rabon Rukunoni"
+msgstr "Mgawanyo wa Kategoria"
+
+msgid "Littattafan da aka fi Duba"
+msgstr "Vitabu Vilivyotazamwa Zaidi"
+
+msgid "Kalmomin Bincike"
+msgstr "Maneno muhimu ya Utafutaji"
+
+msgid "Babu bayanan bincike tukuna."
+msgstr "Hakuna matokeo ya utafutaji bado."
+
+msgid "Yanayin Saukewa"
+msgstr "Hali ya Kupakua"
+
+msgid "Sabon Ra'ayoyi"
+msgstr "Maoni Mapya"
+
+msgid "%(time)s da suka wuce"
+msgstr "iliyopita"
+
+msgid "Babu ra'ayoyi tukuna."
+msgstr "Hakuna alamisho bado"
+
+msgid "Bincike"
+msgstr "Tafuta"
+
+msgid "Saukewa"
+msgstr "Upakuaji"
+
+msgid "(%(count)s "
+msgstr "(%(count)s idadi ya"
+
+msgid "bita'i"
+msgstr ""
+
+msgid "Harshen da bai bayyana ba"
+msgstr "Lugha isiyojulikana"
+
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr "Kitabu hiki kimethibitishwa kitaaluma"
+
+msgid "Karanta Yanzu"
+msgstr "Soma Sasa"
+
+msgid "Sauke PDF"
+msgstr "Pakua PDF"
+
+msgid "PDF ba a samu ba tukuna"
+msgstr "PDF bado haipatikani"
+
+msgid "Ƙara zuwa Jeri"
+msgstr "Ongeza kwenye Orodha"
+
+msgid "Zaɓi jerin karatu"
+msgstr "Chagua orodha ya kusoma"
+
+msgid "bayyananne"
+msgstr ""
+
+msgid "Kwafi Haɗin gwiwa"
+msgstr ""
+
+msgid "Ƙarin zaɓuɓɓuka"
+msgstr "Chaguzi zaidi"
+
+msgid "Kallon"
+msgstr "Kutazama"
+
+msgid "Favorites"
+msgstr "Vipendwa"
+
+msgid "Ci gaban Karatu"
+msgstr "Maendeleo ya Kusoma"
+
+msgid "daga %(total)s"
+msgstr ""
+
+msgid "Bayani game da Littafi"
+msgstr "Kuhusu Kitabu"
+
+msgid "Abubuwan da ke ciki"
+msgstr "Yaliyomo"
+
+msgid "Saurara"
+msgstr "Sikiliza"
+
+msgid "Gudun sauti"
+msgstr "Kasi ya sauti"
+
+msgid "Bita'i da Ra'ayoyi"
+msgstr "Maoni na Maoni"
+
+msgid "%(count)s bita'i"
+msgstr ""
+
+msgid "Rubuta bita'i"
+msgstr "Andika maoni..."
+
+msgid "Ƙima"
+msgstr "Thamani"
+
+msgid "Taken bita'i"
+msgstr "Imechukuliwa bita'i"
+
+msgid "Rubuta ra'ayin ka..."
+msgstr "Andika jibu..."
+
+msgid "Aika Bita'i"
+msgstr ""
+
+msgid "don rubuta bita'i"
+msgstr "kuandika maoni"
+
+msgid "da suka wuce"
+msgstr "iliyopita"
+
+msgid "Babu bita'i tukuna. Ka zama na farko!"
+msgstr "Hakuna maoni bado. Anzisha mjadala!"
+
+msgid "Tattaunawa"
+msgstr "Majadiliano"
+
+msgid "Rubuta sharhi..."
+msgstr "Andika maoni..."
+
+msgid "Aika"
+msgstr "Tuma"
+
+msgid "don rubuta sharhi"
+msgstr "kuandika maoni"
+
+msgid "Amsa"
+msgstr "Jibu"
+
+msgid "Rubuta amsa..."
+msgstr "Andika jibu..."
+
+msgid "Soke"
+msgstr "Ghairi"
+
+msgid "Babu sharhi tukuna. Ka fara tattaunawa!"
+msgstr "Hakuna maoni bado. Anzisha mjadala!"
+
+msgid "Bayanan Littafi"
+msgstr "Maelezo ya Kitabu"
+
+msgid "Rukuni"
+msgstr "Kategoria"
+
+msgid "Ƙaramin Rukuni"
+msgstr "Kategoria Ndogo"
+
+msgid "Harshe"
+msgstr "Lugha"
+
+msgid "Hali"
+msgstr "Hali"
+
+msgid "PDF Akwai"
+msgstr "PDF Inapatikana"
+
+msgid "Babu PDF"
+msgstr "Hakuna PDF"
+
+msgid "Littattafai masu alaƙa"
+msgstr "Vitabu vinavyohusiana"
+
+msgid "Tabbatar da share wannan sharhi?"
+msgstr ""
+
+msgid "Kuskure ya faru. Sake gwadawa."
+msgstr ""
+
+msgid "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+msgstr "Hakuna orodha ya kusoma. Unda moja kwenye ukurasa wako."
+
+msgid "Ba a iya loda jerin"
+msgstr "Haiwezekani kupakia orodha"
+
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr "Vitabu vyote vilivyomo kwenye maktaba yetu"
+
+msgid "Tsara:"
+msgstr "Panga:"
+
+msgid "Sabbin"
+msgstr "Mpya"
+
+msgid "Mafi kallo"
+msgstr "Vilivyotazamwa zaidi"
+
+msgid "Mafi ƙima"
+msgstr "Vilivyokadiriwa zaidi"
+
+msgid "Mafi saukewa"
+msgstr "Vilivyopakuliwa zaidi"
+
+msgid "Harshe:"
+msgstr "Lugha:"
+
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr "Matokeo ya utafutaji: \"%(query)s\""
+
+msgid "Ba a sami littattafai ba."
+msgstr "Hakuna vitabu vilivyopatikana."
+
+msgid "Ƙara nuna"
+msgstr "Ongeza Uangaziaji"
+
+msgid "Baya"
+msgstr "Nyuma"
+
+msgid "Gaba"
+msgstr "Ifuatayo"
+
+msgid "~%(mins)s "
+msgstr "~%(mins)s dakika"
+
+msgid "min"
+msgstr "dak"
+
+msgid "Rubutu"
+msgstr "Maandishi"
+
+msgid "Ƙarami"
+msgstr "Ndogo"
+
+msgid "Matsakaici"
+msgstr "Wastani"
+
+msgid "Babba"
+msgstr "Kubwa"
+
+msgid "Babba ƙwarai"
+msgstr "Kubwa sana"
+
+msgid "Fari"
+msgstr "Nyeupe"
+
+msgid "Duhu"
+msgstr "Giza"
+
+msgid "Alamomin shafi"
+msgstr "Alamisho"
+
+msgid "Gajerun hanyoyi"
+msgstr "Njia za Mkato"
+
+msgid "Cika Allo"
+msgstr "Jaza Bodi"
+
+msgid "Buga"
+msgstr "Chapisha"
+
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr "Haiwezekani kutoa maandishi kutoka kwa PDF hii"
+
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr "Hii inaweza kutokea ikiwa PDF ina picha pekee"
+
+msgid "Duba PDF Viewer"
+msgstr "Tazama Kitazamaji cha PDF"
+
+msgid "Ana loda PDF..."
+msgstr "Inapakia PDF..."
+
+msgid "Rage girma"
+msgstr "Punguza ukuzaji"
+
+msgid "Ƙara girma"
+msgstr "Ongeza Ukubwa"
+
+msgid "Alamar shafi"
+msgstr "Alamisho"
+
+msgid "Babu alamomin shafi tukuna"
+msgstr "Hakuna alamisho bado"
+
+msgid "Shafi na gaba"
+msgstr "Ukurasa unaofuata"
+
+msgid "Shafi na baya"
+msgstr "Ukurasa uliopita"
+
+msgid "Ƙara girman rubutu"
+msgstr "Ongeza Ukubwa wa Maandishi"
+
+msgid "Rage girman rubutu"
+msgstr "Punguza ukubwa wa maandishi"
+
+msgid "Cika allo"
+msgstr "Jaza ubao"
+
+msgid "Rufe"
+msgstr "Funga"
+
+msgid "Shafi"
+msgstr "Ukurasa"
+
+msgid "Ƙarshen Littafi"
+msgstr "Mwisho wa Kitabu"
+
+msgid "Koma ga Bayani"
+msgstr "Rudi kwenye Maelezo"
+
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr "Chagua kategoria ya maarifa unayotaka"
+
+msgid "📚 Littattafai 1,780+ na Musulunci"
+msgstr "📚 Vitabu 1,780+ vya Kiislamu"
+
+msgid "Dakin Karatu na Ilimi"
+msgstr "Maktaba ya Maarifa"
+
+msgid "na Musulunci"
+msgstr "ya Kiislamu"
+
+msgid "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr "Mkusanyiko mkubwa zaidi wa vitabu vya Kiislamu kwa lugha ya Kihausa. Imekusanywa, kutafsiriwa, na kupangwa kwa teknolojia ya kisasa."
+
+msgid "📖 Bincika Littattafai"
+msgstr "📖 Vinjari Vitabu"
+
+msgid "🔍 Nemo Maudu'i"
+msgstr "🔍 Tafuta Mada"
+
+msgid "Marubuta"
+msgstr "Waandishi"
+
+msgid "Harsuna"
+msgstr "Lugha"
+
+msgid "Masu Karatu"
+msgstr "Wasomaji"
+
+msgid "Zaɓi rukunin da kake so"
+msgstr "Chagua kitengo unachopendelea"
+
+msgid "Sababbin Littattafai"
+msgstr "Vitabu Vipya"
+
+msgid "An ƙara su kwanan nan"
+msgstr "Imeongezwa hivi karibuni"
+
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr "Hakuna vitabu vilivyoongezwa bado. Ongeza kitabu kupitia paneli ya msimamizi.Hakuna vitabu vilivyopatikana bado. Ongeza vitabu kupitia paneli ya msimamizi."
+
+msgid "Taimaka wajen yada ilimi"
+msgstr "Saidia kueneza maarifa"
+
+msgid "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+msgstr "Ikiwa una vitabu vya Kiislamu vya Kihausa, saidia kuviongeza kwenye maktaba yetu."
+
+msgid "Karanta duka"
+msgstr "Soma zote"
+
+msgid "Duba"
+msgstr "Angalia"
+
+msgid "Yi alama a matsayin an karanta"
+msgstr "Weka alama kama imesomwa"
+
+msgid "Ba a haɗa da yanar gizo ba"
+msgstr "Nje ya mtandao"
+
+msgid "Ka duba haɗin yanar gizo ka sake gwadawa"
+msgstr "Tafadhali angalia muunganisho wa mtandao na ujaribu tena"
+
+msgid "Sake gwadawa"
+msgstr "Jaribu tena"
+
+msgid "Shekaru {{ age }}"
+msgstr "Umri {{ age }}"
+
+msgid "Ƙarin Bayani"
+msgstr "Maelezo ya Ziada"
+
+msgid "Misali: +234 801 234 5678"
+msgstr "Mfano: +234 801 234 5678"
+
+msgid "Suna Cikakke (Display Name)"
+msgstr "Jina Kamili"
+
+msgid "Sunan Mai Amfani (Username)"
+msgstr "Jina la Mtumiaji"
+
+msgid "Imel (Email)"
+msgstr "Barua pepe"
+
+msgid "Hoton Profil"
+msgstr "Picha ya Wasifu"
+
+msgid "Jinsi"
+msgstr "Jinsia"
+
+msgid "Lambar Waya"
+msgstr "Nambari ya Simu"
+
+msgid "Kalmar Sirri ta Yanzu"
+msgstr "Nywila ya Sasa"
+
+msgid "Sabuwar Kalmar Sirri"
+msgstr "Nywila Mpya"
+
+msgid "Tabbatar Kalmar Sirri"
+msgstr "Thibitisha Nywila"
+
+msgid "Suna dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Jina kamili lazima liwe na herufi 8 au zaidi."
+
+msgid "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Jina la mtumiaji lazima liwe na herufi 8 au zaidi."
+
+msgid "Lambar waya ba daidai ba ce."
+msgstr "Nambari ya simu si sahihi."
+
+msgid "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+msgstr "Nambari ya simu lazima iwe kati ya tarakimu 7 na 15."
+
+msgid "Dole ne ka rubuta kalmar sirri ta yanzu."
+msgstr "Lazima uingize nywila yako ya sasa."
+
+msgid "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+msgstr "Nywila ya sasa si sahihi. Jaribu tena."
+
+msgid "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+msgstr "Nywila lazima iwe na herufi 4 au zaidi."
+
+msgid "Kalmomin sirri biyu ba ɗaya ba ne."
+msgstr "Nywila mbili hazifanani."
+
+msgid "page_title_register"
+msgstr "Jisajili"
+
+msgid "register_heading"
+msgstr "Fungua Akaunti Mpya"
+
+msgid "register_subheading"
+msgstr "Ingia katika maktaba yetu"
+
+msgid "field_label_full_name"
+msgstr "Jina Kamili"
+
+msgid "field_label_username"
+msgstr "Jina la mtumiaji"
+
+msgid "field_label_email"
+msgstr "Barua pepe"
+
+msgid "field_label_password"
+msgstr "Nywila"
+
+msgid "field_label_password_confirm"
+msgstr "Thibitisha Nywila"
+
+msgid "btn_register"
+msgstr "Jisajili"
+
+msgid "already_have_account"
+msgstr "Tayari una akaunti?"
+
+msgid "divider_or"
+msgstr "au"
+
+msgid "btn_login"
+msgstr "Ingia"
+
+msgid "username_hint"
+msgstr "Barua, nambari, na alama tu — zitaonekana kwenye URL"
+
+msgid "terms_accept_label"
+msgstr "Ninakubali Masharti, Vigezo, na Sera ya Faragha"
+
+msgid "tooltip_password_requirements_title"
+msgstr "Mahitaji ya Nywila"
+
+msgid "tooltip_pw_min_chars"
+msgstr "Angalau herufi 4"
+
+msgid "tooltip_pw_numbers_ok"
+msgstr "Nambari pekee zinaruhusiwa"
+
+msgid "tooltip_pw_personal_ok"
+msgstr "Inaweza kufanana na maelezo ya kibinafsi"
+
+msgid "tooltip_pw_common_ok"
+msgstr "Inaweza kuwa ya kawaida"
+
+msgid "pw_strength_very_weak"
+msgstr "Dhaifu sana"
+
+msgid "pw_strength_weak"
+msgstr "Dhaifu"
+
+msgid "pw_strength_medium"
+msgstr "Wastani"
+
+msgid "pw_strength_strong"
+msgstr "Imara"
+
+msgid "pw_strength_very_strong"
+msgstr "Imara sana"
+
+msgid "error_password_min_length"
+msgstr "Nywila lazima iwe na angalau herufi 4."
+
+msgid "error_email_exists"
+msgstr "Anwani hii ya barua pepe tayari inatumika."
+
+msgid "error_username_exists"
+msgstr "Jina hili la mtumiaji tayari linatumika."
+
+msgid "error_current_password_required"
+msgstr "Lazima uingize nywila yako ya sasa."
+
+msgid "error_current_password_wrong"
+msgstr "Nywila ya sasa sio sahihi. Jaribu tena."
+
+msgid "error_passwords_mismatch"
+msgstr "Nywila mbili hazilingani."
+

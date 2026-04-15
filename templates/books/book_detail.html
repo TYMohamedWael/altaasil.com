@@ -1,0 +1,901 @@
+{% extends 'base.html' %}
+{% load site_text %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
+
+{% block title %}{{ book.localized_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block meta_description %}{{ book.seo_description|default:book.description|truncatewords:30 }}{% endblock %}
+{% block meta_keywords %}{{ book.tags|join:", " }}{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "{{ book.localized_title }}",
+    "author": {"@type": "Person", "name": "{{ book.author }}"},
+    "description": "{{ book.description|truncatewords:50 }}",
+    "inLanguage": "{{ book.language_code|default:'ha' }}",
+    {% if book.year %}"datePublished": "{{ book.year }}",{% endif %}
+    "keywords": "{{ book.tags|join:', ' }}"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- ====== HERO ====== -->
+<div class="book-hero text-white">
+    <div class="max-w-6xl mx-auto px-4 py-10 relative z-10">
+        <!-- Breadcrumb -->
+        <div class="text-xs text-white/40 mb-6 flex items-center gap-2">
+            <a href="{% url 'books:home' %}" class="hover:text-gold">{% trans "Gida" %}</a>
+            <span>/</span>
+            <a href="{% url 'books:book_list' %}" class="hover:text-gold">{% trans "Littattafai" %}</a>
+            {% if book.category %}
+            <span>/</span>
+            <a href="{% url 'books:book_list' %}?category={{ book.category.slug }}" class="hover:text-gold">{{ book.category.localized_name }}</a>
+            {% endif %}
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <!-- Book Cover -->
+            <div class="shrink-0">
+                <div class="book-cover-frame">
+                    <div class="book-cover-inner w-48 h-64">
+                        {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-cover rounded-lg">
+                        {% else %}
+                        <div class="text-center px-4">
+                            <div class="text-gold/30 text-5xl mb-3">📖</div>
+                            <p class="text-gold/60 text-xs font-bold" style="font-family: Amiri, serif;">{{ book.localized_title|truncatewords:5 }}</p>
+                            <div class="gold-line my-3 mx-auto w-16"></div>
+                            <p class="text-white/40 text-[10px]">{{ book.author|truncatewords:3 }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Info -->
+            <div class="flex-1 min-w-0">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2" style="font-family: Amiri, serif;">{{ book.localized_title }}</h1>
+                {% if book.alternate_title %}
+                <p class="text-xl text-white/50 mb-4 text-end" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}" style="font-family: Amiri, serif;">{{ book.alternate_title }}</p>
+                {% endif %}
+
+                <!-- Average Rating -->
+                {% if avg_rating %}
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="star-rating star-display">
+                        {% for i in "12345" %}
+                        <span class="star {% if forloop.counter <= avg_rating %}filled{% endif %}">★</span>
+                        {% endfor %}
+                    </div>
+                    <span class="text-white/70 text-sm">{{ avg_rating|floatformat:1 }} {% blocktrans with count=review_count %}({{ count }} {% endblocktrans %}{% trans "bita'i" %})</span>
+                </div>
+                {% endif %}
+
+                <div class="gold-line my-5 w-24"></div>
+
+                <!-- Meta -->
+                <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70 mb-5">
+                    <span class="flex items-center gap-1.5">✍️ {{ book.author }}</span>
+                    {% if book.translator %}<span class="flex items-center gap-1.5">🌐 {{ book.translator }}</span>{% endif %}
+                    {% if book.year %}<span class="flex items-center gap-1.5">📅 {{ book.year }}</span>{% endif %}
+                    {% if book.category %}<span class="flex items-center gap-1.5">📂 {{ book.category.localized_name }}</span>{% endif %}
+                    <span class="flex items-center gap-1.5">🌍 {% if book.language_flag %}{{ book.language_flag }} {% endif %}{{ book.language_label|default:_('Harshen da bai bayyana ba') }}</span>
+                </div>
+
+                {% if book.approved %}
+                <div class="inline-flex items-center gap-1.5 bg-green-500/20 text-green-300 text-xs px-3 py-1.5 rounded-full border border-green-500/30 mb-5">
+                    ✅ {% trans "An tabbatar da wannan littafi ta hanyar ilimi" %}
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-3 mt-2">
+                    {% if book.file or book.drive_url %}
+                    <a href="{% url 'books:book_read' slug=book.seo_slug %}" class="bg-gold text-primary font-bold px-6 py-3 rounded-xl hover:bg-gold/90 transition-all shadow-lg hover:shadow-gold/30 flex items-center gap-2 tap-target">
+                        📖 {% trans "Karanta Yanzu" %}
+                    </a>
+                    {% if book.file %}
+                    <a href="{% url 'books:book_download' slug=book.seo_slug %}" id="download-btn" target="_blank" class="bg-white/10 text-white font-medium px-5 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2 tap-target">
+                        ⬇️ {% trans "Sauke PDF" %}
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    <div class="bg-white/5 text-white/50 px-5 py-3 rounded-xl border border-white/10 flex items-center gap-2">
+                        📄 {% trans "PDF ba a samu ba tukuna" %}
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <button onclick="toggleFav()" id="favBtn" class="{% if is_favorite %}bg-red-500/20 text-red-300 border-red-500/30{% else %}bg-white/10 text-white/70 border-white/20{% endif %} font-medium px-5 py-3 rounded-xl border hover:bg-white/20 transition-all tap-target">
+                        <span id="favText">{% if is_favorite %}❤️ Favorites{% else %}🤍 Favorites{% endif %}</span>
+                    </button>
+
+                    <!-- Add to Reading List -->
+                    <div class="relative" id="readingListWrapper">
+                        <button onclick="toggleReadingListDropdown()" class="bg-white/10 text-white/70 px-5 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-all tap-target">
+                            📋 {% trans "Ƙara zuwa Jeri" %}
+                        </button>
+                        <div id="readingListDropdown" class="reading-list-dropdown mt-2">
+                            <div class="p-3 border-b border-gray-100">
+                                <p class="text-sm font-bold text-primary">{% trans "Zaɓi jerin karatu" %}</p>
+                            </div>
+                            <div id="readingListItems" class="p-2 max-h-48 overflow-y-auto">
+                                <p class="text-xs text-gray-400 p-2">{% trans "Ana loda..." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Share Dropdown -->
+                    <div class="relative" id="shareWrapper">
+                        <button onclick="toggleShareMenu()" id="shareBtn" class="bg-white/10 text-white/70 px-5 py-3 rounded-xl border border-white/20 hover:bg-white/20 transition-all tap-target flex items-center gap-2">
+                            📤 {% trans "Raba" %}
+                        </button>
+                        <div id="shareMenu" class="hidden bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden" style="min-width:240px; position:fixed;">
+                            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50">
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">{% trans "bayyananne" %}</p>
+                            </div>
+                            <!-- Telegram -->
+                            <a id="share-telegram" href="#" target="_blank" rel="noopener"
+                               class="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors">
+                                <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style="background:#2AABEE;">✈</span>
+                                <span class="text-sm font-medium text-gray-700">Telegram</span>
+                            </a>
+                            <!-- WhatsApp -->
+                            <a id="share-whatsapp" href="#" target="_blank" rel="noopener"
+                               class="flex items-center gap-3 px-4 py-3 hover:bg-green-50 transition-colors">
+                                <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm shrink-0" style="background:#25D366;">💬</span>
+                                <span class="text-sm font-medium text-gray-700">WhatsApp</span>
+                            </a>
+                            <!-- Facebook -->
+                            <a id="share-facebook" href="#" target="_blank" rel="noopener"
+                               class="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors">
+                                <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style="background:#1877F2;">f</span>
+                                <span class="text-sm font-medium text-gray-700">Facebook</span>
+                            </a>
+                            <!-- Twitter/X -->
+                            <a id="share-twitter" href="#" target="_blank" rel="noopener"
+                               class="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                                <span class="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style="background:#000;">𝕏</span>
+                                <span class="text-sm font-medium text-gray-700">Twitter / X</span>
+                            </a>
+                            <div class="border-t border-gray-100">
+                                <!-- Copy Link -->
+                                <button onclick="copyBookLink()" id="copyLinkBtn"
+                                        class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                                    <span class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-sm shrink-0">🔗</span>
+                                    <span class="text-sm font-medium text-gray-700" id="copyLinkText">{% trans "Kwafi Haɗin gwiwa" %}</span>
+                                </button>
+                                <!-- Native Share - موبايل فقط، يظهر بالـ JS -->
+                                <button onclick="nativeShare()" id="nativeShareBtn"
+                                        class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors" style="display:none;">
+                                    <span class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-sm shrink-0">📱</span>
+                                    <span class="text-sm font-medium text-gray-700">{% trans "Ƙarin zaɓuɓɓuka" %}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== STATS BAR ====== -->
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 py-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="stat-card">
+                <p class="text-2xl font-bold text-primary">{{ book.view_count|default:0 }}</p>
+                <p class="text-xs text-gray-400">{% trans "Kallon" %}</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-2xl font-bold text-primary" id="download-count-display">{{ book.download_count|default:0 }}</p>
+                <p class="text-xs text-gray-400">{% trans "Saukewa" %}</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-2xl font-bold text-primary">{{ book.favorited_by.count|default:0 }}</p>
+                <p class="text-xs text-gray-400">{% trans "Favorites" %}</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-2xl font-bold text-primary">{{ review_count|default:0 }}</p>
+                <p class="text-xs text-gray-400">{% trans "Bita'i" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== CONTENT ====== -->
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Main Content -->
+        <div class="flex-1 min-w-0 space-y-8">
+
+            {% if reading %}
+            <!-- Reading Progress -->
+            <div class="bg-gradient-to-r from-primary/5 to-gold/5 rounded-2xl p-5 border border-primary/10">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-bold text-primary">📖 {% trans "Ci gaban Karatu" %}</span>
+                    <span class="text-sm text-gold font-bold">{{ reading.progress_percent }}%</span>
+                </div>
+                <div class="h-3 bg-white rounded-full overflow-hidden shadow-inner">
+                    <div class="h-full bg-gradient-to-r from-primary to-gold rounded-full transition-all" style="width:{{ reading.progress_percent }}%"></div>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">{% blocktrans with page=reading.current_page %}Shafi {{ page }}{% endblocktrans %} {% if reading.total_pages %}{% blocktrans with total=reading.total_pages %}daga {{ total }}{% endblocktrans %}{% endif %}</p>
+            </div>
+            {% endif %}
+
+            {% if book.description %}
+            <!-- Description -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-primary mb-3 flex items-center gap-2">📖 {% trans "Bayani game da Littafi" %}</h2>
+                <p class="text-gray-600 leading-relaxed text-base" style="font-family: Amiri, serif; line-height: 2;">{{ book.description }}</p>
+            </div>
+            {% endif %}
+
+            {% if book.table_of_contents %}
+            <!-- Table of Contents -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">📑 {% trans "Abubuwan da ke ciki" %}</h2>
+                <div class="space-y-1">
+                    {% for item in book.table_of_contents %}
+                    <div class="toc-item">
+                        <div class="toc-number">{{ forloop.counter }}</div>
+                        <span class="text-gray-600 text-sm">{{ item }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if book.audio_versions.all %}
+            <!-- Enhanced Audio Player -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm" id="audioSection">
+                <h2 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">🎧 {% trans "Saurara" %}</h2>
+                {% for audio in book.audio_versions.all %}
+                {% with src=audio.direct_audio_url %}
+                {% if src %}
+                <div class="custom-audio-player mb-4" data-audio-idx="{{ forloop.counter0 }}">
+                    <audio id="audioEl{{ forloop.counter0 }}" preload="metadata">
+                        <source src="{{ src }}" type="audio/mpeg">
+                    </audio>
+                    <div class="flex items-center gap-4 mb-3">
+                        <button onclick="toggleAudioPlay({{ forloop.counter0 }})" class="w-12 h-12 bg-gold rounded-full flex items-center justify-center hover:bg-gold-light transition-colors shrink-0 tap-target" id="playBtn{{ forloop.counter0 }}">
+                            <svg class="w-5 h-5 text-primary play-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="w-5 h-5 text-primary pause-icon hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium truncate">{% if audio.language %}{{ audio.language.flag_emoji }} {{ audio.language_label }}{% else %}{% trans "Harshen da bai bayyana ba" %}{% endif %}</p>
+                            <div class="flex items-center gap-2 text-xs text-white/60">
+                                <span id="audioTime{{ forloop.counter0 }}">0:00</span>
+                                <span>/</span>
+                                <span id="audioDuration{{ forloop.counter0 }}">0:00</span>
+                            </div>
+                        </div>
+                        <div class="hidden sm:flex items-center gap-1">
+                            <span class="text-sm">🔊</span>
+                            <input type="range" min="0" max="100" value="100" class="volume-slider" oninput="setAudioVolume({{ forloop.counter0 }}, this.value)">
+                        </div>
+                    </div>
+                    <div class="audio-progress-bar" onclick="seekAudio({{ forloop.counter0 }}, event)">
+                        <div class="audio-progress-fill" id="audioProgress{{ forloop.counter0 }}" style="width:0%"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-3">
+                        <span class="text-xs text-white/50">{% trans "Gudun sauti" %}:</span>
+                        <button onclick="setAudioSpeed({{ forloop.counter0 }}, 0.5)" class="speed-btn" data-speed="0.5">0.5x</button>
+                        <button onclick="setAudioSpeed({{ forloop.counter0 }}, 1)" class="speed-btn active" data-speed="1">1x</button>
+                        <button onclick="setAudioSpeed({{ forloop.counter0 }}, 1.5)" class="speed-btn" data-speed="1.5">1.5x</button>
+                        <button onclick="setAudioSpeed({{ forloop.counter0 }}, 2)" class="speed-btn" data-speed="2">2x</button>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if book.tags %}
+            <!-- Tags -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h2 class="text-lg font-bold text-primary mb-3 flex items-center gap-2">🏷️ {% trans "Kalmomin Bincike" %}</h2>
+                <div class="flex flex-wrap gap-2">
+                    {% for tag in book.tags %}
+                    <a href="{% url 'books:book_list' %}?q={{ tag }}" class="tag-pill">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ====== REVIEWS SECTION ====== -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm" id="reviews">
+                <h2 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">⭐ {% trans "Bita'i da Ra'ayoyi" %}</h2>
+
+                {% if avg_rating %}
+                <div class="flex items-center gap-4 mb-6 p-4 bg-cream rounded-xl">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-primary">{{ avg_rating|floatformat:1 }}</div>
+                        <div class="star-rating star-display mt-1">
+                            {% for i in "12345" %}
+                            <span class="star {% if forloop.counter <= avg_rating %}filled{% endif %}">★</span>
+                            {% endfor %}
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">{% blocktrans with count=review_count %}{{ count }} bita'i{% endblocktrans %}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'books:submit_review' slug=book.seo_slug %}" class="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    {% csrf_token %}
+                    <h3 class="font-semibold text-sm text-primary mb-3">{% trans "Rubuta bita'i" %}</h3>
+                    <div class="mb-3">
+                        <label class="text-xs text-gray-500 mb-1 block">{% trans "Ƙima" %}</label>
+                        <div class="star-rating" id="starSelector">
+                            {% for i in "12345" %}
+                            <span class="star" data-value="{{ forloop.counter }}" onclick="selectRating({{ forloop.counter }})" onmouseover="hoverRating({{ forloop.counter }})" onmouseout="resetRatingHover()">★</span>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="5" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="title" placeholder="{% trans "Taken bita'i" %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none" maxlength="200">
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="content" rows="3" placeholder="{% trans "Rubuta ra'ayin ka..." %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none resize-none" required></textarea>
+                    </div>
+                    <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-primary-light transition-colors tap-target">
+                        {% trans "Aika Bita'i" %}
+                    </button>
+                </form>
+                {% else %}
+                <p class="text-sm text-gray-400 mb-4">
+                    <a href="{% url 'books:login' %}" class="text-gold hover:text-gold-dark">{% trans "Shiga" %}</a> {% trans "don rubuta bita'i" %}
+                </p>
+                {% endif %}
+
+                <div class="space-y-0">
+                    {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xs font-bold">{{ review.user.username|first|upper }}</div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700">{{ review.user.username }}</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="star-rating star-display" style="font-size: 12px;">
+                                        {% for i in "12345" %}
+                                        <span class="star {% if forloop.counter <= review.rating %}filled{% endif %}" style="font-size: 14px;">★</span>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="text-[10px] text-gray-400">{{ review.created_at|timesince }} {% trans "da suka wuce" %}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% if review.title %}
+                        <p class="font-semibold text-sm text-gray-800 mb-1">{{ review.title }}</p>
+                        {% endif %}
+                        <p class="text-sm text-gray-600">{{ review.content }}</p>
+                    </div>
+                    {% empty %}
+                    <p class="text-sm text-gray-400 py-4 text-center">{% trans "Babu bita'i tukuna. Ka zama na farko!" %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ====== COMMENTS SECTION ====== -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm" id="comments">
+                <h2 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">💬 {% trans "Tattaunawa" %}</h2>
+
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'books:add_comment' slug=book.seo_slug %}" class="mb-6" id="mainCommentForm">
+                    {% csrf_token %}
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xs font-bold shrink-0 mt-1">{{ user.username|first|upper }}</div>
+                        <div class="flex-1">
+                            <textarea name="content" rows="2" placeholder="{% trans "Rubuta sharhi..." %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none resize-none" required></textarea>
+                            <button type="submit" class="mt-2 bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-primary-light transition-colors tap-target">
+                                {% trans "Aika" %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <p class="text-sm text-gray-400 mb-4">
+                    <a href="{% url 'books:login' %}" class="text-gold hover:text-gold-dark">{% trans "Shiga" %}</a> {% trans "don rubuta sharhi" %}
+                </p>
+                {% endif %}
+
+                <div class="space-y-4" id="commentsList">
+                    {% for comment in comments %}
+                    <div class="py-3" id="comment-{{ comment.id }}">
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xs font-bold shrink-0">{{ comment.user.username|first|upper }}</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-sm font-semibold text-gray-700">{{ comment.user.username }}</span>
+                                    <span class="text-[10px] text-gray-400">{{ comment.created_at|timesince }} {% trans "da suka wuce" %}</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">{{ comment.content }}</p>
+                                {% if user.is_authenticated %}
+                                <button onclick="showReplyForm({{ comment.id }})" class="text-xs text-gold hover:text-gold-dark font-medium tap-target">
+                                    ↩ {% trans "Amsa" %}
+                                </button>
+                                <form method="POST" action="{% url 'books:add_comment' slug=book.seo_slug %}" class="hidden mt-2" id="replyForm{{ comment.id }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent" value="{{ comment.id }}">
+                                    <textarea name="content" rows="2" placeholder="{% trans "Rubuta amsa..." %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none resize-none" required></textarea>
+                                    <div class="flex gap-2 mt-1">
+                                        <button type="submit" class="bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-primary-light tap-target">{% trans "Aika" %}</button>
+                                        <button type="button" onclick="hideReplyForm({{ comment.id }})" class="text-gray-400 text-xs tap-target">{% trans "Soke" %}</button>
+                                    </div>
+                                </form>
+                                {% endif %}
+                                {% if comment.replies.all %}
+                                <div class="comment-thread mt-3 space-y-3">
+                                    {% for reply in comment.replies.all %}
+                                    <div class="py-2">
+                                        <div class="flex gap-2">
+                                            <div class="w-6 h-6 bg-gold/20 rounded-full flex items-center justify-center text-gold text-[10px] font-bold shrink-0">{{ reply.user.username|first|upper }}</div>
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-0.5">
+                                                    <span class="text-xs font-semibold text-gray-700">{{ reply.user.username }}</span>
+                                                    <span class="text-[10px] text-gray-400">{{ reply.created_at|timesince }} {% trans "da suka wuce" %}</span>
+                                                </div>
+                                                <p class="text-xs text-gray-600">{{ reply.content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-sm text-gray-400 py-4 text-center">{% trans "Babu sharhi tukuna. Ka fara tattaunawa!" %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="w-full lg:w-72 shrink-0 space-y-4">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm sticky top-20">
+                <h3 class="font-bold text-sm text-primary mb-4 pb-3 border-b border-gray-100">📋 {% trans "Bayanan Littafi" %}</h3>
+                <dl class="space-y-4 text-sm">
+                    {% if book.category %}
+                    <div class="flex justify-between">
+                        <dt class="text-gray-400">{% trans "Rukuni" %}</dt>
+                        <dd class="text-primary font-medium">{{ book.category.localized_name }}</dd>
+                    </div>
+                    {% endif %}
+                    {% if book.category_specific %}
+                    <div class="flex justify-between">
+                        <dt class="text-gray-400">{% trans "Ƙaramin Rukuni" %}</dt>
+                        <dd class="text-gray-700">{{ book.category_specific }}</dd>
+                    </div>
+                    {% endif %}
+                    <div class="flex justify-between">
+                        <dt class="text-gray-400">{% trans "Harshe" %}</dt>
+                        <dd class="text-gray-700">{% if book.language_flag %}{{ book.language_flag }} {% endif %}{{ book.language_label|default:_('Harshen da bai bayyana ba') }}</dd>
+                    </div>
+                    {% if book.year %}
+                    <div class="flex justify-between">
+                        <dt class="text-gray-400">{% trans "Shekara" %}</dt>
+                        <dd class="text-gray-700">{{ book.year }}</dd>
+                    </div>
+                    {% endif %}
+                    <div class="flex justify-between">
+                        <dt class="text-gray-400">{% trans "Hali" %}</dt>
+                        <dd>
+                            {% if book.file or book.drive_url %}
+                            <span class="bg-green-50 text-green-600 text-xs px-2 py-0.5 rounded-full border border-green-200">📄 {% trans "PDF Akwai" %}</span>
+                            {% else %}
+                            <span class="bg-yellow-50 text-yellow-600 text-xs px-2 py-0.5 rounded-full border border-yellow-200">{% trans "Babu PDF" %}</span>
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </aside>
+    </div>
+
+    {% if related %}
+    <div class="mt-12">
+        <h2 class="text-xl font-bold text-primary mb-6 flex items-center gap-2">📚 {% trans "Littattafai masu alaƙa" %}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {% for book in related %}
+            {% include 'books/_book_card.html' with book=book %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- ====== MINI AUDIO PLAYER ====== -->
+{% if book.audio_versions.all %}
+<div class="mini-player" id="miniPlayer">
+    <div class="flex items-center gap-3 max-w-6xl mx-auto w-full">
+        <button onclick="toggleMiniAudioPlay()" id="miniPlayBtn" class="w-8 h-8 bg-gold rounded-full flex items-center justify-center shrink-0 tap-target">
+            <svg class="w-4 h-4 text-primary mini-play-icon" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="w-4 h-4 text-primary mini-pause-icon hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <div class="flex-1 min-w-0">
+            <p class="text-xs text-white/80 truncate">{{ book.localized_title }}</p>
+            <div class="audio-progress-bar mt-1" onclick="seekMiniAudio(event)" style="height:4px;">
+                <div class="audio-progress-fill" id="miniProgress" style="width:0%; height:100%;"></div>
+            </div>
+        </div>
+        <span class="text-[10px] text-white/60 shrink-0" id="miniTime">0:00</span>
+        <button onclick="closeMiniPlayer()" class="text-white/40 hover:text-white tap-target">✕</button>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// ===== Favorites =====
+function toggleFav() {
+    fetch('{% url "books:toggle_favorite" slug=book.seo_slug %}', {
+        method: 'POST',
+        headers: {'X-CSRFToken': getCSRF()}
+    }).then(function(r){ return r.json(); }).then(function(data) {
+        var btn = document.getElementById('favBtn');
+        var txt = document.getElementById('favText');
+        if (data.favorited) {
+            btn.className = 'bg-red-500/20 text-red-300 border-red-500/30 font-medium px-5 py-3 rounded-xl border hover:bg-white/20 transition-all tap-target';
+            txt.innerHTML = '❤️ Favorites';
+        } else {
+            btn.className = 'bg-white/10 text-white/70 border-white/20 font-medium px-5 py-3 rounded-xl border hover:bg-white/20 transition-all tap-target';
+            txt.innerHTML = '🤍 Favorites';
+        }
+    });
+}
+
+// ===== Share =====
+var bookTitle = '{{ book.localized_title|escapejs }}';
+var bookUrl = window.location.href;
+var bookText = bookTitle + ' - ' + bookUrl;
+
+// هل الجهاز موبايل حقيقي (touch device) - مش مجرد متصفح يدعم navigator.share
+var isTouchMobile = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0)) 
+                    && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+// إعداد روابط المشاركة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    var enc = encodeURIComponent;
+    var tg = document.getElementById('share-telegram');
+    var wa = document.getElementById('share-whatsapp');
+    var fb = document.getElementById('share-facebook');
+    var tw = document.getElementById('share-twitter');
+    var nsBtn = document.getElementById('nativeShareBtn');
+
+    if (tg) tg.href = 'https://t.me/share/url?url=' + enc(bookUrl) + '&text=' + enc(bookTitle);
+    if (wa) wa.href = 'https://wa.me/?text=' + enc(bookText);
+    if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc(bookUrl);
+    if (tw) tw.href = 'https://twitter.com/intent/tweet?url=' + enc(bookUrl) + '&text=' + enc(bookTitle);
+
+    // أظهر زرار "ƙarin zaɓuɓɓuka" على الموبايل الحقيقي فقط
+    if (isTouchMobile && navigator.share && nsBtn) {
+        nsBtn.style.display = 'flex';
+    }
+});
+
+function toggleShareMenu() {
+    var menu = document.getElementById('shareMenu');
+    var btn = document.getElementById('shareBtn');
+    if (!menu || !btn) return;
+
+    if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        return;
+    }
+
+    // احسب مكان الزرار وحط القائمة تحته بالضبط
+    var rect = btn.getBoundingClientRect();
+    var menuWidth = 240;
+    var left = rect.right - menuWidth;
+    if (left < 8) left = 8; // لا تخرج من الشاشة يسار
+    var top = rect.bottom + 8 + window.scrollY;
+
+    menu.style.top = top + 'px';
+    menu.style.left = left + 'px';
+    menu.style.position = 'fixed';
+    menu.style.top = (rect.bottom + 8) + 'px';
+    menu.classList.remove('hidden');
+}
+
+function copyBookLink() {
+    var btn = document.getElementById('copyLinkText');
+    var copied = function() {
+        btn.textContent = '✅ {% trans "An kwafi!" %}';
+        setTimeout(function() { btn.textContent = '{% trans "Kwafi Haɗin gwiwa" %}'; }, 2000);
+        // أغلق القائمة بعد النسخ
+        document.getElementById('shareMenu').classList.add('hidden');
+    };
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(bookUrl).then(copied).catch(function() {
+            var t = document.createElement('textarea');
+            t.value = bookUrl; document.body.appendChild(t); t.select();
+            document.execCommand('copy'); document.body.removeChild(t); copied();
+        });
+    } else {
+        var t = document.createElement('textarea');
+        t.value = bookUrl; document.body.appendChild(t); t.select();
+        document.execCommand('copy'); document.body.removeChild(t); copied();
+    }
+}
+
+function nativeShare() {
+    // تشتغل فقط على الموبايل الحقيقي
+    if (isTouchMobile && navigator.share) {
+        navigator.share({ title: bookTitle, url: bookUrl })
+            .catch(function(err) { if (err.name !== 'AbortError') console.error(err); });
+    }
+}
+
+// إغلاق القائمة عند الضغط خارجها
+document.addEventListener('click', function(e) {
+    var wrapper = document.getElementById('shareWrapper');
+    var menu = document.getElementById('shareMenu');
+    if (wrapper && menu && !wrapper.contains(e.target)) {
+        menu.classList.add('hidden');
+    }
+});
+
+// إغلاق بـ Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        var menu = document.getElementById('shareMenu');
+        if (menu) menu.classList.add('hidden');
+    }
+});
+
+// ===== Download Counter =====
+document.addEventListener('DOMContentLoaded', function() {
+    var downloadBtn = document.getElementById('download-btn');
+    var counterEl = document.getElementById('download-count-display');
+
+    if (downloadBtn && counterEl) {
+        downloadBtn.addEventListener('click', function() {
+            var current = parseInt(counterEl.innerText) || 0;
+            counterEl.innerText = current + 1;
+            counterEl.classList.remove('count-updated');
+            // force reflow to restart animation
+            void counterEl.offsetWidth;
+            counterEl.classList.add('count-updated');
+            setTimeout(function() {
+                counterEl.classList.remove('count-updated');
+            }, 600);
+        });
+    }
+});
+
+// ===== Star Rating =====
+var selectedRating = 5;
+function selectRating(val) {
+    selectedRating = val;
+    document.getElementById('ratingInput').value = val;
+    updateStarDisplay(val, false);
+}
+function hoverRating(val) { updateStarDisplay(val, true); }
+function resetRatingHover() { updateStarDisplay(selectedRating, false); }
+function updateStarDisplay(val, isHover) {
+    var stars = document.querySelectorAll('#starSelector .star');
+    stars.forEach(function(s) {
+        var v = parseInt(s.dataset.value);
+        s.classList.toggle('filled', v <= val);
+        s.classList.toggle('hover', isHover && v <= val);
+    });
+}
+updateStarDisplay(5, false);
+
+// ===== Comments =====
+function showReplyForm(id) {
+    document.getElementById('replyForm' + id).classList.remove('hidden');
+}
+function hideReplyForm(id) {
+    document.getElementById('replyForm' + id).classList.add('hidden');
+}
+
+// ===== Custom Audio Player =====
+var activeAudioIdx = null;
+
+function formatTime(secs) {
+    if (isNaN(secs)) return '0:00';
+    var m = Math.floor(secs / 60);
+    var s = Math.floor(secs % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function toggleAudioPlay(idx) {
+    var audio = document.getElementById('audioEl' + idx);
+    if (!audio) return;
+    if (audio.paused) {
+        if (activeAudioIdx !== null && activeAudioIdx !== idx) {
+            var prev = document.getElementById('audioEl' + activeAudioIdx);
+            if (prev) { prev.pause(); }
+            updatePlayBtn(activeAudioIdx, false);
+        }
+        var playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(function() {
+                    activeAudioIdx = idx;
+                    updatePlayBtn(idx, true);
+                    showMiniPlayer();
+                })
+                .catch(function(err) {
+                    if (err.name !== 'AbortError') console.error('Audio error:', err);
+                });
+        }
+    } else {
+        audio.pause();
+        updatePlayBtn(idx, false);
+        updateMiniPlayBtn(false);
+    }
+}
+
+function updatePlayBtn(idx, playing) {
+    var btn = document.getElementById('playBtn' + idx);
+    if (!btn) return;
+    btn.querySelector('.play-icon').classList.toggle('hidden', playing);
+    btn.querySelector('.pause-icon').classList.toggle('hidden', !playing);
+}
+
+function setAudioSpeed(idx, speed) {
+    var audio = document.getElementById('audioEl' + idx);
+    audio.playbackRate = speed;
+    var player = audio.closest('.custom-audio-player');
+    player.querySelectorAll('.speed-btn').forEach(function(b) {
+        b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
+    });
+}
+
+function setAudioVolume(idx, val) {
+    document.getElementById('audioEl' + idx).volume = val / 100;
+}
+
+function seekAudio(idx, e) {
+    var audio = document.getElementById('audioEl' + idx);
+    if (!audio || !audio.duration || !isFinite(audio.duration)) return;
+    var bar = e.currentTarget;
+    var rect = bar.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+}
+
+document.querySelectorAll('audio').forEach(function(audio, idx) {
+    audio.addEventListener('timeupdate', function() {
+        var pct = (audio.currentTime / audio.duration) * 100 || 0;
+        var fill = document.getElementById('audioProgress' + idx);
+        if (fill) fill.style.width = pct + '%';
+        var timeEl = document.getElementById('audioTime' + idx);
+        if (timeEl) timeEl.textContent = formatTime(audio.currentTime);
+        if (activeAudioIdx === idx) {
+            var mp = document.getElementById('miniProgress');
+            if (mp) mp.style.width = pct + '%';
+            var mt = document.getElementById('miniTime');
+            if (mt) mt.textContent = formatTime(audio.currentTime);
+            updateMiniPlayBtn(!audio.paused);
+        }
+    });
+    audio.addEventListener('loadedmetadata', function() {
+        var durEl = document.getElementById('audioDuration' + idx);
+        if (durEl) durEl.textContent = formatTime(audio.duration);
+    });
+    audio.addEventListener('ended', function() {
+        updatePlayBtn(idx, false);
+        updateMiniPlayBtn(false);
+    });
+});
+
+// ===== Mini Player =====
+function showMiniPlayer() {
+    var section = document.getElementById('audioSection');
+    if (!section) return;
+    var observer = new IntersectionObserver(function(entries) {
+        var mp = document.getElementById('miniPlayer');
+        if (!mp) return;
+        if (!entries[0].isIntersecting && activeAudioIdx !== null) {
+            mp.classList.add('visible');
+        } else {
+            mp.classList.remove('visible');
+        }
+    }, { threshold: 0 });
+    observer.observe(section);
+}
+
+function toggleMiniAudioPlay() {
+    if (activeAudioIdx !== null) toggleAudioPlay(activeAudioIdx);
+}
+
+function updateMiniPlayBtn(playing) {
+    var btn = document.getElementById('miniPlayBtn');
+    if (!btn) return;
+    btn.querySelector('.mini-play-icon').classList.toggle('hidden', playing);
+    btn.querySelector('.mini-pause-icon').classList.toggle('hidden', !playing);
+}
+
+function seekMiniAudio(e) {
+    if (activeAudioIdx === null) return;
+    var audio = document.getElementById('audioEl' + activeAudioIdx);
+    if (!audio || !audio.duration || !isFinite(audio.duration)) return;
+    var bar = e.currentTarget;
+    var rect = bar.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+}
+
+function closeMiniPlayer() {
+    document.getElementById('miniPlayer').classList.remove('visible');
+    if (activeAudioIdx !== null) {
+        var audio = document.getElementById('audioEl' + activeAudioIdx);
+        audio.pause();
+        updatePlayBtn(activeAudioIdx, false);
+    }
+}
+
+// ===== Reading List Dropdown =====
+{% if user.is_authenticated %}
+function toggleReadingListDropdown() {
+    var dd = document.getElementById('readingListDropdown');
+    dd.classList.toggle('open');
+    if (dd.classList.contains('open')) fetchReadingLists();
+}
+
+function fetchReadingLists() {
+    fetch('/api/reading-lists/')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var container = document.getElementById('readingListItems');
+            var lists = data.results || data || [];
+            if (!Array.isArray(lists) || lists.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400 p-2">{% trans "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka." %}</p>';
+                return;
+            }
+            var html = '';
+            lists.forEach(function(list) {
+                var inList = list.book_ids && list.book_ids.indexOf({{ book.id }}) > -1;
+                html += '<button onclick="toggleBookInList(' + list.id + ', this)" class="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-cream transition-colors flex items-center justify-between">';
+                html += '<span class="text-gray-700">' + list.name + '</span>';
+                html += '<span class="text-xs">' + (inList ? '✅' : '➕') + '</span>';
+                html += '</button>';
+            });
+            container.innerHTML = html;
+        })
+        .catch(function() {
+            document.getElementById('readingListItems').innerHTML = '<p class="text-xs text-gray-400 p-2">{% trans "Ba a iya loda jerin" %}</p>';
+        });
+}
+
+function toggleBookInList(listId, btn) {
+    fetch('/api/reading-lists/' + listId + '/toggle-book/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCSRF() },
+        body: JSON.stringify({ book_id: {{ book.id }} })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+        var icon = btn.querySelector('span:last-child');
+        icon.textContent = data.added ? '✅' : '➕';
+    }).catch(function(err){
+        if (typeof showToast === 'function') showToast('{% trans "Ba a iya sabunta jerin" %}', 'error');
+    });
+}
+
+document.addEventListener('click', function(e) {
+    var w = document.getElementById('readingListWrapper');
+    var dropdown = document.getElementById('readingListDropdown');
+    if (!w || !dropdown) return;
+    try {
+        if (!w.contains(e.target)) dropdown.classList.remove('open');
+    } catch(err) {}
+});
+{% endif %}
+</script>
+{% endblock %}

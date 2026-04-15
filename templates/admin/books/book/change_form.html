@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+{{ block.super }}
+{% if original %}
+<li>
+    <a href="/books/{{ original.seo_slug }}/" target="_blank" class="viewsitelink">
+        👁️ {% trans "عرض في الموقع" %}
+    </a>
+</li>
+{% endif %}
+{% endblock %}

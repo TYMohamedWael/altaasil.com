@@ -1,0 +1,962 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 08:03+0200\n"
+"PO-Revision-Date: 2026-03-18 10:34+0000\n"
+"Last-Translator:   <ali@gmail.com>\n"
+"Language: ha\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+msgid "الاسم الكامل"
+msgstr "Sunan Kamai"
+
+msgid "البريد الإلكتروني"
+msgstr "Imel"
+
+msgid "اسم المستخدم (Username)"
+msgstr "Sunan mai amfani (Username)"
+
+msgid "كلمة المرور الجديدة"
+msgstr "Kalmar ajiya sabon"
+
+msgid "تأكيد كلمة المرور الجديدة"
+msgstr "Tabbatar da kalmar ajiya sabuwa"
+
+msgid "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+msgstr "Bai kamata kalmar aji ya asiri ta kasance ƙasa da haruffa 4."
+
+msgid "الاسم الكامل يجب أن يكون 8 أحرف على الأقل."
+msgstr "Sunan cikakke dole ya kasance haruffa 8 aƙalla."
+
+msgid "اسم المستخدم يجب أن يكون 8 أحرف على الأقل."
+msgstr "Sunan mai amfani dole ya kasance haruffa 8 aƙalla."
+
+msgid "اسم المستخدم هذا مستخدم بالفعل."
+msgstr "Sunan mai amfani wannan an riga an amfani dashi."
+
+msgid "هذا البريد الإلكتروني مستخدم بالفعل."
+msgstr "Wannan imel an riga a amfani."
+
+msgid "Suna Cikakke (Display Name)"
+msgstr "Suna Cikakke (Display Name)"
+
+msgid "Sunan Mai Amfani (Username)"
+msgstr "Sunan Mai Amfani (Username)"
+
+msgid "Imel (Email)"
+msgstr "Imel (Email)"
+
+msgid "Hoton Profil"
+msgstr "Hoton Profil"
+
+msgid "Ƙasa"
+msgstr "Ƙasa"
+
+msgid "Jinsi"
+msgstr "Jinsi"
+
+msgid "Lambar Waya"
+msgstr "Lambar Waya"
+
+msgid "Rana"
+msgstr "Rana"
+
+msgid "Wata"
+msgstr "Wata"
+
+msgid "Shekara"
+msgstr "Shekara"
+
+msgid "Kalmar Sirri ta Yanzu"
+msgstr "Kalmar Sirri ta Yanzu"
+
+msgid "Sabuwar Kalmar Sirri"
+msgstr "Sabuwar Kalmar Sirri"
+
+msgid "Tabbatar Kalmar Sirri"
+msgstr "Tabbatar Kalmar Sirri"
+
+msgid "Suna dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Suna dole ne ya kasance haruffa 8 aƙalla."
+
+msgid "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+
+msgid "Wannan sunan mai amfani yana amfani da shi."
+msgstr "Wannan sunan mai amfani yana amfani da shi."
+
+msgid "Wannan adireshin email yana amfani da shi."
+msgstr "Wannan adireshin imel yana amfani da shi."
+
+msgid "Lambar waya ba daidai ba ce."
+msgstr "Lambar waya ba daidai ba ce."
+
+msgid "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+msgstr "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+
+msgid "Dole ne ka rubuta kalmar sirri ta yanzu."
+msgstr "Dole ne ka rubuta kalmar sirri ta yanzu."
+
+msgid "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+msgstr "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+
+msgid "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+msgstr "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+
+msgid "Kalmomin sirri biyu ba ɗaya ba ne."
+msgstr "Kalmomin sirri biyu ba ɗaya ba ne."
+
+msgid "Hausa"
+msgstr ""
+
+msgid "العربية"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Amharic"
+msgstr ""
+
+msgid "Swahili"
+msgstr ""
+
+msgid "Arabic"
+msgstr ""
+
+msgid "Shiga"
+msgstr "Shiga"
+
+msgid "Littattafan Hausa"
+msgstr "Littattafan Hausa"
+
+msgid "Shiga Asusun ka"
+msgstr "Shiga Asusun ka"
+
+msgid "Sunan mai amfani (Username)"
+msgstr "Sunan mai amfani"
+
+msgid "Kalmar sirri"
+msgstr "Kalmar sirri"
+
+msgid "Ba ka da asusu?"
+msgstr "Ba ka da asusu?"
+
+msgid "Yi Rajista"
+msgstr "Yi rajista"
+
+msgid "Barka da zuwa!"
+msgstr "Barka da zuwa!"
+
+msgid "Gyara Bayanai"
+msgstr "Koma ga Bayani"
+
+msgid "Ana Karatu"
+msgstr "Ana Karatu"
+
+msgid "Shafi %(page)s"
+msgstr "Shafi %(page)s"
+
+msgid "Jerin Karatu na"
+msgstr "Jerin Karatu na"
+
+msgid "Ƙirƙiri sabon jeri"
+msgstr "Ƙirƙiri sabon jeri"
+
+msgid "Sunan jeri"
+msgstr "Sunan jeri"
+
+msgid "Bayani (zaɓi)"
+msgstr "Bayani (zaɓi)"
+
+msgid "Ƙirƙira"
+msgstr "Ƙirƙira"
+
+msgid "%(count)s littattafai"
+msgstr "%(count)s littattafai"
+
+msgid "Na jama'a"
+msgstr "Na jama'a"
+
+msgid "Ba ka da jerin karatu tukuna."
+msgstr "Ba ka da jerin karatu tukuna."
+
+msgid "Littattafai da na fi so"
+msgstr "Littattafai da na fi so"
+
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr "Ba ka zaɓi wani littafi ba tukuna."
+
+msgid "Bincika Littattafai"
+msgstr "Bincika Littattafai"
+
+msgid "..."
+msgstr "..."
+
+msgid "Foto Profil"
+msgstr "Hoton Profile"
+
+msgid "Shekaru %(age)s"
+msgstr "Shafi %(page)s"
+
+msgid "Bayanan Asali"
+msgstr "Bayanan Asali"
+
+msgid "Ƙarin Bayani"
+msgstr "Ƙarin Bayani"
+
+msgid "Misali: +234 801 234 5678"
+msgstr "Misali: +234 801 234 5678"
+
+msgid "Ƙasa da Ranar Haihuwa"
+msgstr "Ƙasa da Ranar Haihuwa"
+
+msgid "Canza Kalmar Sirri"
+msgstr "Canza Kalmar Sirri"
+
+msgid "Bari fanko idan ba ka son canza"
+msgstr "Bari fanko idan ba ka son canza"
+
+msgid "Sharuddan"
+msgstr "Sharuddan"
+
+msgid "Haruffa 4 aƙalla"
+msgstr "Haruffa 4 aƙalla"
+
+msgid "Lambobi kawai yana yiwuwa"
+msgstr "Lambobi kawai yana yiwuwa"
+
+msgid "Adana Canje-canje"
+msgstr "Adana Canje-canje"
+
+msgid "Koma Bayanina"
+msgstr "Koma ga Bayani"
+
+msgid "Jama'a"
+msgstr "Jama'a"
+
+msgid "Sirri"
+msgstr "Sirri"
+
+msgid "Littattafai %(count)s"
+msgstr "Littattafai %(count)s"
+
+msgid "Raba"
+msgstr "Raba"
+
+msgid "Koma"
+msgstr "Koma"
+
+msgid "Cire"
+msgstr "Cire"
+
+msgid "Babu littattafai a cikin wannan jerin"
+msgstr "Babu littattafai a cikin wannan jerin"
+
+msgid "An kwafi!"
+msgstr "An kwafi!"
+
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr "Ƙirƙiri Sabon Asusu"
+
+msgid "Sharuddan Kalmar Sirri"
+msgstr "Sharuddan Kalmar Sirri"
+
+msgid "Yana iya zama kamar bayanan sirri"
+msgstr "Yana iya zama kamar bayanan sirri"
+
+msgid "Yana iya zama shahararre"
+msgstr "Yana iya zama shahararre"
+
+msgid "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+msgstr "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+
+msgid "Kana da asusu?"
+msgstr "Kana da asusu?"
+
+msgid "Models in the %(name)s application"
+msgstr "Mudugai a cikin aikace-aikacen %(name)s"
+
+msgid "Model name"
+msgstr "Sunan model"
+
+msgid "Add link"
+msgstr "Ƙara hanyar haɗi"
+
+msgid "Change or view list link"
+msgstr "Canja ko duba jerin haɗin gwiwa"
+
+msgid "Add"
+msgstr "Ƙara"
+
+msgid "View"
+msgstr "Mai kallo"
+
+msgid "Change"
+msgstr "Canji"
+
+msgid "You don’t have permission to view or edit anything."
+msgstr "Ba ku da izini ya kallon ko gyara komai."
+
+msgid "Translations (Rosetta)"
+msgstr "Fassara (Rosetta)"
+
+msgid "Manage translations"
+msgstr "Gudanar da fassara"
+
+msgid "Open"
+msgstr "Bude"
+
+msgid "Altaasil - Dakin Karatu na Ilimi na Musulunci"
+msgstr "Dakin Karatu na Ilimi na Musulunci"
+
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr "Manhajar littattafan Musulunci na Hausa."
+
+msgid "Altaasil"
+msgstr ""
+
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr "Dakin Karatu na Ilimi na Musulunci"
+
+msgid "DAKIN KARATU NA ILIMI"
+msgstr "DAKIN KARATU NA ILIMI"
+
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr "Nemo littafi, marubuci, ko maudu'i..."
+
+msgid "Sanarwa"
+msgstr "Sanarwa"
+
+msgid "Duba duka"
+msgstr "Duba duka"
+
+msgid "Ana loda..."
+msgstr "Ana loda..."
+
+msgid "Gida"
+msgstr "Gida"
+
+msgid "Littattafai"
+msgstr "Littattafai"
+
+msgid "Rukunoni"
+msgstr "Rukunoni"
+
+msgid "Nemo littafi..."
+msgstr "Nemo littafi..."
+
+msgid "Ni"
+msgstr "Ni"
+
+msgid "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+
+msgid "Hanyoyi"
+msgstr "Hanyoyi"
+
+msgid "Game da mu"
+msgstr "Game da mu"
+
+msgid "Akida"
+msgstr "Akida"
+
+msgid "Fikhu"
+msgstr "Fikhu"
+
+msgid "Hadisi"
+msgstr "Hadisi"
+
+msgid "Tafsiri"
+msgstr "Tafsiri"
+
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr "An gina da ❤️ don al'ummar Hausa"
+
+msgid "Babu sanarwa"
+msgstr "Babu sanarwa"
+
+msgid "Ba a iya loda sanarwa"
+msgstr "Ba a iya loda sanarwa"
+
+msgid "?"
+msgstr "Mene ne?"
+
+msgid "Karanta"
+msgstr "Karanta"
+
+msgid "Game da Littattafan Hausa"
+msgstr "Game da Littattafan Hausa"
+
+msgid "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+
+msgid "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+
+msgid "Tattara Ilimi"
+msgstr "Tattara Ilimi"
+
+msgid "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+msgstr "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+
+msgid "Fassara Duniya"
+msgstr "Fassara Duniya"
+
+msgid "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+
+msgid "Daidaiton Ilimi"
+msgstr "Daidaiton Ilimi"
+
+msgid "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+msgstr "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+
+msgid "Fasaha ta AI"
+msgstr "Fasaha ta AI"
+
+msgid "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+msgstr "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+
+msgid "Ƙididdigar"
+msgstr "Ƙididdigar"
+
+msgid "Ana sabuntawa kai tsaye"
+msgstr ""
+
+msgid "Tsayar"
+msgstr ""
+
+msgid "Duba yadda ake amfani da dakin karatu"
+msgstr "Duba yadda ake amfani da dakin karatu"
+
+msgid "7 kwanaki"
+msgstr "7 kwanaki"
+
+msgid "30 kwanaki"
+msgstr "30 kwanaki"
+
+msgid "90 kwanaki"
+msgstr "90 kwanaki"
+
+msgid "Duka"
+msgstr "Duka"
+
+msgid "Sabunta yanzu"
+msgstr "Karanta Yanzu"
+
+msgid "Sabunta"
+msgstr ""
+
+msgid "Fitar CSV"
+msgstr "Fitar da CSV"
+
+msgid "Ayyukan Masu Amfani"
+msgstr "Ayyukan Masu Amfani"
+
+msgid "Masu karatu masu aiki"
+msgstr "Masu karatu masu aiki"
+
+msgid "Matsakaicin lokacin karatu"
+msgstr "Matsakaicin lokacin karatu"
+
+msgid "Bita'i"
+msgstr "Bita'i"
+
+msgid "Sharhi"
+msgstr "Sharhi"
+
+msgid "Ayyuka na Yau da Kullum"
+msgstr "Ayyuka na Yau da Kullum"
+
+msgid "Bincike"
+msgstr "Bincike"
+
+msgid "Rabon Rukunoni"
+msgstr "Rabon Rukunoni"
+
+msgid "Yanayin Saukewa"
+msgstr "Yanayin Saukewa"
+
+msgid "Littattafan da aka fi Duba"
+msgstr "Littattafan da aka fi Duba"
+
+msgid "Duba Duka"
+msgstr "Duba duka"
+
+msgid "Babu bayanan tukuna."
+msgstr "Babu bayanan bincike tukuna."
+
+msgid "Kalmomin Bincike"
+msgstr "Kalmomin Bincike"
+
+msgid "Babu bayanan bincike tukuna."
+msgstr "Babu bayanan bincike tukuna."
+
+msgid "Sabon Ra'ayoyi"
+msgstr "Sababbin Ra'ayoyi"
+
+msgid "%(time)s da suka wuce"
+msgstr "%(time)s da suka wuce"
+
+msgid "Babu ra'ayoyi tukuna."
+msgstr "Babu ra'ayoyi tukuna."
+
+msgid "Saukewa"
+msgstr "Saukewa"
+
+msgid "An sabunta bayanan"
+msgstr ""
+
+msgid "An ci gaba da sabuntawa"
+msgstr ""
+
+msgid "Ci gaba"
+msgstr "Ci gaban Karatu"
+
+msgid "Sabuntawa ta tsaya"
+msgstr ""
+
+msgid "An tsayar da sabuntawa"
+msgstr "Ba a iya loda sanarwa"
+
+msgid "Ana fitar da CSV..."
+msgstr "Fitar da CSV"
+
+msgid "(%(count)s "
+msgstr "(%(count)s "
+
+msgid "bita'i"
+msgstr "bita'i"
+
+msgid "Harshen da bai bayyana ba"
+msgstr "Harshen da bai bayyana ba"
+
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr "An tabbatar da wannan littafi ta hanyar ilimi"
+
+msgid "Karanta Yanzu"
+msgstr "Karanta Yanzu"
+
+msgid "Sauke PDF"
+msgstr "Sauke PDF"
+
+msgid "PDF ba a samu ba tukuna"
+msgstr "PDF ba a samu ba tukuna"
+
+msgid "Ƙara zuwa Jeri"
+msgstr "Ƙara zuwa Jeri"
+
+msgid "Zaɓi jerin karatu"
+msgstr "Zaɓi jerin karatu"
+
+msgid "bayyananne"
+msgstr "Bayyananne"
+
+msgid "Kwafi Haɗin gwiwa"
+msgstr "Kwafi Haɗin gwiwa"
+
+msgid "Ƙarin zaɓuɓɓuka"
+msgstr "Ƙarin zaɓuɓɓuka"
+
+msgid "Kallon"
+msgstr "Kallon"
+
+msgid "Favorites"
+msgstr "Favorites"
+
+msgid "Ci gaban Karatu"
+msgstr "Ci gaban Karatu"
+
+msgid "daga %(total)s"
+msgstr "daga %(total)s"
+
+msgid "Bayani game da Littafi"
+msgstr "Bayani game da Littafi"
+
+msgid "Abubuwan da ke ciki"
+msgstr "Abubuwan da ke ciki"
+
+msgid "Saurara"
+msgstr "Saurara"
+
+msgid "Gudun sauti"
+msgstr "Gudun sauti"
+
+msgid "Bita'i da Ra'ayoyi"
+msgstr "Bita'i da Ra'ayoyi"
+
+msgid "%(count)s bita'i"
+msgstr "%(count)s bita'i"
+
+msgid "Rubuta bita'i"
+msgstr "Rubuta bita'i"
+
+msgid "Ƙima"
+msgstr "Ƙima"
+
+msgid "Taken bita'i"
+msgstr "Taken bita'i"
+
+msgid "Rubuta ra'ayin ka..."
+msgstr "Rubuta ra'ayin ka..."
+
+msgid "Aika Bita'i"
+msgstr "Aika Bita'i"
+
+msgid "don rubuta bita'i"
+msgstr "don rubuta bita'i"
+
+msgid "da suka wuce"
+msgstr "da suka wuce"
+
+msgid "Babu bita'i tukuna. Ka zama na farko!"
+msgstr "Babu bita'i tukuna. Ka zama na farko!"
+
+msgid "Tattaunawa"
+msgstr "Tattaunawa"
+
+msgid "Rubuta sharhi..."
+msgstr "Rubuta sharhi..."
+
+msgid "Aika"
+msgstr "Aika"
+
+msgid "don rubuta sharhi"
+msgstr "don rubuta sharhi"
+
+msgid "Amsa"
+msgstr "Amsa"
+
+msgid "Rubuta amsa..."
+msgstr "Rubuta amsa..."
+
+msgid "Soke"
+msgstr "Soke"
+
+msgid "Babu sharhi tukuna. Ka fara tattaunawa!"
+msgstr "Babu sharhi tukuna. Ka fara tattaunawa!"
+
+msgid "Bayanan Littafi"
+msgstr "Bayanan Littafi"
+
+msgid "Rukuni"
+msgstr "Rukuni"
+
+msgid "Ƙaramin Rukuni"
+msgstr "Ƙaramin Rukuni"
+
+msgid "Harshe"
+msgstr "Harshe"
+
+msgid "Hali"
+msgstr "Hali"
+
+msgid "PDF Akwai"
+msgstr "PDF Akwai"
+
+msgid "Babu PDF"
+msgstr "Babu PDF"
+
+msgid "Littattafai masu alaƙa"
+msgstr "Littattafai masu alaƙa"
+
+msgid "Tabbatar da share wannan sharhi?"
+msgstr "Tabbatar da share wannan sharhi?"
+
+msgid "Kuskure ya faru. Sake gwadawa."
+msgstr "Kuskure ya faru. Sake gwadawa."
+
+msgid "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+msgstr "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+
+msgid "Ba a iya loda jerin"
+msgstr "Ba a iya loda jerin"
+
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr "Duk littattafan da ke cikin dakin karatu na mu"
+
+msgid "Tsara:"
+msgstr "Tsara:"
+
+msgid "Sabbin"
+msgstr "Sabbin"
+
+msgid "Mafi kallo"
+msgstr "Mafi kallo"
+
+msgid "Mafi ƙima"
+msgstr "Mafi ƙima"
+
+msgid "Mafi saukewa"
+msgstr "Mafi saukewa"
+
+msgid "Harshe:"
+msgstr "Harshe:"
+
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr "Sakamakon bincike: \"%(query)s\""
+
+msgid "Ba a sami littattafai ba."
+msgstr "Ba a sami littattafai ba."
+
+msgid "Ƙara nuna"
+msgstr "Ƙara nuna"
+
+msgid "Baya"
+msgstr "Baya"
+
+msgid "Gaba"
+msgstr "Gaba"
+
+msgid "~%(mins)s "
+msgstr "~%(mins)s dakika"
+
+msgid "min"
+msgstr "min"
+
+msgid "Rubutu"
+msgstr "Rubutu"
+
+msgid "Ƙarami"
+msgstr "Ƙarami"
+
+msgid "Matsakaici"
+msgstr "Matsakaici"
+
+msgid "Babba"
+msgstr "Babba"
+
+msgid "Babba ƙwarai"
+msgstr "Babba ƙwarai"
+
+msgid "Fari"
+msgstr "Fari"
+
+msgid "Duhu"
+msgstr "Duhu"
+
+msgid "Alamomin shafi"
+msgstr "Alamomin shafi"
+
+msgid "Gajerun hanyoyi"
+msgstr "Gajerun hanyoyi"
+
+msgid "Cika Allo"
+msgstr "Cika Allo"
+
+msgid "Buga"
+msgstr "Buga"
+
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr "Ba a iya ciro rubutu daga wannan PDF ba"
+
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+
+msgid "Duba PDF Viewer"
+msgstr "Duba PDF Viewer"
+
+msgid "Ana loda PDF..."
+msgstr "Ana loda PDF..."
+
+msgid "Rage girma"
+msgstr "Rage girma"
+
+msgid "Ƙara girma"
+msgstr "Ƙara girma"
+
+msgid "Alamar shafi"
+msgstr "Alamar shafi"
+
+msgid "Babu alamomin shafi tukuna"
+msgstr "Babu alamomin shafi tukuna"
+
+msgid "Shafi na gaba"
+msgstr "Shafi na gaba"
+
+msgid "Shafi na baya"
+msgstr "Shafi na baya"
+
+msgid "Ƙara girman rubutu"
+msgstr "Ƙara girman rubutu"
+
+msgid "Rage girman rubutu"
+msgstr "Rage girman rubutu"
+
+msgid "Cika allo"
+msgstr "Cika allo"
+
+msgid "Rufe"
+msgstr "Rufe"
+
+msgid "Shafi"
+msgstr "Shafi"
+
+msgid "Ƙarshen Littafi"
+msgstr "Ƙarshen Littafi"
+
+msgid "Koma ga Bayani"
+msgstr "Koma ga Bayani"
+
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr "Zaɓi rukunin ilimi da kake so"
+
+msgid "📚 Littattafai 1,780+ na Musulunci"
+msgstr "📚 Littattafai 1,780+ na Musulunci"
+
+msgid "Dakin Karatu na Ilimi"
+msgstr "Dakin Karatu na Ilimi"
+
+msgid "na Musulunci"
+msgstr "na Musulunci"
+
+msgid "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+
+msgid "📖 Bincika Littattafai"
+msgstr "📖 Bincika Littattafai"
+
+msgid "🔍 Nemo Maudu'i"
+msgstr "🔍 Nemo Maudu'i"
+
+msgid "Marubuta"
+msgstr "Marubuta"
+
+msgid "Harsuna"
+msgstr "Harsuna"
+
+msgid "Masu Karatu"
+msgstr "Masu Karatu"
+
+msgid "Zaɓi rukunin da kake so"
+msgstr "Zaɓi rukunin da kake so"
+
+msgid "Sababbin Littattafai"
+msgstr "Sababbin Littattafai"
+
+msgid "An ƙara su kwanan nan"
+msgstr "An ƙara su kwanan nan"
+
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+
+msgid "Taimaka wajen yada ilimi"
+msgstr "Taimaka wajen yada ilimi"
+
+msgid "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+msgstr "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+
+msgid "Karanta duka"
+msgstr "Karanta duka"
+
+msgid "Duba"
+msgstr "Duba"
+
+msgid "Yi alama a matsayin an karanta"
+msgstr "Yi alama a matsayin an karanta"
+
+msgid "Ba a haɗa da yanar gizo ba"
+msgstr "Ba a haɗa da yanar gizo ba"
+
+msgid "Ka duba haɗin yanar gizo ka sake gwadawa"
+msgstr "Ka duba haɗin yanar gizo ka sake gwadawa"
+
+msgid "Sake gwadawa"
+msgstr "Sake gwadawa"
+
+msgid "page_title_register"
+msgstr "Yi Rajista"
+
+msgid "register_heading"
+msgstr "Ƙirƙiri Sabon Asusu"
+
+msgid "register_subheading"
+msgstr "Shiga dakin karatu na mu"
+
+msgid "field_label_full_name"
+msgstr "Cikakken Suna"
+
+msgid "field_label_username"
+msgstr "Sunan mai amfani"
+
+msgid "field_label_email"
+msgstr "Adireshin Imel"
+
+msgid "field_label_password"
+msgstr "Kalmar sirri"
+
+msgid "field_label_password_confirm"
+msgstr "Tabbatar da Kalmar Sirri"
+
+msgid "btn_register"
+msgstr "Yi Rajista"
+
+msgid "already_have_account"
+msgstr "Kana da asusu?"
+
+msgid "divider_or"
+msgstr "ko"
+
+msgid "btn_login"
+msgstr "Shiga"
+
+msgid "username_hint"
+msgstr "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+
+msgid "terms_accept_label"
+msgstr "Na yarda da Sharuddan, Sharuɗɗan, da Manufar Sirri"
+
+msgid "tooltip_password_requirements_title"
+msgstr "Sharuddan Kalmar Sirri"
+
+msgid "tooltip_pw_min_chars"
+msgstr "Haruffa 4 aƙalla"
+
+msgid "tooltip_pw_numbers_ok"
+msgstr "Lambobi kawai yana yiwuwa"
+
+msgid "tooltip_pw_personal_ok"
+msgstr "Yana iya zama kamar bayanan sirri"
+
+msgid "tooltip_pw_common_ok"
+msgstr "Yana iya zama shahararre"
+
+msgid "pw_strength_very_weak"
+msgstr "Lalata sosai"
+
+msgid "pw_strength_weak"
+msgstr "Lalata"
+
+msgid "pw_strength_medium"
+msgstr "Matsakaici"
+
+msgid "pw_strength_strong"
+msgstr "Mai ƙarfi"
+
+msgid "pw_strength_very_strong"
+msgstr "Mai ƙarfi sosai"
+
+msgid "error_password_min_length"
+msgstr "Dole ne kalmar sirri ta kasance akalla haruffa 4."
+
+msgid "error_email_exists"
+msgstr "Wannan adireshin email yana amfani da shi."
+
+msgid "error_username_exists"
+msgstr "Wannan sunan mai amfani yana amfani da shi."
+
+msgid "error_current_password_required"
+msgstr "Dole ne ku shigar da kalmar sirri ta yanzu."
+
+msgid "error_current_password_wrong"
+msgstr "Kalmar sirri ta yanzu ba daidai ba ce. Sake gwada."
+
+msgid "error_passwords_mismatch"
+msgstr "Bangarorin kalmar sirri guda biyu basu dace ba."
+

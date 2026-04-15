@@ -1,0 +1,50 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="bulk-confirm-container" style="max-width: 600px; margin: 2rem auto; padding: 2rem; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+    <h1 style="color: #1a5632; margin-bottom: 1.5rem;">تأكيد التوليد الجماعي</h1>
+    
+    <p style="font-size: 1.1rem; color: #4b5563; line-height: 1.6; margin-bottom: 2rem;">
+        أنت على وشك البدء في توليد البيانات بالذكاء الاصطناعي لـ 
+        <strong style="color: #1a5632; font-size: 1.4rem;">{{ book_count }}</strong> 
+        كتاب.
+    </p>
+
+    <div style="background: #f3f4f6; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; text-align: right; direction: rtl;">
+        <h3 style="margin-top: 0; font-size: 1rem; color: #374151;">ما الذي سيتم توليده؟</h3>
+        <ul style="margin: 0; padding-right: 1.2rem; color: #4b5563;">
+            <li>الوصف التفصيلي (Description)</li>
+            <li>فهرس المحتويات (TOC)</li>
+            <li>الكلمات الدلالية (Tags)</li>
+            <li>بيانات السيو (SEO Title, Description, Slug)</li>
+        </ul>
+        <p style="font-size: 0.9rem; color: #6b7280; margin-top: 1rem; border-top: 1px solid #e5e7eb; pt: 0.5rem;">
+            * سيتم التوليد بناءً على لغة كل كتاب المحددة.
+        </p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="{% url 'admin:books_book_changelist' %}" style="flex: 1; padding: 0.8rem; border-radius: 8px; border: 1px solid #d1d5db; color: #374151; text-decoration: none; font-weight: 600; transition: all 0.2s;">
+                إلغاء
+            </a>
+            <button type="submit" style="flex: 2; padding: 0.8rem; border-radius: 8px; border: none; background: #1a5632; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(26, 86, 50, 0.2);">
+                ابدأ التوليد الآن 🚀
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .bulk-confirm-container button:hover {
+        background: #134226 !important;
+        transform: translateY(-2px);
+    }
+    .bulk-confirm-container a:hover {
+        background: #f9fafb;
+    }
+</style>
+{% endblock %}

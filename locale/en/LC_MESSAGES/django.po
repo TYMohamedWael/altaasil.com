@@ -1,0 +1,963 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Littattafan Hausa 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-14 10:58+0200\n"
+"PO-Revision-Date: 2026-03-17 08:46+0000\n"
+"Last-Translator:   <admin@admin.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+msgid "الاسم الكامل"
+msgstr "Full name"
+
+msgid "البريد الإلكتروني"
+msgstr "Email"
+
+msgid "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+msgstr "The password must not be less than 4 characters."
+
+msgid "هذا البريد الإلكتروني مستخدم بالفعل."
+msgstr "This email is already in use."
+
+msgid "اسم المستخدم هذا مستخدم بالفعل."
+msgstr "This username is already in use."
+
+msgid "الاسم الكامل (Display Name)"
+msgstr "Full Name (Display Name)"
+
+msgid "اسم المستخدم (Username)"
+msgstr "Username"
+
+msgid "البريد الإلكتروني (Email)"
+msgstr "Email"
+
+msgid "الصورة الشخصية"
+msgstr "Personal photo"
+
+msgid "الدولة"
+msgstr "The State"
+
+msgid "اليوم"
+msgstr "Today"
+
+msgid "الشهر"
+msgstr "The month"
+
+msgid "السنة"
+msgstr "The year"
+
+msgid "كلمة المرور الحالية"
+msgstr "Current password"
+
+msgid "كلمة المرور الجديدة"
+msgstr "New password"
+
+msgid "تأكيد كلمة المرور الجديدة"
+msgstr "Confirm new password"
+
+msgid "Wannan adireshin email yana amfani da shi."
+msgstr "This email address is in use."
+
+msgid "Wannan sunan mai amfani yana amfani da shi."
+msgstr "This username is in use."
+
+msgid "يجب عليك كتابة كلمة المرور الحالية."
+msgstr "You must write the current password."
+
+msgid "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+msgstr "Your current password is incorrect. Try again."
+
+msgid "كلمتا المرور غير متطابقتين."
+msgstr "The traffic words do not match."
+
+msgid "Hausa"
+msgstr ""
+
+msgid "العربية"
+msgstr "Arabic"
+
+msgid "English"
+msgstr ""
+
+msgid "Amharic"
+msgstr ""
+
+msgid "Swahili"
+msgstr ""
+
+msgid "Arabic"
+msgstr ""
+
+msgid "Shiga"
+msgstr "Login"
+
+msgid "Littattafan Hausa"
+msgstr "Hausa Books"
+
+msgid "Shiga Asusun ka"
+msgstr "Log in to your account."
+
+msgid "Sunan mai amfani (Username)"
+msgstr "Username"
+
+msgid "Kalmar sirri"
+msgstr "The Secret of Kalmar"
+
+msgid "Ba ka da asusu?"
+msgstr "Do you speak the language?"
+
+msgid "Yi Rajista"
+msgstr "Register"
+
+msgid "Barka da zuwa!"
+msgstr "Welcome!"
+
+msgid "Gyara Bayanai"
+msgstr "Tell Us"
+
+msgid "Ana Karatu"
+msgstr "I Read"
+
+msgid "Shafi %(page)s"
+msgstr "Shafi page"
+
+msgid "Jerin Karatu na"
+msgstr "List of Educational and"
+
+msgid "Ƙirƙiri sabon jeri"
+msgstr "Create a new series"
+
+msgid "Sunan jeri"
+msgstr "List name"
+
+msgid "Bayani (zaɓi)"
+msgstr "Description (optional)"
+
+msgid "Ƙirƙira"
+msgstr "Creation"
+
+msgid "%(count)s littattafai"
+msgstr "%(count)s books"
+
+msgid "Na jama'a"
+msgstr "My people"
+
+msgid "Ba ka da jerin karatu tukuna."
+msgstr "Don't let your education go to waste."
+
+msgid "Littattafai da na fi so"
+msgstr "Small books I love"
+
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr "If you choose a book we will read it."
+
+msgid "Bincika Littattafai"
+msgstr "Book Review"
+
+msgid "..."
+msgstr "..."
+
+msgid "Foto Profil"
+msgstr "Profile Picture"
+
+msgid "Bayanan Asali"
+msgstr "Original Statement"
+
+msgid "Ƙasa da Ranar Haihuwa"
+msgstr "Country and Date of Birth"
+
+msgid "Zaɓi Ƙasa"
+msgstr "Presidential Election"
+
+msgid "Wata ƙasa..."
+msgstr "A country..."
+
+msgid "Ƙasa"
+msgstr "Country"
+
+msgid "Rana"
+msgstr "Day"
+
+msgid "Wata"
+msgstr "Month"
+
+msgid "Shekara"
+msgstr "Year"
+
+msgid "Canza Kalmar Sirri"
+msgstr "Change Password"
+
+msgid "Bari fanko idan ba ka son canza"
+msgstr "I'm very happy if you want to change"
+
+msgid "Sharuddan"
+msgstr "Apparently"
+
+msgid "Haruffa 4 aƙalla"
+msgstr "At least 4 letters"
+
+msgid "Lambobi kawai yana yiwuwa"
+msgstr "Small lips are possible or Cute lips exist"
+
+msgid "Adana Canje-canje"
+msgstr "Save Changes"
+
+msgid "Koma Bayanina"
+msgstr "Our Home"
+
+msgid "Jama'a"
+msgstr "Mosque"
+
+msgid "Sirri"
+msgstr "Secret"
+
+msgid "Littattafai %(count)s"
+msgstr "%(count)s Books"
+
+msgid "Raba"
+msgstr "Share"
+
+msgid "Koma"
+msgstr "Back"
+
+msgid "Cire"
+msgstr "Remove"
+
+msgid "Babu littattafai a cikin wannan jerin"
+msgstr "Books in this series"
+
+msgid "An kwafi!"
+msgstr "Copied!"
+
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr "Create New Language"
+
+msgid "Sharuddan Kalmar Sirri"
+msgstr "Secret of the Sharuddan Caliph"
+
+msgid "Yana iya zama kamar bayanan sirri"
+msgstr "It can be like confidential reports"
+
+msgid "Yana iya zama shahararre"
+msgstr "It can be popular"
+
+msgid "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+msgstr "Headers, footers, and watermarks only — will display a URL"
+
+msgid "Kana da asusu?"
+msgstr "Is that a language?"
+
+msgid "Models in the %(name)s application"
+msgstr "Models in the %(name)s application is already in English, however if you'd like, I can replace %(name)s with 'application name' for clarity: Models in the application name application."
+
+msgid "Model name"
+msgstr "Model name"
+
+msgid "Add link"
+msgstr "Add link"
+
+msgid "Change or view list link"
+msgstr "Cambiar o ver enlace de lista"
+
+msgid "Add"
+msgstr ""
+
+msgid "View"
+msgstr "View"
+
+msgid "Change"
+msgstr "Change"
+
+msgid "You don’t have permission to view or edit anything."
+msgstr "You don’t have permission to view or edit anything."
+
+msgid "Translations (Rosetta)"
+msgstr "Translations"
+
+msgid "Manage translations"
+msgstr "Manage translations"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Littattafan Hausa - Dakin Karatu na Ilimi na Musulunci"
+msgstr "Hausa Books - Islamic Knowledge Library"
+
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr "Islamic books platform in Hausa."
+
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr "Islamic Knowledge Library"
+
+msgid "DAKIN KARATU NA ILIMI"
+msgstr "ISLAMIC KNOWLEDGE LIBRARY"
+
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr "Search book, author or topic..."
+
+msgid "Sanarwa"
+msgstr "Notifications"
+
+msgid "Duba duka"
+msgstr "View all"
+
+msgid "Ana loda..."
+msgstr "Loading..."
+
+msgid "Gida"
+msgstr "Home"
+
+msgid "Littattafai"
+msgstr "Books"
+
+msgid "Rukunoni"
+msgstr "Categories"
+
+msgid "Nemo littafi..."
+msgstr "Search a book..."
+
+msgid "Ni"
+msgstr "Me"
+
+msgid "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr "Portal of Islamic books in Hausa language. We collect, translate, and spread Islamic knowledge in Hausa language to the whole world."
+
+msgid "Hanyoyi"
+msgstr "Links"
+
+msgid "Game da mu"
+msgstr "About us"
+
+msgid "Akida"
+msgstr "Aqidah"
+
+msgid "Fikhu"
+msgstr "Fiqh"
+
+msgid "Hadisi"
+msgstr "Hadith"
+
+msgid "Tafsiri"
+msgstr "Tafsir"
+
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr "© 2026 Hausa Books. All rights reserved."
+
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr "Built with ❤️ for the Hausa community"
+
+msgid "Babu sanarwa"
+msgstr "No notifications"
+
+msgid "Ba a iya loda sanarwa"
+msgstr "Failed to load notifications"
+
+msgid "?"
+msgstr "There is no text to translate."
+
+msgid "Karanta"
+msgstr "Read"
+
+msgid "Game da Littattafan Hausa"
+msgstr "House of Hausa Books"
+
+msgid "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr "Hausa Books is a digital educational platform that collects Islamic books in the Hausa language. Our goal is to provide access to Islamic knowledge to the Hausa community worldwide, through modern technology and Artificial Intelligence (AI) assistance."
+
+msgid "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr "We are working to collect 1,780+ books, translate them, and publish them online with detailed abstracts and indexes to facilitate research and study."
+
+msgid "Tattara Ilimi"
+msgstr "Higher Education"
+
+msgid "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+msgstr "We collect great Islamic books in Hausa from all over the world."
+
+msgid "Fassara Duniya"
+msgstr "Interpret the World"
+
+msgid "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr "She translated books into 10 languages to spread the message of Islam to all."
+
+msgid "Daidaiton Ilimi"
+msgstr "Higher Education"
+
+msgid "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+msgstr "Every book is reviewed by scholars to verify the accuracy of the information."
+
+msgid "Fasaha ta AI"
+msgstr "AI Technology"
+
+msgid "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+msgstr "She uses Intelligence and Common Sense to research, summarize, and provide SEO."
+
+msgid "Ƙididdigar"
+msgstr "Census"
+
+msgid "Ƙididdigar (Analytics)"
+msgstr "Analytics"
+
+msgid "Duba yadda ake amfani da dakin karatu"
+msgstr "How the library is used"
+
+msgid "7 kwanaki"
+msgstr "7 weeks"
+
+msgid "30 kwanaki"
+msgstr "30 days"
+
+msgid "90 kwanaki"
+msgstr "90 days"
+
+msgid "Duka"
+msgstr "Shop"
+
+msgid "Fitar da CSV"
+msgstr "Failed to Load CSV"
+
+msgid "Ayyukan Masu Amfani"
+msgstr "Useful Works"
+
+msgid "Masu karatu masu aiki"
+msgstr "Functional literacy"
+
+msgid "Matsakaicin lokacin karatu"
+msgstr "I am very happy during reading time"
+
+msgid "Bita'i"
+msgstr "Mine"
+
+msgid "Sharhi"
+msgstr "Explanation or Commentary"
+
+msgid "Ayyuka na Yau da Kullum"
+msgstr "Jobs and Daily News"
+
+msgid "Rabon Rukunoni"
+msgstr "Group Share"
+
+msgid "Littattafan da aka fi Duba"
+msgstr "The Most Viewed Books"
+
+msgid "Kalmomin Bincike"
+msgstr "Search Keywords"
+
+msgid "Babu bayanan bincike tukuna."
+msgstr "The father's statements are true."
+
+msgid "Yanayin Saukewa"
+msgstr "Hot Weather or Dry Season"
+
+msgid "Sabon Ra'ayoyi"
+msgstr "New Ideas"
+
+msgid "%(time)s da suka wuce"
+msgstr "%(time)s ago"
+
+msgid "Babu ra'ayoyi tukuna."
+msgstr "No comments yet."
+
+msgid "Bincike"
+msgstr "Search"
+
+msgid "Saukewa"
+msgstr "Downloads"
+
+msgid "(%(count)s "
+msgstr "(%(count)s"
+
+msgid "bita'i"
+msgstr "Without"
+
+msgid "Harshen da bai bayyana ba"
+msgstr "Unspecified language"
+
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr "This book has been scientifically proven."
+
+msgid "Karanta Yanzu"
+msgstr "Read Now"
+
+msgid "Sauke PDF"
+msgstr "Download PDF"
+
+msgid "PDF ba a samu ba tukuna"
+msgstr "PDF not available yet"
+
+msgid "Ƙara zuwa Jeri"
+msgstr "Add to List"
+
+msgid "Zaɓi jerin karatu"
+msgstr "Choose a reading list"
+
+msgid "bayyananne"
+msgstr "It seems \"bayyananne\" is not a word in a widely recognized language, could you provide the language it's from or more context so I can give a proper translation? \n\nHowever, considering the Romanization \"bayyananne\" might be from Sinhala, a language spoken in Sri Lanka, \"bayyananne\" or \"බය්යාන්නේ\" roughly translates to 'don't be afraid' in English."
+
+msgid "Kwafi Haɗin gwiwa"
+msgstr "Strong Unity"
+
+msgid "Ƙarin zaɓuɓɓuka"
+msgstr "More options"
+
+msgid "Kallon"
+msgstr "Views"
+
+msgid "Favorites"
+msgstr "Favourites"
+
+msgid "Ci gaban Karatu"
+msgstr "Reading Progress"
+
+msgid "daga %(total)s"
+msgstr "from %(total)s"
+
+msgid "Bayani game da Littafi"
+msgstr "About the Book"
+
+msgid "Abubuwan da ke ciki"
+msgstr "Table of Contents"
+
+msgid "Saurara"
+msgstr "Listen"
+
+msgid "Gudun sauti"
+msgstr "Loud noise"
+
+msgid "Bita'i da Ra'ayoyi"
+msgstr "Reviews and Opinions"
+
+msgid "%(count)s bita'i"
+msgstr "% (count) s bits"
+
+msgid "Rubuta bita'i"
+msgstr "Write a letter"
+
+msgid "Ƙima"
+msgstr "Sesame"
+
+msgid "Taken bita'i"
+msgstr "Heading Review"
+
+msgid "Rubuta ra'ayin ka..."
+msgstr "Write your opinion..."
+
+msgid "Aika Bita'i"
+msgstr "Submit Review"
+
+msgid "don rubuta bita'i"
+msgstr "to write a review"
+
+msgid "da suka wuce"
+msgstr "I'm not sure, it seems like the text \"da suka wuce\" doesn't have a clear meaning or translation, as it doesn't appear to be a valid phrase or sentence in a widely recognized language. If you could provide more context or information about the language or dialect it's from, I'd be happy to try and help you translate it."
+
+msgid "Babu bita'i tukuna. Ka zama na farko!"
+msgstr "The child has spoken. I will be the first!"
+
+msgid "Tattaunawa"
+msgstr "Discussion"
+
+msgid "Rubuta sharhi..."
+msgstr "Write a comment..."
+
+msgid "Aika"
+msgstr "Time"
+
+msgid "don rubuta sharhi"
+msgstr "Please write a comment"
+
+msgid "Amsa"
+msgstr "Dam"
+
+msgid "Rubuta amsa..."
+msgstr "Write a comment..."
+
+msgid "Soke"
+msgstr "Grandmaster or Head of a School/Family"
+
+msgid "Babu sharhi tukuna. Ka fara tattaunawa!"
+msgstr "That's all the explanation. Let the conversation begin!"
+
+msgid "Bayanan Littafi"
+msgstr "The Declaration Book"
+
+msgid "Rukuni"
+msgstr "Chief"
+
+msgid "Ƙaramin Rukuni"
+msgstr "Small Category"
+
+msgid "Harshe"
+msgstr "Language"
+
+msgid "Hali"
+msgstr "Condition or State"
+
+msgid "PDF Akwai"
+msgstr "There is"
+
+msgid "Babu PDF"
+msgstr "Baby Portable Document Format"
+
+msgid "Littattafai masu alaƙa"
+msgstr "Related books"
+
+msgid "Tabbatar da share wannan sharhi?"
+msgstr "Can you confirm this comment?"
+
+msgid "Kuskure ya faru. Sake gwadawa."
+msgstr "Excuse me, it happened. Leave me alone."
+
+msgid "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+msgstr "The baby has books. Create one on your page."
+
+msgid "Ba a iya loda jerin"
+msgstr "Can I load the list"
+
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr "All books in our library"
+
+msgid "Tsara:"
+msgstr "Sort:"
+
+msgid "Sabbin"
+msgstr "Newest"
+
+msgid "Mafi kallo"
+msgstr "Most viewed"
+
+msgid "Mafi ƙima"
+msgstr "Highest rated"
+
+msgid "Mafi saukewa"
+msgstr "Most downloaded"
+
+msgid "Harshe:"
+msgstr "Language:"
+
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr "Search results: \"%(query)s\""
+
+msgid "Ba a sami littattafai ba."
+msgstr "No books found."
+
+msgid "Ƙara nuna"
+msgstr "Load more"
+
+msgid "Baya"
+msgstr "Previous"
+
+msgid "Gaba"
+msgstr "Next"
+
+msgid "~%(mins)s "
+msgstr "about %(mins)s minutes"
+
+msgid "min"
+msgstr "minute"
+
+msgid "Rubutu"
+msgstr "Writing"
+
+msgid "Ƙarami"
+msgstr "Small"
+
+msgid "Matsakaici"
+msgstr "The word \"Matsakaici\" is not in a widely recognized language, however based on some African languages, it appears to be in the Shona language. \n\nIn English, \"Matsakaici\" roughly translates to \"troublemakers\""
+
+msgid "Babba"
+msgstr "Dad"
+
+msgid "Babba ƙwarai"
+msgstr "Father of wisdom"
+
+msgid "Fari"
+msgstr "Lighthouse"
+
+msgid "Duhu"
+msgstr "Anxious"
+
+msgid "Alamomin shafi"
+msgstr "The Clear Quran"
+
+msgid "Gajerun hanyoyi"
+msgstr "Routes of Gaze"
+
+msgid "Cika Allo"
+msgstr "Little Allo"
+
+msgid "Buga"
+msgstr "Buga"
+
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr "Can I extract text from this PDF?"
+
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr "This can occur when the PDF contains images only"
+
+msgid "Duba PDF Viewer"
+msgstr "Duba PDF Viewer"
+
+msgid "Ana loda PDF..."
+msgstr "I want a PDF..."
+
+msgid "Rage girma"
+msgstr "Anger is boiling"
+
+msgid "Ƙara girma"
+msgstr "Increase"
+
+msgid "Alamar shafi"
+msgstr "The sign of healing"
+
+msgid "Babu alamomin shafi tukuna"
+msgstr "Grandfather is a very pious man"
+
+msgid "Shafi na gaba"
+msgstr "Forward is good"
+
+msgid "Shafi na baya"
+msgstr "Goodbye"
+
+msgid "Ƙara girman rubutu"
+msgstr "Increase font size"
+
+msgid "Rage girman rubutu"
+msgstr "I am unable to translate the text as it does not appear to be in a recognizable language. However, \"Rage\" is an English word and \"girman\" seems to be related to the Hausa word for \"write\" or \"writing\" and \"rubutu\" is the Hausa word for \"writing\", so a possible translation could be \"Write the writing\" but a more suitable translation would be needed with the context of the sentence."
+
+msgid "Cika allo"
+msgstr "Little or Small Hen"
+
+msgid "Rufe"
+msgstr "Calls"
+
+msgid "Shafi"
+msgstr "Pure or untainted"
+
+msgid "Ƙarshen Littafi"
+msgstr "The End of the Book"
+
+msgid "Koma ga Bayani"
+msgstr "Coma is a Hero"
+
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr "Choose the educational group you want"
+
+msgid "📚 Littattafai 1,780+ na Musulunci"
+msgstr "📚 1,780+ Islamic Books"
+
+msgid "Dakin Karatu na Ilimi"
+msgstr "Library of Knowledge"
+
+msgid "na Musulunci"
+msgstr "Islamic"
+
+msgid "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr "The greatest Islamic books in the Hausa language, collected, translated, and prepared through modern technology."
+
+msgid "📖 Bincika Littattafai"
+msgstr "📖 Browse Books"
+
+msgid "🔍 Nemo Maudu'i"
+msgstr "🔍 Search Topics"
+
+msgid "Marubuta"
+msgstr "Authors"
+
+msgid "Harsuna"
+msgstr "Languages"
+
+msgid "Masu Karatu"
+msgstr "Readers"
+
+msgid "Zaɓi rukunin da kake so"
+msgstr "Choose your preferred category"
+
+msgid "Sababbin Littattafai"
+msgstr "Latest Books"
+
+msgid "An ƙara su kwanan nan"
+msgstr "Recently added"
+
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr "No books added yet. Add a book through the admin panel."
+
+msgid "Taimaka wajen yada ilimi"
+msgstr "Help spread knowledge"
+
+msgid "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+msgstr "If you have Hausa Islamic books, help add them to our library."
+
+msgid "Karanta duka"
+msgstr "Read the room"
+
+msgid "Duba"
+msgstr "Dubai"
+
+msgid "Yi alama a matsayin an karanta"
+msgstr "He has a signature that I can read"
+
+msgid "Ba a haɗa da yanar gizo ba"
+msgstr "Does it include internet?"
+
+msgid "Ka duba haɗin yanar gizo ka sake gwadawa"
+msgstr "When you click on the link you will redirect"
+
+msgid "Sake gwadawa"
+msgstr "My friend"
+
+msgid "Shekaru {{ age }}"
+msgstr "Age {{ age }}"
+
+msgid "Ƙarin Bayani"
+msgstr "Additional Details"
+
+msgid "Misali: +234 801 234 5678"
+msgstr "Example: +234 801 234 5678"
+
+msgid "Suna Cikakke (Display Name)"
+msgstr "Full Name (Display Name)"
+
+msgid "Sunan Mai Amfani (Username)"
+msgstr "Username"
+
+msgid "Imel (Email)"
+msgstr "Email"
+
+msgid "Hoton Profil"
+msgstr "Profile Picture"
+
+msgid "Jinsi"
+msgstr "Gender"
+
+msgid "Lambar Waya"
+msgstr "Phone Number"
+
+msgid "Kalmar Sirri ta Yanzu"
+msgstr "Current Password"
+
+msgid "Sabuwar Kalmar Sirri"
+msgstr "New Password"
+
+msgid "Tabbatar Kalmar Sirri"
+msgstr "Confirm Password"
+
+msgid "Suna dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Full name must be at least 8 characters."
+
+msgid "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+msgstr "Username must be at least 8 characters."
+
+msgid "Lambar waya ba daidai ba ce."
+msgstr "Phone number is not valid."
+
+msgid "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+msgstr "Phone number must be between 7 and 15 digits."
+
+msgid "Dole ne ka rubuta kalmar sirri ta yanzu."
+msgstr "You must enter your current password."
+
+msgid "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+msgstr "Current password is incorrect. Please try again."
+
+msgid "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+msgstr "Password must be at least 4 characters."
+
+msgid "Kalmomin sirri biyu ba ɗaya ba ne."
+msgstr "The two passwords do not match."
+
+msgid "page_title_register"
+msgstr "Register"
+
+msgid "register_heading"
+msgstr "Create New Account"
+
+msgid "register_subheading"
+msgstr "Enter our library"
+
+msgid "field_label_full_name"
+msgstr "Full Name"
+
+msgid "field_label_username"
+msgstr "Username"
+
+msgid "field_label_email"
+msgstr "Email Address"
+
+msgid "field_label_password"
+msgstr "Password"
+
+msgid "field_label_password_confirm"
+msgstr "Confirm Password"
+
+msgid "btn_register"
+msgstr "Register"
+
+msgid "already_have_account"
+msgstr "Already have an account?"
+
+msgid "divider_or"
+msgstr "or"
+
+msgid "btn_login"
+msgstr "Log In"
+
+msgid "username_hint"
+msgstr "Letters, numbers, and symbols only — will appear in URL"
+
+msgid "terms_accept_label"
+msgstr "I agree to the Terms, Conditions, and Privacy Policy"
+
+msgid "tooltip_password_requirements_title"
+msgstr "Password Requirements"
+
+msgid "tooltip_pw_min_chars"
+msgstr "Minimum 4 characters"
+
+msgid "tooltip_pw_numbers_ok"
+msgstr "Numbers only are allowed"
+
+msgid "tooltip_pw_personal_ok"
+msgstr "Can be similar to personal info"
+
+msgid "tooltip_pw_common_ok"
+msgstr "Can be common"
+
+msgid "pw_strength_very_weak"
+msgstr "Very Weak"
+
+msgid "pw_strength_weak"
+msgstr "Weak"
+
+msgid "pw_strength_medium"
+msgstr "Medium"
+
+msgid "pw_strength_strong"
+msgstr "Strong"
+
+msgid "pw_strength_very_strong"
+msgstr "Very Strong"
+
+msgid "error_password_min_length"
+msgstr "Password must be at least 4 characters long."
+
+msgid "error_email_exists"
+msgstr "This email address is already in use."
+
+msgid "error_username_exists"
+msgstr "This username is already in use."
+
+msgid "error_current_password_required"
+msgstr "You must enter your current password."
+
+msgid "error_current_password_wrong"
+msgstr "Current password is incorrect. Try again."
+
+msgid "error_passwords_mismatch"
+msgstr "The two password fields didn't match."
+

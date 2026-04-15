@@ -1,0 +1,491 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block title %}محرر PDF - {{ book }}{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+<style>
+  :root {
+    --primary: #2563eb;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --radius: 10px;
+  }
+  #pdf-editor-wrap {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    padding: 24px;
+    color: var(--text);
+    direction: rtl;
+  }
+  .pdf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .pdf-header h1 { font-size: 1.25rem; margin: 0; }
+  .badge {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: .85rem;
+    font-weight: 600;
+  }
+  .pdf-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+  }
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  .card h3 {
+    margin: 0 0 14px;
+    font-size: .95rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .page-nav { display: flex; align-items: center; gap: 8px; }
+  .page-nav input[type=number] {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 7px;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+  }
+  .btn:hover  { opacity: .87; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-danger  { background: var(--danger);  color: #fff; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-warning { background: var(--warning); color: #fff; }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+  .btn-block   { width: 100%; justify-content: center; }
+  .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .input-group label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+  .input-group input {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: .9rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: .85rem;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .upload-zone:hover { border-color: var(--primary); color: var(--primary); }
+  .upload-zone input { display: none; }
+  .preview-pane {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .preview-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: #f1f5f9;
+    flex-shrink: 0;
+  }
+  .preview-toolbar span { color: var(--muted); font-size: .85rem; }
+  #pdf-canvas-wrap {
+    flex: 1;
+    min-height: 650px;
+    background: #525659;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+  #toast-container {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .toast {
+    padding: 12px 22px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: .9rem;
+    animation: slideUp .3s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  }
+  .toast.success { background: var(--success); }
+  .toast.error   { background: var(--danger); }
+  .toast.info    { background: var(--primary); }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .spinner {
+    display: none;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading .spinner { display: inline-block; }
+  .loading .btn-text { display: none; }
+  .confirm-modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .confirm-modal.open { display: flex; }
+  .confirm-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 32px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+  }
+  .confirm-box h2 { margin: 0 0 8px; font-size: 1.1rem; }
+  .confirm-box p  { color: var(--muted); margin: 0 0 20px; font-size: .9rem; }
+  .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="pdf-editor-wrap">
+  <div class="pdf-header">
+    <div>
+      <h1>🗂 محرر PDF</h1>
+      <small style="color:var(--muted)">{{ book }}</small>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span>عدد الصفحات:</span>
+      <span class="badge" id="page-count-badge">{{ total_pages }}</span>
+      <a href="{% url 'admin:books_book_change' book.pk %}" class="btn btn-outline">
+        ← العودة للكتاب
+      </a>
+    </div>
+  </div>
+
+  <div class="pdf-layout">
+    <aside class="sidebar">
+      <div class="card">
+        <h3>📄 عرض صفحة</h3>
+        <div class="page-nav">
+          <button class="btn btn-outline" id="btn-prev">‹</button>
+          <input type="number" id="page-input" value="1" min="1" max="{{ total_pages }}">
+          <span style="color:var(--muted);font-size:.85rem">/ <span id="total-display">{{ total_pages }}</span></span>
+          <button class="btn btn-outline" id="btn-next">›</button>
+        </div>
+        <br>
+        <button class="btn btn-primary btn-block" id="btn-load-preview">عرض الصفحة</button>
+      </div>
+
+      <div class="card">
+        <h3>🗑 حذف صفحة</h3>
+        <div class="input-group">
+          <label>رقم الصفحة المراد حذفها</label>
+          <input type="number" id="delete-page-num" min="1" max="{{ total_pages }}" placeholder="مثال: 5">
+        </div>
+        <button class="btn btn-danger btn-block" id="btn-delete-page">
+          <span class="btn-text">حذف الصفحة</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>➕ إضافة صفحة فارغة</h3>
+        <div class="input-group">
+          <label>إضافة بعد الصفحة رقم (0 = في البداية)</label>
+          <input type="number" id="add-after-blank" min="0" max="{{ total_pages }}" placeholder="مثال: 10">
+        </div>
+        <button class="btn btn-success btn-block" id="btn-add-blank">
+          <span class="btn-text">إضافة صفحة فارغة</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>📤 رفع صفحة PDF</h3>
+        <div class="input-group">
+          <label>إضافة بعد الصفحة رقم (0 = في البداية)</label>
+          <input type="number" id="add-after-upload" min="0" max="{{ total_pages }}" placeholder="مثال: 10">
+        </div>
+        <label class="upload-zone" for="upload-pdf-input">
+          <input type="file" id="upload-pdf-input" accept=".pdf,.png,.jpg,.jpeg">
+          <div id="upload-label">🗂 اضغط لاختيار ملف PDF أو صورة</div>
+        </label>
+        <br>
+        <button class="btn btn-warning btn-block" id="btn-upload">
+          <span class="btn-text">رفع وإضافة الصفحات</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="preview-pane">
+      <div class="preview-toolbar">
+        <span>معاينة الصفحة:</span>
+        <strong id="preview-page-label">1</strong>
+      </div>
+      <div id="pdf-canvas-wrap">
+        <iframe id="pdf-iframe" style="width:100%;height:100%;border:none;min-height:650px;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal — بدون أي onclick في الـ HTML -->
+<div class="confirm-modal" id="confirm-modal">
+  <div class="confirm-box">
+    <h2>⚠️ تأكيد الحذف</h2>
+    <p id="confirm-msg">هل أنت متأكد من حذف هذه الصفحة؟</p>
+    <div class="confirm-actions">
+      <button class="btn btn-outline" id="btn-cancel-confirm">إلغاء</button>
+      <button class="btn btn-danger"  id="confirm-yes-btn">حذف</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module">
+  const CSRF           = "{{ csrf_token }}";
+  const urlPreviewBase = "{% url 'admin:books_book_pdf-preview' book.pk 999999 %}".replace('999999/', '');
+  const urlDeletePage  = "{% url 'admin:books_book_pdf-delete-page' book.pk %}";
+  const urlAddBlank    = "{% url 'admin:books_book_pdf-add-blank' book.pk %}";
+  const urlUploadPage  = "{% url 'admin:books_book_pdf-upload-page' book.pk %}";
+
+  let currentPage = 1;
+  let totalPages  = {{ total_pages }};
+  let pendingDeletePage = null;
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function toast(msg, type = "info") {
+    const el = document.createElement("div");
+    el.className = `toast ${type}`;
+    el.textContent = msg;
+    document.getElementById("toast-container").appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+
+  function setLoading(btnId, on) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.disabled = on;
+    btn.classList.toggle("loading", on);
+  }
+
+  function updatePageCount(n) {
+    totalPages = n;
+    document.getElementById("page-count-badge").textContent = n;
+    document.getElementById("total-display").textContent = n;
+    ["delete-page-num", "add-after-blank", "add-after-upload"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.max = n;
+    });
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────
+  function renderPage(pageNum) {
+    document.getElementById("pdf-iframe").src = urlPreviewBase + pageNum + '/';
+  }
+
+  // ── Preview ───────────────────────────────────────────────────────────────
+  function loadPreview(pg) {
+    pg = (pg !== undefined) ? pg : parseInt(document.getElementById("page-input").value);
+    if (pg < 1) pg = 1;
+    if (pg > totalPages) pg = totalPages;
+    currentPage = pg;
+    document.getElementById("page-input").value = pg;
+    document.getElementById("preview-page-label").textContent = pg;
+    renderPage(pg);
+  }
+
+  // ── Delete ────────────────────────────────────────────────────────────────
+  function confirmDeletePage() {
+    const pg = parseInt(document.getElementById("delete-page-num").value);
+    if (!pg || pg < 1 || pg > totalPages) {
+      toast(`أدخل رقم صفحة بين 1 و ${totalPages}`, "error");
+      return;
+    }
+    pendingDeletePage = pg;
+    document.getElementById("confirm-msg").textContent =
+      `هل أنت متأكد من حذف الصفحة رقم ${pg}؟ لا يمكن التراجع.`;
+    document.getElementById("confirm-modal").classList.add("open");
+  }
+
+  function closeConfirm() {
+    document.getElementById("confirm-modal").classList.remove("open");
+    pendingDeletePage = null;
+  }
+
+  async function deletePage() {
+    const pageToDelete = pendingDeletePage;
+    closeConfirm();
+    if (!pageToDelete) return;
+
+    setLoading("btn-delete-page", true);
+    try {
+      const res  = await fetch(urlDeletePage, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRF,
+        },
+        body: JSON.stringify({ page_number: pageToDelete }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast(data.message, "success");
+        updatePageCount(data.new_page_count);
+        if (currentPage > data.new_page_count) currentPage = data.new_page_count;
+        loadPreview(currentPage);
+        document.getElementById("delete-page-num").value = "";
+      } else {
+        toast(data.error || "حدث خطأ", "error");
+      }
+    } catch (e) {
+      toast("خطأ في الاتصال بالسيرفر", "error");
+    }
+    setLoading("btn-delete-page", false);
+  }
+
+  // ── Add blank ─────────────────────────────────────────────────────────────
+  async function addBlankPage() {
+    const after = parseInt(document.getElementById("add-after-blank").value);
+    if (isNaN(after) || after < 0 || after > totalPages) {
+      toast(`أدخل رقم بين 0 و ${totalPages}`, "error");
+      return;
+    }
+    setLoading("btn-add-blank", true);
+    try {
+      const res  = await fetch(urlAddBlank, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+        body: JSON.stringify({ after_page: after }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast(data.message, "success");
+        updatePageCount(data.new_page_count);
+        loadPreview(data.inserted_at);
+        document.getElementById("add-after-blank").value = "";
+      } else {
+        toast(data.error || "حدث خطأ", "error");
+      }
+    } catch (e) {
+      toast("خطأ في الاتصال بالسيرفر", "error");
+    }
+    setLoading("btn-add-blank", false);
+  }
+
+  // ── Upload ────────────────────────────────────────────────────────────────
+  async function uploadPage() {
+    const after = parseInt(document.getElementById("add-after-upload").value);
+    const file  = document.getElementById("upload-pdf-input").files[0];
+    if (!file) { toast("اختر ملف أولاً", "error"); return; }
+    if (isNaN(after) || after < 0 || after > totalPages) {
+      toast(`أدخل رقم بين 0 و ${totalPages}`, "error");
+      return;
+    }
+    setLoading("btn-upload", true);
+    const formData = new FormData();
+    formData.append("page_file", file);
+    formData.append("after_page", after);
+    try {
+      const res  = await fetch(urlUploadPage, {
+        method: "POST",
+        headers: { "X-CSRFToken": CSRF },
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast(data.message, "success");
+        updatePageCount(data.new_page_count);
+        loadPreview(after + 1);
+        document.getElementById("upload-pdf-input").value = "";
+        document.getElementById("upload-label").textContent = "🗂 اضغط لاختيار ملف PDF أو صورة";
+        document.getElementById("add-after-upload").value = "";
+      } else {
+        toast(data.error || "حدث خطأ", "error");
+      }
+    } catch (e) {
+      toast("خطأ في الاتصال بالسيرفر", "error");
+    }
+    setLoading("btn-upload", false);
+  }
+
+  // ── Init: ربط كل الأزرار بدون أي onclick في الـ HTML ─────────────────────
+  document.getElementById("btn-load-preview").addEventListener("click",   () => loadPreview());
+  document.getElementById("btn-prev").addEventListener("click",           () => loadPreview(currentPage - 1));
+  document.getElementById("btn-next").addEventListener("click",           () => loadPreview(currentPage + 1));
+  document.getElementById("btn-delete-page").addEventListener("click",    () => confirmDeletePage());
+  document.getElementById("btn-add-blank").addEventListener("click",      () => addBlankPage());
+  document.getElementById("btn-upload").addEventListener("click",         () => uploadPage());
+  document.getElementById("btn-cancel-confirm").addEventListener("click", () => closeConfirm());
+  document.getElementById("confirm-yes-btn").addEventListener("click",    () => deletePage());
+  document.getElementById("page-input").addEventListener("keydown", e => {
+    if (e.key === "Enter") loadPreview();
+  });
+  document.getElementById("upload-pdf-input").addEventListener("change", function () {
+    document.getElementById("upload-label").textContent =
+      this.files[0] ? `📄 ${this.files[0].name}` : "🗂 اضغط لاختيار ملف PDF أو صورة";
+  });
+
+  renderPage(1);
+</script>
+{% endblock %}

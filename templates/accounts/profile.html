@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load i18n site_text %}
+{% block title %}{{ user.first_name|default:user.username }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                    {% if user.first_name %}{{ user.first_name|first|upper }}{% else %}{{ user.get_full_name|default:user.username|first|upper }}{% endif %}
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-primary">{{ user.get_full_name|default:user.username }}</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">@{{ user.username }}</p>
+                    <p class="text-sm text-gray-500">{{ user.email|default_if_none:"" }}{% if not user.email %}{% trans "Barka da zuwa!" %}{% endif %}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="{% url 'books:profile_edit' %}"
+                   class="flex items-center gap-2 bg-primary text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-primary-light transition-colors tap-target">
+                    ✏️ {% trans "Gyara Bayanai" %}
+                </a>
+                <a href="{% url 'books:logout' %}"
+                   class="flex items-center gap-2 bg-red-50 text-red-600 text-sm font-medium px-4 py-2 rounded-lg border border-red-200 hover:bg-red-100 transition-colors tap-target">
+                    🚪 {% trans "Fita" %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading Progress -->
+    {% if reading_list %}
+    <div class="mb-8">
+        <h2 class="text-xl font-bold text-primary mb-4">📖 {% trans "Ana Karatu" %}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for r in reading_list %}
+            <a href="{% url 'books:book_read' slug=r.book.seo_slug %}" class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-all flex gap-4 tap-target">
+                <div class="w-12 h-16 bg-primary/10 rounded flex items-center justify-center shrink-0">📖</div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-primary text-sm truncate">{{ r.book.localized_title }}</h3>
+                    <p class="text-xs text-gray-400">{% blocktrans with page=r.current_page %}Shafi {{ page }}{% endblocktrans %}</p>
+                    <div class="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-gold rounded-full" style="width:{{ r.progress_percent }}%"></div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- My Reading Lists -->
+    <div class="mb-8">
+        <h2 class="text-xl font-bold text-primary mb-4">📋 {% trans "Jerin Karatu na" %}</h2>
+
+        <!-- Create new list form -->
+        <form method="POST" action="{% url 'books:create_reading_list' %}" class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+            {% csrf_token %}
+            <h3 class="font-semibold text-sm text-primary mb-3">{% trans "Ƙirƙiri sabon jeri" %}</h3>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" name="name" placeholder="{% trans "Sunan jeri" %}" required class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none" maxlength="100">
+                <input type="text" name="description" placeholder="{% trans "Bayani (zaɓi)" %}" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none" maxlength="300">
+                <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-primary-light transition-colors tap-target shrink-0">
+                    ➕ {% trans "Ƙirƙira" %}
+                </button>
+            </div>
+        </form>
+
+        <!-- Reading Lists -->
+        {% if reading_lists %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% for list in reading_lists %}
+            <a href="{% url 'books:reading_list_detail' list_id=list.id %}" class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-gold/30 transition-all tap-target">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-primary text-sm truncate">{{ list.name }}</h3>
+                    <span class="bg-gold/20 text-gold text-[10px] px-2 py-0.5 rounded-full font-bold">
+                        {% blocktrans with count=list.books.count %}{{ count }} littattafai{% endblocktrans %}
+                    </span>
+                </div>
+                {% if list.description %}
+                <p class="text-xs text-gray-400 line-clamp-2">{{ list.description }}</p>
+                {% endif %}
+                {% if list.is_public %}
+                <span class="text-[10px] text-green-500 mt-2 inline-block">🌐 {% trans "Na jama'a" %}</span>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-xl p-6 text-center border border-gray-100">
+            <p class="text-gray-400 text-sm">{% trans "Ba ka da jerin karatu tukuna." %}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Favorites -->
+    <div>
+        <h2 class="text-xl font-bold text-primary mb-4">❤️ {% trans "Littattafai da na fi so" %}</h2>
+        {% if favorites %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for fav in favorites %}
+            {% include 'books/_book_card.html' with book=fav.book %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-xl p-8 text-center border border-gray-100">
+            <p class="text-gray-500">{% trans "Ba ka zaɓi wani littafi ba tukuna." %}</p>
+            <a href="{% url 'books:book_list' %}" class="inline-block mt-3 text-gold font-semibold hover:text-gold-dark tap-target">{% trans "Bincika Littattafai" %} →</a>
+        </div>
+        {% endif %}
+    </div>
+
+
+</div>
+
+{% endblock %}

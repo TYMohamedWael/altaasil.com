@@ -1,0 +1,542 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-24 13:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: hausa_books/settings.py:109
+msgid "Hausa"
+msgstr ""
+
+#: hausa_books/settings.py:110
+msgid "العربية"
+msgstr ""
+
+#: hausa_books/settings.py:111
+msgid "English"
+msgstr ""
+
+#: templates/accounts/login.html:3 templates/accounts/login.html:18
+#: templates/accounts/register.html:27 templates/base.html:118
+#: templates/base.html:146
+msgid "Shiga"
+msgstr ""
+
+#: templates/accounts/login.html:3 templates/accounts/profile.html:3
+#: templates/accounts/register.html:3 templates/base.html:13
+#: templates/base.html:88 templates/base.html:177 templates/books/about.html:3
+#: templates/books/analytics.html:3 templates/books/book_detail.html:4
+#: templates/books/book_list.html:3 templates/books/category_list.html:3
+msgid "Littattafan Hausa"
+msgstr ""
+
+#: templates/accounts/login.html:7
+msgid "Shiga Asusun ka"
+msgstr ""
+
+#: templates/accounts/login.html:11
+msgid "Sunan mai amfani"
+msgstr ""
+
+#: templates/accounts/login.html:15
+msgid "Kalmar sirri"
+msgstr ""
+
+#: templates/accounts/login.html:21
+msgid "Ba ka da asusu?"
+msgstr ""
+
+#: templates/accounts/login.html:21 templates/accounts/register.html:3
+#: templates/accounts/register.html:24 templates/base.html:119
+#: templates/base.html:147
+msgid "Yi Rajista"
+msgstr ""
+
+#: templates/accounts/profile.html:13
+msgid "Barka da zuwa!"
+msgstr ""
+
+#: templates/accounts/profile.html:21
+msgid "Ana Karatu"
+msgstr ""
+
+#: templates/accounts/profile.html:28 templates/books/book_detail.html:193
+#: templates/books/book_read.html:85
+#, python-format
+msgid "Shafi %(page)s"
+msgstr ""
+
+#: templates/accounts/profile.html:41
+msgid "Littattafai da na fi so"
+msgstr ""
+
+#: templates/accounts/profile.html:50
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr ""
+
+#: templates/accounts/profile.html:51 templates/books/home.html:20
+msgid "Bincika Littattafai"
+msgstr ""
+
+#: templates/accounts/register.html:7
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr ""
+
+#: templates/accounts/register.html:27
+msgid "Kana da asusu?"
+msgstr ""
+
+#: templates/base.html:8
+msgid "Littattafan Hausa - Dakin Karatu na Ilimi na Musulunci"
+msgstr ""
+
+#: templates/base.html:9
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr ""
+
+#: templates/base.html:14 templates/base.html:178
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr ""
+
+#: templates/base.html:89
+msgid "DAKIN KARATU NA ILIMI"
+msgstr ""
+
+#: templates/base.html:97
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr ""
+
+#: templates/base.html:108 templates/base.html:128
+#: templates/books/book_detail.html:71
+msgid "Gida"
+msgstr ""
+
+#: templates/base.html:109 templates/base.html:129 templates/base.html:186
+#: templates/books/book_detail.html:73 templates/books/book_list.html:3
+#: templates/books/book_list.html:9 templates/books/home.html:34
+msgid "Littattafai"
+msgstr ""
+
+#: templates/base.html:110 templates/base.html:130 templates/base.html:187
+#: templates/base.html:192 templates/books/book_list.html:25
+#: templates/books/category_list.html:3 templates/books/category_list.html:8
+#: templates/books/home.html:55
+msgid "Rukunoni"
+msgstr ""
+
+#: templates/base.html:116 templates/base.html:144
+msgid "Fita"
+msgstr ""
+
+#: templates/base.html:135
+msgid "Nemo littafi..."
+msgstr ""
+
+#: templates/base.html:181
+msgid ""
+"Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da "
+"yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr ""
+
+#: templates/base.html:184
+msgid "Hanyoyi"
+msgstr ""
+
+#: templates/base.html:188 templates/books/about.html:3
+msgid "Game da mu"
+msgstr ""
+
+#: templates/base.html:194
+msgid "Akida"
+msgstr ""
+
+#: templates/base.html:195
+msgid "Fikhu"
+msgstr ""
+
+#: templates/base.html:196
+msgid "Hadisi"
+msgstr ""
+
+#: templates/base.html:197
+msgid "Tafsiri"
+msgstr ""
+
+#: templates/base.html:202
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr ""
+
+#: templates/base.html:203
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr ""
+
+#: templates/books/_book_card.html:39 templates/books/book_read.html:3
+msgid "Karanta"
+msgstr ""
+
+#: templates/books/about.html:7
+msgid "Game da Littattafan Hausa"
+msgstr ""
+
+#: templates/books/about.html:11
+msgid ""
+"Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan "
+"Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin "
+"Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani "
+"da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr ""
+
+#: templates/books/about.html:14
+msgid ""
+"Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan "
+"yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr ""
+
+#: templates/books/about.html:21
+msgid "Tattara Ilimi"
+msgstr ""
+
+#: templates/books/about.html:22
+msgid ""
+"Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina "
+"cikin duniya."
+msgstr ""
+
+#: templates/books/about.html:26
+msgid "Fassara Duniya"
+msgstr ""
+
+#: templates/books/about.html:27
+msgid ""
+"Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr ""
+
+#: templates/books/about.html:31
+msgid "Daidaiton Ilimi"
+msgstr ""
+
+#: templates/books/about.html:32
+msgid ""
+"Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin "
+"bayani."
+msgstr ""
+
+#: templates/books/about.html:36
+msgid "Fasaha ta AI"
+msgstr ""
+
+#: templates/books/about.html:37
+msgid ""
+"Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da "
+"SEO."
+msgstr ""
+
+#: templates/books/analytics.html:3
+msgid "Ƙididdigar"
+msgstr ""
+
+#: templates/books/analytics.html:7
+msgid "Ƙididdigar (Analytics)"
+msgstr ""
+
+#: templates/books/analytics.html:22
+msgid "Ayyuka na Yau da Kullum"
+msgstr ""
+
+#: templates/books/analytics.html:28
+msgid "Littattafan da aka fi Duba"
+msgstr ""
+
+#: templates/books/analytics.html:45 templates/books/book_detail.html:238
+msgid "Kalmomin Bincike"
+msgstr ""
+
+#: templates/books/analytics.html:55
+msgid "Babu bayanan bincike tukuna."
+msgstr ""
+
+#: templates/books/analytics.html:61
+msgid "Sabon Ra'ayoyi"
+msgstr ""
+
+#: templates/books/analytics.html:70
+#, python-format
+msgid "%(time)s da suka wuce"
+msgstr ""
+
+#: templates/books/analytics.html:78
+msgid "Babu ra'ayoyi tukuna."
+msgstr ""
+
+#: templates/books/analytics.html:94
+msgid "Bincike"
+msgstr ""
+
+#: templates/books/book_detail.html:119
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr ""
+
+#: templates/books/book_detail.html:127
+msgid "Karanta Yanzu"
+msgstr ""
+
+#: templates/books/book_detail.html:130 templates/books/book_read.html:90
+msgid "Sauke PDF"
+msgstr ""
+
+#: templates/books/book_detail.html:134
+msgid "PDF ba a samu ba tukuna"
+msgstr ""
+
+#: templates/books/book_detail.html:145 templates/books/book_detail.html:331
+#: templates/books/book_detail.html:337
+msgid "Raba"
+msgstr ""
+
+#: templates/books/book_detail.html:159
+msgid "Kallon"
+msgstr ""
+
+#: templates/books/book_detail.html:163
+msgid "Saukewa"
+msgstr ""
+
+#: templates/books/book_detail.html:167
+msgid "Favorites"
+msgstr ""
+
+#: templates/books/book_detail.html:171
+msgid "Ra'ayoyi"
+msgstr ""
+
+#: templates/books/book_detail.html:187
+msgid "Ci gaban Karatu"
+msgstr ""
+
+#: templates/books/book_detail.html:193
+#, python-format
+msgid "daga %(total)s"
+msgstr ""
+
+#: templates/books/book_detail.html:200
+msgid "Bayani game da Littafi"
+msgstr ""
+
+#: templates/books/book_detail.html:208
+msgid "Abubuwan da ke ciki"
+msgstr ""
+
+#: templates/books/book_detail.html:223
+msgid "Saurara"
+msgstr ""
+
+#: templates/books/book_detail.html:252
+msgid "Bayanan Littafi"
+msgstr ""
+
+#: templates/books/book_detail.html:256
+msgid "Rukuni"
+msgstr ""
+
+#: templates/books/book_detail.html:262
+msgid "Ƙaramin Rukuni"
+msgstr ""
+
+#: templates/books/book_detail.html:267
+msgid "Harshe"
+msgstr ""
+
+#: templates/books/book_detail.html:272
+msgid "Shekara"
+msgstr ""
+
+#: templates/books/book_detail.html:277
+msgid "Hali"
+msgstr ""
+
+#: templates/books/book_detail.html:280
+msgid "PDF Akwai"
+msgstr ""
+
+#: templates/books/book_detail.html:282
+msgid "Babu PDF"
+msgstr ""
+
+#: templates/books/book_detail.html:294
+msgid "Littattafai masu alaƙa"
+msgstr ""
+
+#: templates/books/book_detail.html:330 templates/books/book_detail.html:336
+msgid "An kwafi!"
+msgstr ""
+
+#: templates/books/book_list.html:10
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr ""
+
+#: templates/books/book_list.html:28
+msgid "Duka"
+msgstr ""
+
+#: templates/books/book_list.html:42
+#, python-format
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr ""
+
+#: templates/books/book_list.html:70 templates/books/book_list.html:79
+msgid "Ba a sami littattafai ba."
+msgstr ""
+
+#: templates/books/book_read.html:104
+msgid "Rubutu"
+msgstr ""
+
+#: templates/books/book_read.html:118
+msgid "Ƙarami"
+msgstr ""
+
+#: templates/books/book_read.html:119
+msgid "Matsakaici"
+msgstr ""
+
+#: templates/books/book_read.html:120
+msgid "Babba"
+msgstr ""
+
+#: templates/books/book_read.html:121
+msgid "Babba ƙwarai"
+msgstr ""
+
+#: templates/books/book_read.html:126
+msgid "Fari"
+msgstr ""
+
+#: templates/books/book_read.html:128
+msgid "Duhu"
+msgstr ""
+
+#: templates/books/book_read.html:132
+msgid "Cika Allo"
+msgstr ""
+
+#: templates/books/book_read.html:137
+msgid "Buga"
+msgstr ""
+
+#: templates/books/book_read.html:184
+msgid "Ƙarshen Littafi"
+msgstr ""
+
+#: templates/books/book_read.html:186
+msgid "Koma ga Bayani"
+msgstr ""
+
+#: templates/books/book_read.html:191
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr ""
+
+#: templates/books/book_read.html:192
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr ""
+
+#: templates/books/book_read.html:193
+msgid "Duba PDF Viewer"
+msgstr ""
+
+#: templates/books/book_read.html:205
+msgid "Ana loda PDF..."
+msgstr ""
+
+#: templates/books/book_read.html:210
+msgid "Baya"
+msgstr ""
+
+#: templates/books/book_read.html:214
+msgid "Gaba"
+msgstr ""
+
+#: templates/books/category_list.html:9
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr ""
+
+#: templates/books/category_list.html:22 templates/books/home.html:66
+#, python-format
+msgid "%(count)s littattafai"
+msgstr ""
+
+#: templates/books/home.html:9
+msgid "Littattafai 1,780+ na Musulunci"
+msgstr ""
+
+#: templates/books/home.html:12
+msgid "Dakin Karatu na Ilimi"
+msgstr ""
+
+#: templates/books/home.html:13
+msgid "na Musulunci"
+msgstr ""
+
+#: templates/books/home.html:16
+msgid ""
+"Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, "
+"an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr ""
+
+#: templates/books/home.html:23
+msgid "Nemo Maudu'i"
+msgstr ""
+
+#: templates/books/home.html:38
+msgid "Marubuta"
+msgstr ""
+
+#: templates/books/home.html:42
+msgid "Harsuna"
+msgstr ""
+
+#: templates/books/home.html:46
+msgid "Masu Karatu"
+msgstr ""
+
+#: templates/books/home.html:56
+msgid "Zaɓi rukunin da kake so"
+msgstr ""
+
+#: templates/books/home.html:58 templates/books/home.html:80
+msgid "Duba duka"
+msgstr ""
+
+#: templates/books/home.html:77
+msgid "Sababbin Littattafai"
+msgstr ""
+
+#: templates/books/home.html:78
+msgid "An ƙara su kwanan nan"
+msgstr ""
+
+#: templates/books/home.html:86
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr ""
+
+#: templates/books/home.html:94
+msgid "Taimaka wajen yada ilimi"
+msgstr ""
+
+#: templates/books/home.html:96
+msgid ""
+"Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a "
+"cikin dakin karatu na mu."
+msgstr ""

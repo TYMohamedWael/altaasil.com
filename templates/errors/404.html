@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ha" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Shafi ba a samu ba | Littattafan Hausa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:{DEFAULT:"#1a5632",light:"#2d7a4a",dark:"#0f3d22"},gold:{DEFAULT:"#c8a84e",light:"#e0c878",dark:"#a88a2e"},cream:{DEFAULT:"#faf8f0",dark:"#f0ead6"}}}}}</script>
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <script>
+        // No script content needed here
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #faf8f0; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pageFlip {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(15deg); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .book-float { animation: float 4s ease-in-out infinite; }
+        .fade-in-1 { animation: fadeInUp 0.6s ease-out 0.1s both; }
+        .fade-in-2 { animation: fadeInUp 0.6s ease-out 0.3s both; }
+        .fade-in-3 { animation: fadeInUp 0.6s ease-out 0.5s both; }
+        .fade-in-4 { animation: fadeInUp 0.6s ease-out 0.7s both; }
+
+        /* CSS Book Illustration */
+        .book-wrapper { perspective: 600px; }
+        .book {
+            position: relative;
+            width: 140px;
+            height: 180px;
+            transform-style: preserve-3d;
+        }
+        .book-cover {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a5632 0%, #0f3d22 100%);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: -4px 4px 0 #c8a84e, -6px 6px 20px rgba(0,0,0,0.2);
+        }
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.15);
+        }
+        .book-spine {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 6px;
+            background: #0f3d22;
+            border-radius: 2px 0 0 2px;
+        }
+        .book-gold-detail {
+            position: absolute;
+            top: 30px;
+            left: 24px;
+            right: 20px;
+            height: 2px;
+            background: #c8a84e;
+        }
+        .book-gold-detail::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #c8a84e;
+        }
+        .book-title-area {
+            position: absolute;
+            top: 50px;
+            left: 24px;
+            right: 20px;
+            text-align: center;
+        }
+        .book-title-area span {
+            color: #c8a84e;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .book-bottom-detail {
+            position: absolute;
+            bottom: 25px;
+            left: 24px;
+            right: 20px;
+            text-align: center;
+        }
+        .book-bottom-detail .diamond {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #c8a84e;
+            transform: rotate(45deg);
+        }
+        /* Pages effect */
+        .book-pages {
+            position: absolute;
+            right: -3px;
+            top: 6px;
+            bottom: 6px;
+            width: 8px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #fff 0px, #fff 2px,
+                #eee 2px, #eee 3px
+            );
+            border-radius: 0 2px 2px 0;
+        }
+        /* Sparkle decorations */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #c8a84e;
+            border-radius: 50%;
+        }
+        .sparkle-1 { top: -10px; right: -10px; animation: sparkle 2s ease-in-out 0s infinite; }
+        .sparkle-2 { bottom: 20px; left: -15px; animation: sparkle 2s ease-in-out 0.7s infinite; }
+        .sparkle-3 { top: 30px; right: -20px; animation: sparkle 2s ease-in-out 1.4s infinite; }
+
+        /* Question mark on book */
+        .book-question {
+            position: absolute;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            color: #c8a84e;
+            opacity: 0.3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full text-center">
+        <!-- Animated Book -->
+        <div class="flex justify-center mb-8 fade-in-1">
+            <div class="book-wrapper">
+                <div class="book book-float">
+                    <div class="book-cover">
+                        <div class="book-spine"></div>
+                        <div class="book-gold-detail"></div>
+                        <div class="book-question">?</div>
+                        <div class="book-bottom-detail">
+                            <span class="diamond"></span>
+                        </div>
+                    </div>
+                    <div class="book-pages"></div>
+                    <div class="sparkle sparkle-1"></div>
+                    <div class="sparkle sparkle-2"></div>
+                    <div class="sparkle sparkle-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Code -->
+        <div class="fade-in-1">
+            <span class="text-8xl font-black text-primary/10">404</span>
+        </div>
+
+        <!-- Hausa Title -->
+        <h1 class="text-3xl md:text-4xl font-bold text-primary mt-2 fade-in-2">
+            Shafi ba a samu ba
+        </h1>
+        <!-- Arabic -->
+        <p class="text-xl text-gold mt-2 fade-in-2" dir="rtl" style="font-family: serif;">
+            الصفحة غير موجودة
+        </p>
+
+        <!-- Fun message -->
+        <p class="text-gray-600 mt-4 text-lg fade-in-3">
+            Wannan littafin ya ɓace daga dakin karatu...
+            <br>
+            <span class="text-sm text-gray-400">Amma kada ku damu, za mu taimaka ku sami abin da kuke nema!</span>
+        </p>
+
+        <!-- Search Bar -->
+        <div class="mt-8 fade-in-3">
+            <form action="/books/" method="GET" class="max-w-md mx-auto">
+                <div class="relative">
+                    <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" name="q" placeholder="Nemo littafi, marubuci, ko maudu'i..."
+                        class="w-full pl-12 pr-4 py-3.5 rounded-2xl border-2 border-primary/20 bg-white text-sm focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
+                </div>
+            </form>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="mt-10 flex flex-wrap justify-center gap-3 fade-in-4">
+            <a href="/" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-primary-light transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Gida
+            </a>
+            <a href="/books/" class="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-xl text-sm font-semibold border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                Littattafai
+            </a>
+            <a href="/categories/" class="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-xl text-sm font-semibold border-2 border-primary/20 hover:border-gold hover:bg-gold hover:text-primary transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                Rukunoni
+            </a>
+        </div>
+
+        <!-- Subtle branding -->
+        <p class="mt-12 text-xs text-gray-300 fade-in-4">
+            Littattafan Hausa — Dakin Karatu na Ilimi na Musulunci
+        </p>
+    </div>
+</body>
+</html>

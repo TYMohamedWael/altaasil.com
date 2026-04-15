@@ -1,0 +1,57 @@
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+    
+    // Track custom events
+    function trackEvent(action, category, label, value) {
+        gtag('event', action, {
+            'event_category': category,
+            'event_label': label,
+            'value': value
+        });
+    }
+    
+    // Track book views
+    function trackBookView(bookTitle, category) {
+        trackEvent('view_book', 'Books', bookTitle);
+    }
+    
+    // Track downloads
+    function trackDownload(bookTitle) {
+        trackEvent('download', 'Books', bookTitle);
+    }
+    
+    // Track search
+    function trackSearch(query, resultsCount) {
+        trackEvent('search', 'Search', query, resultsCount);
+    }
+</script>
+
+<!-- Simple Heatmap tracking (lightweight) -->
+<script>
+(function() {
+    var clicks = [];
+    document.addEventListener('click', function(e) {
+        clicks.push({
+            x: e.clientX, y: e.clientY,
+            path: e.target.tagName + (e.target.className ? '.' + e.target.className.split(' ')[0] : ''),
+            time: Date.now()
+        });
+        // Send batch every 20 clicks
+        if (clicks.length >= 20) {
+            navigator.sendBeacon('/api/analytics/clicks/', JSON.stringify(clicks));
+            clicks = [];
+        }
+    });
+    // Send remaining on page leave
+    window.addEventListener('beforeunload', function() {
+        if (clicks.length > 0) {
+            navigator.sendBeacon('/api/analytics/clicks/', JSON.stringify(clicks));
+        }
+    });
+})();
+</script>

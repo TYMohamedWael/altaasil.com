@@ -1,0 +1,446 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Gyara Bayanai" %} - {% trans "Littattafan Hausa" %}{% endblock %}
+
+{% block content %}
+<style>
+  /* ── Outlined floating-label ── */
+  .fl-group { position: relative; }
+  .fl-group input,
+  .fl-group select {
+    width: 100%;
+    border: 1.5px solid #b0bec5;
+    border-radius: 4px;
+    padding: 14px 12px 6px 12px;
+    font-size: 0.88rem;
+    background: #fff;
+    outline: none;
+    color: #111827;
+    font-weight: 500;
+    transition: border-color 0.18s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .fl-group input:focus,
+  .fl-group select:focus { border-color: #1a5632; }
+  .fl-group input.err,
+  .fl-group select.err { border-color: #e53935; }
+  .fl-group input::placeholder { color: transparent; }
+  .fl-group label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: #fff;
+    padding: 0 4px;
+    font-size: 0.68rem;
+    color: #607d8b;
+    font-weight: 700;
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .fl-group .select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #607d8b;
+    font-size: 0.7rem;
+    pointer-events: none;
+  }
+  .field-error {
+    color: #e53935;
+    font-size: 0.68rem;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* ── Avatar ── */
+  .avatar-box {
+    width: 120px;
+    height: 120px;
+    border: 1.5px solid #b0bec5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #f5f8fa;
+    flex-shrink: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-box svg { width: 64px; height: 64px; color: #90a4ae; }
+  .avatar-remove {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 1.5px solid #e53935;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 10px;
+    color: #e53935;
+    font-weight: bold;
+    z-index: 2;
+  }
+  .upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a5632;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+  .upload-btn:hover { background: #2d7a4a; }
+
+  /* ── Section divider ── */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #607d8b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    margin-top: 20px;
+  }
+
+  /* ── Card ── */
+  .edit-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 28px 32px 32px;
+    max-width: 860px;
+    margin: 2rem auto;
+  }
+
+  /* ── Save button ── */
+  .save-btn {
+    width: 100%;
+    background: #1a5632;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 8px;
+  }
+  .save-btn:hover { background: #2d7a4a; }
+
+  .success-msg {
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: #1b5e20;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  /* ── Password info icon ── */
+  .pw-info-wrap { position: relative; display: inline-flex; align-items: center; }
+  .pw-info-btn {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: #e5e7eb; color: #6b7280;
+    font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; flex-shrink: 0;
+  }
+  .pw-info-btn:hover { background: #c8a84e; color: #fff; }
+  .pw-tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    background: #111827;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.68rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .pw-info-wrap:hover .pw-tooltip { opacity: 1; visibility: visible; }
+  .pw-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%; transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #111827;
+  }
+</style>
+
+<div class="px-4 py-8">
+<div class="edit-card">
+
+  {% if messages %}
+  {% for msg in messages %}
+  <div class="success-msg">{{ msg }}</div>
+  {% endfor %}
+  {% endif %}
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- ── Avatar + User info ── -->
+    <div class="flex gap-5 mb-6" style="align-items:flex-start;">
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div class="avatar-box" onclick="document.getElementById('id_avatar').click()">
+          {% if user.profile.avatar_url %}
+          <span class="avatar-remove" onclick="event.stopPropagation(); clearAvatar()">✕</span>
+          <img id="avatarPreview" src="{{ user.profile.avatar_url }}" alt="avatar">
+          {% else %}
+          <svg id="avatarPlaceholder" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+          <img id="avatarPreview" src="" alt="" style="display:none; width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0;">
+          {% endif %}
+        </div>
+        <input type="file" id="id_avatar" name="avatar" accept="image/*" style="display:none;">
+        <label class="upload-btn" for="id_avatar">⬆ {% trans "Foto Profil" %}</label>
+        <input type="hidden" name="clear_avatar" id="clearAvatarInput" value="">
+      </div>
+
+      <div style="padding-top: 10px;">
+        <p class="font-bold text-lg" style="color: #1a5632;">{{ user.get_full_name|default:user.username }}</p>
+        <p class="text-xs" style="color:#607d8b;">@{{ user.username }}</p>
+        <p class="text-sm" style="color:#607d8b; margin-top:2px;">{{ user.email }}</p>
+        {% if user.profile.country %}
+        <p class="text-xs mt-1" style="color:#90a4ae;">🌍 {{ user.profile.country }}</p>
+        {% endif %}
+        {% if user.profile.birth_date %}
+        <p class="text-xs mt-0.5" style="color:#90a4ae;">🎂 {{ user.profile.birth_date }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ── Section: Bayanan Asali ── -->
+    <div class="section-label">{% trans "Bayanan Asali" %}</div>
+    <div class="grid gap-4 mb-2" style="grid-template-columns: 1fr 1fr 1fr;">
+
+      <div class="fl-group">
+        <input type="text" name="name" id="id_name"
+               value="{{ form.name.value|default:'' }}"
+               class="{% if form.name.errors %}err{% endif %}">
+        <label for="id_name">{{ form.fields.name.label }}</label>
+        {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="fl-group">
+        <input type="text" name="username" id="id_username"
+               value="{{ form.username.value|default:'' }}"
+               class="{% if form.username.errors %}err{% endif %}">
+        <label for="id_username">{{ form.fields.username.label }}</label>
+        {% if form.username.errors %}<p class="field-error">{{ form.username.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="fl-group">
+        <input type="email" name="email" id="id_email"
+               value="{{ form.email.value|default:'' }}"
+               class="{% if form.email.errors %}err{% endif %}">
+        <label for="id_email">Email</label>
+        {% if form.email.errors %}<p class="field-error">{{ form.email.errors.0 }}</p>{% endif %}
+      </div>
+    </div>
+
+    <!-- ── Section: Ƙasa & Ranar Haihuwa ── -->
+    <div class="section-label">{% trans "Ƙasa da Ranar Haihuwa" %}</div>
+    <div class="grid gap-4 mb-2" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+
+      <!-- Country -->
+      <div class="fl-group">
+        <select name="country" id="id_country"
+                class="{% if form.country.errors %}err{% endif %}">
+          <option value="">— {% trans "Zaɓi Ƙasa" %} —</option>
+          <option value="NG" {% if form.country.value == 'NG' %}selected{% endif %}>Nigeria 🇳🇬</option>
+          <option value="NE" {% if form.country.value == 'NE' %}selected{% endif %}>Niger 🇳🇪</option>
+          <option value="GH" {% if form.country.value == 'GH' %}selected{% endif %}>Ghana 🇬🇭</option>
+          <option value="SD" {% if form.country.value == 'SD' %}selected{% endif %}>Sudan 🇸🇩</option>
+          <option value="SA" {% if form.country.value == 'SA' %}selected{% endif %}>Saudi Arabia 🇸🇦</option>
+          <option value="EG" {% if form.country.value == 'EG' %}selected{% endif %}>Egypt 🇪🇬</option>
+          <option value="CM" {% if form.country.value == 'CM' %}selected{% endif %}>Cameroon 🇨🇲</option>
+          <option value="SN" {% if form.country.value == 'SN' %}selected{% endif %}>Senegal 🇸🇳</option>
+          <option value="ML" {% if form.country.value == 'ML' %}selected{% endif %}>Mali 🇲🇱</option>
+          <option value="BF" {% if form.country.value == 'BF' %}selected{% endif %}>Burkina Faso 🇧🇫</option>
+          <option value="TD" {% if form.country.value == 'TD' %}selected{% endif %}>Chad 🇹🇩</option>
+          <option value="LY" {% if form.country.value == 'LY' %}selected{% endif %}>Libya 🇱🇾</option>
+          <option value="MA" {% if form.country.value == 'MA' %}selected{% endif %}>Morocco 🇲🇦</option>
+          <option value="SO" {% if form.country.value == 'SO' %}selected{% endif %}>Somalia 🇸🇴</option>
+          <option value="ET" {% if form.country.value == 'ET' %}selected{% endif %}>Ethiopia 🇪🇹</option>
+          <option value="GB" {% if form.country.value == 'GB' %}selected{% endif %}>United Kingdom 🇬🇧</option>
+          <option value="US" {% if form.country.value == 'US' %}selected{% endif %}>United States 🇺🇸</option>
+          <option value="CA" {% if form.country.value == 'CA' %}selected{% endif %}>Canada 🇨🇦</option>
+          <option value="DE" {% if form.country.value == 'DE' %}selected{% endif %}>Germany 🇩🇪</option>
+          <option value="FR" {% if form.country.value == 'FR' %}selected{% endif %}>France 🇫🇷</option>
+          <option value="OTHER" {% if form.country.value == 'OTHER' %}selected{% endif %}>{% trans "Wata ƙasa..." %}</option>
+        </select>
+        <label for="id_country">{% trans "Ƙasa" %}</label>
+        <span class="select-arrow">▾</span>
+        {% if form.country.errors %}<p class="field-error">{{ form.country.errors.0 }}</p>{% endif %}
+      </div>
+
+      <!-- Birth Day -->
+      <div class="fl-group">
+        <input type="number" name="birth_day" id="id_birth_day"
+               value="{{ form.birth_day.value|default:'' }}"
+               min="1" max="31" placeholder=" "
+               class="{% if form.birth_day.errors %}err{% endif %}">
+        <label for="id_birth_day">{% trans "Rana" %}</label>
+        {% if form.birth_day.errors %}<p class="field-error">{{ form.birth_day.errors.0 }}</p>{% endif %}
+      </div>
+
+      <!-- Birth Month -->
+      <div class="fl-group">
+        <input type="number" name="birth_month" id="id_birth_month"
+               value="{{ form.birth_month.value|default:'' }}"
+               min="1" max="12" placeholder=" "
+               class="{% if form.birth_month.errors %}err{% endif %}">
+        <label for="id_birth_month">{% trans "Wata" %}</label>
+        {% if form.birth_month.errors %}<p class="field-error">{{ form.birth_month.errors.0 }}</p>{% endif %}
+      </div>
+
+      <!-- Birth Year -->
+      <div class="fl-group">
+        <input type="number" name="birth_year" id="id_birth_year"
+               value="{{ form.birth_year.value|default:'' }}"
+               min="1900" max="2020" placeholder=" "
+               class="{% if form.birth_year.errors %}err{% endif %}">
+        <label for="id_birth_year">{% trans "Shekara" %}</label>
+        {% if form.birth_year.errors %}<p class="field-error">{{ form.birth_year.errors.0 }}</p>{% endif %}
+      </div>
+    </div>
+
+    <!-- ── Section: Canza Kalmar Sirri ── -->
+    <div class="section-label">
+      {% trans "Canza Kalmar Sirri" %}
+      <span style="font-size:0.62rem; color:#90a4ae; font-weight:400; text-transform:none; letter-spacing:0;">
+        ({% trans "Bari fanko idan ba ka son canza" %})
+      </span>
+    </div>
+    <div class="grid gap-4 mb-6" style="grid-template-columns: 1fr 1fr 1fr;">
+
+      <!-- Current password -->
+      <div class="fl-group">
+        <input type="password" name="current_password" id="id_current_password"
+               autocomplete="current-password"
+               class="{% if form.current_password.errors %}err{% endif %}">
+        <label for="id_current_password">{{ form.fields.current_password.label }}</label>
+        {% if form.current_password.errors %}
+        <p class="field-error">{{ form.current_password.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- New password -->
+      <div class="fl-group" style="position:relative;">
+        <div style="position:absolute; top:-9px; left:10px; background:#fff; padding:0 4px; display:flex; align-items:center; gap:4px; z-index:1;">
+          <span style="font-size:0.68rem; color:#607d8b; font-weight:700;">{{ form.fields.new_password.label }}</span>
+          <span class="pw-info-wrap">
+            <button type="button" class="pw-info-btn">i</button>
+            <div class="pw-tooltip">
+              <p style="font-size:0.62rem; font-weight:700; color:#c8a84e; margin-bottom:6px; text-transform:uppercase;">{% trans "Sharuddan" %}</p>
+              <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:4px;">
+                <li style="display:flex; gap:5px; align-items:flex-start;"><span style="color:#4ade80;">✓</span><span>{% trans "Haruffa 4 aƙalla" %}</span></li>
+                <li style="display:flex; gap:5px; align-items:flex-start;"><span style="color:#4ade80;">✓</span><span>{% trans "Lambobi kawai yana yiwuwa" %}</span></li>
+              </ul>
+              <div class="pw-tooltip::after"></div>
+            </div>
+          </span>
+        </div>
+        <input type="password" name="new_password" id="id_new_password"
+               autocomplete="new-password"
+               style="padding-top:14px;"
+               class="{% if form.new_password.errors %}err{% endif %}">
+        {% if form.new_password.errors %}<p class="field-error">{{ form.new_password.errors.0 }}</p>{% endif %}
+      </div>
+
+      <!-- Confirm password -->
+      <div class="fl-group">
+        <input type="password" name="confirm_password" id="id_confirm_password"
+               autocomplete="new-password"
+               class="{% if form.confirm_password.errors %}err{% endif %}">
+        <label for="id_confirm_password">{{ form.fields.confirm_password.label }}</label>
+        {% if form.confirm_password.errors %}<p class="field-error">{{ form.confirm_password.errors.0 }}</p>{% endif %}
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+    <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:10px 14px;margin-bottom:14px;">
+      {% for error in form.non_field_errors %}<p style="color:#dc2626;font-size:0.82rem;margin:0;">{{ error }}</p>{% endfor %}
+    </div>
+    {% endif %}
+
+    <button type="submit" class="save-btn">{% trans "Adana Canje-canje" %}</button>
+  </form>
+
+  <p style="text-align:center; margin-top:14px;">
+    <a href="{% url 'books:profile' %}" style="color:#c8a84e; font-size:0.82rem; font-weight:600; text-decoration:none;">
+      ← {% trans "Koma Bayanina" %}
+    </a>
+  </p>
+</div>
+</div>
+
+<script>
+  // Avatar preview
+  document.getElementById('id_avatar').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const preview = document.getElementById('avatarPreview');
+      const placeholder = document.getElementById('avatarPlaceholder');
+      preview.src = ev.target.result;
+      preview.style.display = 'block';
+      if (placeholder) placeholder.style.display = 'none';
+      // Show remove button
+      const box = preview.closest('.avatar-box');
+      let rm = box.querySelector('.avatar-remove');
+      if (!rm) {
+        rm = document.createElement('span');
+        rm.className = 'avatar-remove';
+        rm.textContent = '✕';
+        rm.onclick = function(e) { e.stopPropagation(); clearAvatar(); };
+        box.appendChild(rm);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function clearAvatar() {
+    const preview = document.getElementById('avatarPreview');
+    const placeholder = document.getElementById('avatarPlaceholder');
+    const fileInput = document.getElementById('id_avatar');
+    preview.src = '';
+    preview.style.display = 'none';
+    if (placeholder) placeholder.style.display = '';
+    fileInput.value = '';
+    document.getElementById('clearAvatarInput').value = '1';
+    const rm = document.querySelector('.avatar-remove');
+    if (rm) rm.remove();
+  }
+</script>
+{% endblock %}

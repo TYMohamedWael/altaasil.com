@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n site_text %}
+
+{% block title %}{{ page_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block meta_description %}{{ page.seo_description|default:page_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-500 mb-6">
+        <a href="{% url 'books:home' %}" class="hover:text-primary">{% trans "Gida" %}</a>
+        <span class="mx-2">›</span>
+        <span class="text-gray-700">{{ page_title }}</span>
+    </nav>
+
+    <!-- Page Header -->
+    {% if page.cover_image %}
+    <div class="rounded-xl overflow-hidden mb-8 shadow-lg">
+        <img src="{{ page.cover_image.url }}" alt="{{ page_title }}" class="w-full h-48 md:h-64 object-cover">
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-xl shadow-sm p-6 md:p-10">
+        <!-- Title -->
+        <h1 class="text-2xl md:text-3xl font-bold text-primary mb-2">
+            {% if page.icon %}{{ page.icon }} {% endif %}{{ page_title }}
+        </h1>
+
+        {% if page.get_title != page_title %}
+        <p class="text-sm text-gray-500 mb-6">{{ page.get_title }}</p>
+        {% endif %}
+
+        <hr class="border-gold/30 mb-8">
+
+        <!-- Content -->
+        <article class="prose prose-lg max-w-none
+                        prose-headings:text-primary prose-headings:font-bold
+                        prose-a:text-gold-dark hover:prose-a:text-primary
+                        prose-strong:text-gray-800">
+            {{ page_content|safe }}
+        </article>
+    </div>
+
+    <!-- Updated date -->
+    <p class="text-xs text-gray-400 text-center mt-6">
+        {% trans "An sabunta" %}: {{ page.updated_at|date:"d M Y" }}
+    </p>
+
+</div>
+{% endblock %}

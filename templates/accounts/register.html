@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load i18n site_text %}
+{% block title %}{% trans "page_title_register" %} - {% trans "site_name" %}{% endblock %}
+
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+
+            <!-- Logo / Site name -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md"
+                     style="background:linear-gradient(135deg,#1a5632,#2d7a4a);">
+                    <svg class="w-8 h-8" style="color:#c8a84e;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13
+                                 C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13
+                                 C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13
+                                 C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-primary">{% trans "register_heading" %}</h1>
+                <p class="text-sm text-gray-400 mt-1">{% trans "register_subheading" %}</p>
+            </div>
+
+            <!-- Non-field errors -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-6">
+                {% for error in form.non_field_errors %}
+                <p class="text-red-600 text-sm">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-5 relative" style="overflow: visible;">
+                    <div class="flex items-center gap-2 mb-1.5">
+
+                        {# field.label يجي من forms.py مترجم تلقائياً #}
+                        <label for="id_{{ field.name }}"
+                               class="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            {{ field.label }}
+                        </label>
+
+                        {% if field.name == 'password1' %}
+                        <!-- Password requirements tooltip -->
+                        <div class="relative group cursor-pointer inline-flex" style="overflow:visible;">
+                            <span class="w-4 h-4 rounded-full bg-gray-200 text-gray-600 flex items-center
+                                         justify-center text-[10px] font-bold hover:bg-gold hover:text-white
+                                         transition-colors shadow-sm select-none">i</span>
+                            <div class="pointer-events-none absolute bottom-full mb-2 w-60 p-3 bg-gray-900
+                                        text-white rounded-xl shadow-2xl opacity-0 invisible z-50
+                                        group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                                 style="left:50%; transform:translateX(-50%) translateY(4px);
+                                        transition: opacity .2s ease, transform .2s ease;">
+                                <p class="text-[10px] font-bold text-gold mb-2 uppercase tracking-wide">
+                                    {% trans "tooltip_password_requirements_title" %}
+                                </p>
+                                <ul class="space-y-1.5 text-[11px] leading-relaxed">
+                                    <li class="flex items-start gap-1.5">
+                                        <span class="text-green-400 mt-0.5 shrink-0">✓</span>
+                                        <span>{% trans "tooltip_pw_min_chars" %}</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5">
+                                        <span class="text-green-400 mt-0.5 shrink-0">✓</span>
+                                        <span>{% trans "tooltip_pw_numbers_ok" %}</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5">
+                                        <span class="text-green-400 mt-0.5 shrink-0">✓</span>
+                                        <span>{% trans "tooltip_pw_personal_ok" %}</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5">
+                                        <span class="text-green-400 mt-0.5 shrink-0">✓</span>
+                                        <span>{% trans "tooltip_pw_common_ok" %}</span>
+                                    </li>
+                                </ul>
+                                <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-px
+                                            border-4 border-transparent border-t-gray-900"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <input
+                        type="{{ field.field.widget.input_type|default:'text' }}"
+                        name="{{ field.name }}"
+                        id="id_{{ field.name }}"
+                        {% if field.value %}value="{{ field.value }}"{% endif %}
+                        {% if not 'password' in field.name %}autocomplete="{{ field.name }}"{% else %}autocomplete="new-password"{% endif %}
+                        required
+                        class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm
+                               focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10
+                               transition-all {% if field.errors %}border-red-400 bg-red-50/30{% endif %}"
+                    >
+
+                    {% if field.name == 'username' %}
+                    <p class="text-gray-400 text-[11px] mt-1.5">
+                        {% trans "username_hint" %}
+                    </p>
+                    {% endif %}
+
+                    {% if field.name == 'password1' %}
+                    <!-- Password strength indicator -->
+                    <div class="pw-strength bg-gray-100 mt-2" style="height:4px;border-radius:2px;overflow:hidden;">
+                        <div id="pwStrengthBar" style="height:100%;width:0%;background:#e5e7eb;transition:all .3s;"></div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-1" id="pwStrengthText"></p>
+                    {% endif %}
+
+                    {% if field.errors %}
+                    <p class="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1">
+                        <span>⚠</span> {{ field.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Terms acceptance -->
+                <div class="flex items-start gap-2 mb-6">
+                    <input type="checkbox" name="terms" id="terms" required
+                           class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary/20 mt-0.5">
+                    <label for="terms" class="text-xs text-gray-500 leading-relaxed">
+                        {% trans "terms_accept_label" %}
+                    </label>
+                </div>
+
+                <button type="submit"
+                        class="w-full font-bold py-3 rounded-xl transition-all duration-300 text-white
+                               shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                        style="background-color:#1a5632;">
+                    {% trans "btn_register" %}
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center gap-3 my-6">
+                <div class="flex-1 h-px bg-gray-200"></div>
+                <span class="text-xs text-gray-400">{% trans "divider_or" %}</span>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+            <p class="text-center text-sm text-gray-500">
+                {% trans "already_have_account" %}
+                <a href="{% url 'books:login' %}" class="font-semibold hover:underline" style="color:#c8a84e;">
+                    {% trans "btn_login" %}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var pw = document.getElementById('id_password1');
+    if (!pw) return;
+
+    // ترجمة labels القوة — بتيجي من Django مش hard-coded
+    var strengthLabels = [
+        '',
+        '{% trans "pw_strength_very_weak" %}',
+        '{% trans "pw_strength_weak" %}',
+        '{% trans "pw_strength_medium" %}',
+        '{% trans "pw_strength_strong" %}',
+        '{% trans "pw_strength_very_strong" %}'
+    ];
+    var widths = ['0%', '20%', '40%', '60%', '80%', '100%'];
+    var colors = ['#e5e7eb', '#ef4444', '#f97316', '#eab308', '#22c55e', '#1a5632'];
+
+    pw.addEventListener('input', function () {
+        var val = this.value;
+        var s = 0;
+        if (val.length >= 4) s++;
+        if (val.length >= 8) s++;
+        if (/[A-Z]/.test(val) && /[a-z]/.test(val)) s++;
+        if (/[0-9]/.test(val)) s++;
+        if (/[^A-Za-z0-9]/.test(val)) s++;
+
+        var bar  = document.getElementById('pwStrengthBar');
+        var text = document.getElementById('pwStrengthText');
+        bar.style.width      = widths[s];
+        bar.style.background = colors[s];
+        text.textContent     = strengthLabels[s];
+        text.style.color     = colors[s];
+    });
+})();
+</script>
+{% endblock %}

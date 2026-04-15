@@ -1,0 +1,287 @@
+{% load static %}
+{% load i18n site_text %}
+<!DOCTYPE html>
+<html lang="{{ active_language_code|default:request.LANGUAGE_CODE }}" dir="{{ active_language_direction|default:"ltr" }}" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Altaasil - Dakin Karatu na Ilimi na Musulunci" %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% trans "Manhajar littattafan Musulunci na Hausa." %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}hausa, islamic books, littattafai, musulunci{% endblock %}">
+    <meta name="theme-color" content="#1a5632">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta property="og:title" content="{% block og_title %}{% trans "Altaasil" %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% trans "Dakin Karatu na Ilimi na Musulunci" %}{% endblock %}">
+    <!-- Tailwind CSS: CDN for development, replace with compiled build for production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#1a5632', light: '#2d7a4a', dark: '#0f3d22' },
+                        gold: { DEFAULT: '#c8a84e', light: '#e0c878', dark: '#a88a2e' },
+                        cream: { DEFAULT: '#faf8f0', dark: '#f0ead6' },
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+    <script src="{% static 'js/tailwind.config.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static 'images/og-default.png' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+
+        function trackEvent(action, category, label, value) {
+            gtag('event', action, {
+                'event_category': category,
+                'event_label': label,
+                'value': value
+            });
+        }
+        function trackBookView(bookTitle, category) {
+            trackEvent('view_book', 'Books', bookTitle);
+        }
+        function trackDownload(bookTitle) {
+            trackEvent('download', 'Books', bookTitle);
+        }
+        function trackSearch(query, resultsCount) {
+            trackEvent('search', 'Search', query, resultsCount);
+        }
+    </script>
+
+    <!-- ✅ Heatmap tracking - Fixed for SVG elements -->
+    <script>
+    (function() {
+        var clicks = [];
+        document.addEventListener('click', function(e) {
+            // ✅ SVG elements have className as object, not string
+            var cn = e.target.className;
+            var firstName = typeof cn === 'string' && cn ? '.' + cn.trim().split(/\s+/)[0] : '';
+            clicks.push({
+                x: e.clientX,
+                y: e.clientY,
+                path: (e.target.tagName || '') + firstName,
+                time: Date.now()
+            });
+            if (clicks.length >= 20) {
+                navigator.sendBeacon('/api/analytics/clicks/', JSON.stringify(clicks));
+                clicks = [];
+            }
+        });
+        window.addEventListener('beforeunload', function() {
+            if (clicks.length > 0) {
+                navigator.sendBeacon('/api/analytics/clicks/', JSON.stringify(clicks));
+            }
+        });
+    })();
+    </script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+{% include 'includes/header.html' %}
+
+<!-- Content -->
+<main class="flex-1">
+    {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 mt-4">
+        {% for message in messages %}
+        <div class="p-3 rounded-lg text-sm mb-2 {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-green-50 text-green-700 border border-green-200{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav">
+    <a href="{% url 'books:home' %}" id="bnav-home">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>{% trans "Gida" %}</span>
+    </a>
+    <a href="{% url 'books:book_list' %}" id="bnav-books">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>{% trans "Altaasil" %}</span>
+    </a>
+    <a href="{% url 'books:category_list' %}" id="bnav-categories">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <span>{% trans "Rukunoni" %}</span>
+    </a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'books:profile' %}" id="bnav-profile">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span>{% trans "Ni" %}</span>
+    </a>
+    {% else %}
+    <a href="{% url 'books:login' %}" id="bnav-login">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+        <span>{% trans "Shiga" %}</span>
+    </a>
+    {% endif %}
+</nav>
+
+{% include 'includes/footer.html' %}
+
+<!-- Dark Mode Script -->
+<script>
+    function toggleDark() {
+        document.getElementById('htmlRoot').classList.toggle('dark');
+        var isDark = document.getElementById('htmlRoot').classList.contains('dark');
+        localStorage.setItem('darkMode', isDark);
+        document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+    }
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.getElementById('htmlRoot').classList.add('dark');
+        document.getElementById('darkBtn').textContent = '☀️';
+    }
+</script>
+
+<!-- Mobile menu toggle -->
+<script>
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobileMenu');
+        var openIcon = document.getElementById('menuIcon');
+        var closeIcon = document.getElementById('menuCloseIcon');
+        var btn = document.getElementById('mobileMenuBtn');
+        menu.classList.toggle('open');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+        if (btn) btn.setAttribute('aria-expanded', menu.classList.contains('open'));
+    }
+
+    // Bottom nav active state
+    (function() {
+        var path = window.location.pathname;
+        var navMap = {
+            'bnav-home': ['/', '/ha', '/en', '/ar'],
+            'bnav-books': ['/books/'],
+            'bnav-categories': ['/categories/'],
+            'bnav-profile': ['/profile/'],
+            'bnav-login': ['/login/']
+        };
+        Object.keys(navMap).forEach(function(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            navMap[id].forEach(function(p) {
+                if (path === p || (p !== '/' && path.indexOf(p) !== -1)) {
+                    el.classList.add('active');
+                }
+            });
+        });
+    })();
+</script>
+
+<!-- Notifications -->
+{% if user.is_authenticated %}
+<script>
+    var notifDropdownOpen = false;
+
+    function toggleNotifications() {
+        var dd = document.getElementById('notifDropdown');
+        notifDropdownOpen = !notifDropdownOpen;
+        dd.classList.toggle('open', notifDropdownOpen);
+        if (notifDropdownOpen) fetchNotifications();
+    }
+
+    function fetchNotifications() {
+        fetch('/api/notifications/')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var list = document.getElementById('notifList');
+                var items = data.results || data.notifications || data || [];
+                var unread = 0;
+                if (!Array.isArray(items) || items.length === 0) {
+                    list.innerHTML = '<div class="p-4 text-center text-xs text-gray-400">{% trans "Babu sanarwa" %}</div>';
+                } else {
+                    var html = '';
+                    items.slice(0, 8).forEach(function(n) {
+                        if (!n.is_read) unread++;
+                        html += '<div class="p-3 hover:bg-cream/50 cursor-pointer transition-colors ' + (n.is_read ? 'opacity-60' : '') + '" onclick="markNotifRead(\'' + n.id + '\')">';
+                        html += '<p class="text-sm text-gray-700">' + (n.message || n.title || '') + '</p>';
+                        html += '<p class="text-[10px] text-gray-400 mt-1">' + (n.created_at_display || n.created_at || '') + '</p>';
+                        html += '</div>';
+                    });
+                    list.innerHTML = html;
+                }
+                updateNotifBadge(typeof data.unread_count !== 'undefined' ? data.unread_count : unread);
+            })
+            .catch(function() {
+                document.getElementById('notifList').innerHTML = '<div class="p-4 text-center text-xs text-gray-400">{% trans "Ba a iya loda sanarwa" %}</div>';
+            });
+    }
+
+    function updateNotifBadge(count) {
+        var badge = document.getElementById('notifBadge');
+        var mobileBadge = document.getElementById('mobileNotifBadge');
+        if (count > 0) {
+            badge.textContent = count > 99 ? '99+' : count;
+            badge.classList.remove('hidden');
+            if (mobileBadge) {
+                mobileBadge.textContent = count;
+                mobileBadge.classList.remove('hidden');
+            }
+        } else {
+            badge.classList.add('hidden');
+            if (mobileBadge) mobileBadge.classList.add('hidden');
+        }
+    }
+
+    function markNotifRead(id) {
+        fetch('/api/notifications/' + id + '/read/', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': getCSRF() }
+        }).then(function() { fetchNotifications(); }).catch(function(err){
+            if (typeof showToast === 'function') showToast('{% trans "Ba a iya sabunta sanarwa" %}', 'error');
+        });
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', function(e) {
+        var wrapper = document.getElementById('notifWrapper');
+        if (wrapper && !wrapper.contains(e.target) && notifDropdownOpen) {
+            toggleNotifications();
+        }
+    });
+
+    // Initial fetch for badge count
+    fetchNotifications();
+</script>
+{% endif %}
+
+<!-- PWA Service Worker -->
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{% static "sw.js" %}').catch(function(){});
+    }
+</script>
+<!-- Scroll to top button -->
+<button id="scrollTopBtn" class="scroll-top-btn bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-primary-light transition-all" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="{% trans 'Koma sama' %}">
+    ↑
+</button>
+
+<!-- Toast container -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- External JS -->
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/notifications.js' %}"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

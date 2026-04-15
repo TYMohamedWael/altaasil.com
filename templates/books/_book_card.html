@@ -1,0 +1,75 @@
+{% load site_text %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANG %}
+<a href="{% url 'books:book_detail' slug=book.seo_slug %}" class="block h-full">
+    <div class="bg-white rounded-xl border border-gray-100 overflow-hidden h-full flex flex-col card-scale hover:shadow-lg hover:border-yellow-300/40 group">
+        <!-- Cover Image Area -->
+        <div class="relative h-48 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center overflow-hidden flex-shrink-0">
+            {% if book.cover %}
+            <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            {% else %}
+            <div class="flex flex-col items-center justify-center gap-2">
+                <svg class="w-14 h-14 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span class="text-white/20 text-xs font-medium">{{ book.localized_title|truncatewords:3 }}</span>
+            </div>
+            {% endif %}
+            <!-- Category Badge (top-right) -->
+            {% if book.category %}
+            <div class="absolute top-3 right-3 bg-yellow-500 text-emerald-900 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide shadow-sm" style="background-color:#c8a84e; color:#1a5632;">
+                {{ book.category.localized_name }}
+            </div>
+            {% endif %}
+            <!-- Language Badge (top-left, glass) -->
+            <div class="absolute top-3 left-3 glass text-white text-[10px] px-2.5 py-1 rounded-full flex items-center gap-1">
+                {% if book.language_flag %}<span>{{ book.language_flag }}</span>{% endif %}
+                <span>{{ book.language_label|default:_("Harshen da bai bayyana ba") }}</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="p-4 flex flex-col flex-1">
+            <!-- Title -->
+            <h3 class="font-bold text-gray-800 text-base mb-1 line-clamp-2 group-hover:text-emerald-700 transition-colors leading-snug" style="color:#1a1a1a;">{{ book.localized_title }}</h3>
+
+            <!-- Alternate Title -->
+            {% if book.alternate_title %}
+            <p class="text-sm text-gray-500 mb-2 line-clamp-1" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}">{{ book.alternate_title }}</p>
+            {% endif %}
+
+            <!-- Author -->
+            <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-2">
+                <svg class="w-3.5 h-3.5 flex-shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                <span class="truncate">{{ book.author }}</span>
+            </div>
+
+            <!-- Description -->
+            {% if book.description %}
+            <p class="text-xs text-gray-400 line-clamp-2 mb-3 leading-relaxed">{{ book.description|truncatewords:25 }}</p>
+            {% endif %}
+
+            <!-- Tags -->
+            {% if book.tags %}
+            <div class="flex flex-wrap gap-1.5 mb-3">
+                {% for tag in book.tags|slice:":3" %}
+                <span class="text-[10px] px-2 py-0.5 rounded-full border font-medium" style="background-color:rgba(26,86,50,0.05); color:#1a5632; border-color:rgba(26,86,50,0.1);">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Spacer to push footer down -->
+            <div class="flex-1"></div>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between pt-3 border-t border-gray-50 text-xs">
+                <span class="font-semibold" style="color:#c8a84e;">{% trans "Karanta" %} →</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-400">👁 {{ book.view_count|default:0 }}</span>
+                    {% if book.file %}
+                    <span class="bg-green-50 text-green-600 px-2 py-0.5 rounded-full border border-green-200 text-[10px] font-medium">📄 PDF</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

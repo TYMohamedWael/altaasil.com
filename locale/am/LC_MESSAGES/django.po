@@ -1,0 +1,963 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Littattafan Hausa 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-14 10:58+0200\n"
+"PO-Revision-Date: 2026-03-17 08:46+0000\n"
+"Last-Translator:   <admin@admin.com>\n"
+"Language-Team: Amharic\n"
+"Language: am\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+msgid "الاسم الكامل"
+msgstr "ሙሉ ስም"
+
+msgid "البريد الإلكتروني"
+msgstr "ኢሜይል"
+
+msgid "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+msgstr "የይለፍ ቃሉ ቢያንስ 4 ቁምፊዎች ርዝመት ሊኖረው ይገባል።"
+
+msgid "هذا البريد الإلكتروني مستخدم بالفعل."
+msgstr "ይህ የኢሜይል አድራሻ አስቀድሞ ጥቅም ላይ ውሏል።"
+
+msgid "اسم المستخدم هذا مستخدم بالفعل."
+msgstr "ይህ የተጠቃሚ ስም አስቀድሞ ጥቅም ላይ ውሏል።"
+
+msgid "الاسم الكامل (Display Name)"
+msgstr "ሙሉ ስም (የማሳያ ስም)"
+
+msgid "اسم المستخدم (Username)"
+msgstr "የተጠቃሚ ስም"
+
+msgid "البريد الإلكتروني (Email)"
+msgstr "ኢሜይል"
+
+msgid "الصورة الشخصية"
+msgstr "የግል ፎቶ"
+
+msgid "الدولة"
+msgstr "ግዛት"
+
+msgid "اليوم"
+msgstr "ዛሬ"
+
+msgid "الشهر"
+msgstr "ወር"
+
+msgid "السنة"
+msgstr "አመት"
+
+msgid "كلمة المرور الحالية"
+msgstr "የአሁኑ ሚስጥራዊ ማለፊያ ቁልፍ"
+
+msgid "كلمة المرور الجديدة"
+msgstr "አዲሱን የይለፍ ቃል ያረጋግጡ"
+
+msgid "تأكيد كلمة المرور الجديدة"
+msgstr "አዲሱን የይለፍ ቃል ያረጋግጡ"
+
+msgid "Wannan adireshin email yana amfani da shi."
+msgstr "ይህ የኢሜይል አድራሻ ጥቅም ላይ እየዋለ ነው።"
+
+msgid "Wannan sunan mai amfani yana amfani da shi."
+msgstr "ይህ የተጠቃሚ ስም ጥቅም ላይ እየዋለ ነው።"
+
+msgid "يجب عليك كتابة كلمة المرور الحالية."
+msgstr "የአሁኑን የይለፍ ቃልዎን ማስገባት አለብዎት።"
+
+msgid "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+msgstr "የአሁኑ የይለፍ ቃል የተሳሳተ ነው። እባክዎ እንደገና ይሞክሩ።"
+
+msgid "كلمتا المرور غير متطابقتين."
+msgstr "የመንገድ ማረጋገጫ ቃላት ተመሳሳይ ናቸውንም"
+
+msgid "Hausa"
+msgstr "ሐዘኛ"
+
+msgid "العربية"
+msgstr "አረብኛ"
+
+msgid "English"
+msgstr "እንግሊዝኛ"
+
+msgid "Amharic"
+msgstr "አማርኛ"
+
+msgid "Swahili"
+msgstr "ስዋሂሊ"
+
+msgid "Arabic"
+msgstr "አረብኛ"
+
+msgid "Shiga"
+msgstr "ግባ"
+
+msgid "Littattafan Hausa"
+msgstr "የሃውሳ መጻሕፍት"
+
+msgid "Shiga Asusun ka"
+msgstr "ወደ መለያዎ ይግቡ።"
+
+msgid "Sunan mai amfani (Username)"
+msgstr "የተጠቃሚ ስም"
+
+msgid "Kalmar sirri"
+msgstr "የይለፍ ቃል"
+
+msgid "Ba ka da asusu?"
+msgstr "መለያ የለህም?"
+
+msgid "Yi Rajista"
+msgstr "ተመዝገብ"
+
+msgid "Barka da zuwa!"
+msgstr "እንኳን ደህና መጣህ!"
+
+msgid "Gyara Bayanai"
+msgstr "ውሂብን ያርትዑ"
+
+msgid "Ana Karatu"
+msgstr "Ana Karatu"
+
+msgid "Shafi %(page)s"
+msgstr "ሻፊ %(ገጽሀ)s"
+
+msgid "Jerin Karatu na"
+msgstr "የንባብ ዝርዝሬ"
+
+msgid "Ƙirƙiri sabon jeri"
+msgstr "አዲስ ዝርዝር ይፍጠሩ"
+
+msgid "Sunan jeri"
+msgstr "የዝርዝር ስም"
+
+msgid "Bayani (zaɓi)"
+msgstr "መግለጫ (አማራጭ)"
+
+msgid "Ƙirƙira"
+msgstr "ፍጠር"
+
+msgid "%(count)s littattafai"
+msgstr "በ %(count)s መጻሕፍት"
+
+msgid "Na jama'a"
+msgstr "የህዝብ"
+
+msgid "Ba ka da jerin karatu tukuna."
+msgstr "እስካሁን የንባብ ዝርዝር የለዎትም።"
+
+msgid "Littattafai da na fi so"
+msgstr "የምወዳቸው መጽሐፍት"
+
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr "እስካሁን መጽሐፍ አልመረጥክም።"
+
+msgid "Bincika Littattafai"
+msgstr "መጽሐፍትን ፈልግ"
+
+msgid "..."
+msgstr "..."
+
+msgid "Foto Profil"
+msgstr "የመገለጫ ስዕል"
+
+msgid "Bayanan Asali"
+msgstr "የመጀመሪያው መረጃ"
+
+msgid "Ƙasa da Ranar Haihuwa"
+msgstr "ሀገር እና የትውልድ ቀን"
+
+msgid "Zaɓi Ƙasa"
+msgstr "አገር ምረጥ"
+
+msgid "Wata ƙasa..."
+msgstr "ሌላ ሀገር..."
+
+msgid "Ƙasa"
+msgstr "መሬት"
+
+msgid "Rana"
+msgstr "ራና"
+
+msgid "Wata"
+msgstr "ጨረቃ"
+
+msgid "Shekara"
+msgstr "አመት"
+
+msgid "Canza Kalmar Sirri"
+msgstr "የይለፍ ቃል ቀይር"
+
+msgid "Bari fanko idan ba ka son canza"
+msgstr "መለወጥ ካልፈለጉ ባዶውን ይተዉት።"
+
+msgid "Sharuddan"
+msgstr "ሻሩዳን"
+
+msgid "Haruffa 4 aƙalla"
+msgstr "ሐሩፋ 4 አሊትላ"
+
+msgid "Lambobi kawai yana yiwuwa"
+msgstr "ላምቦቢ ካይ ያንኬ አለበት"
+
+msgid "Adana Canje-canje"
+msgstr "አዳና ካንጄ-ካንጄ"
+
+msgid "Koma Bayanina"
+msgstr "ኮማ ባያኒና\n\n\nPlease note: \"Koma\" seems to be a proper noun ( likely a name), and \"Bayanina\" seems to be a noun or an adjective. Without more context, it's difficult to provide a more accurate translation. If you provide more context or information about the words, I can try to give a more precise translation. \n\nHowever, assuming \"Koma\" is a name and \"Bayanina\" is an adjective, the translation could be:\n\n\n ኮማ (Koma) - ኮማ\nባያኒና (Bayanina) - ባያኒና ( possibly meaning \"my Bayanina\" or \"of Bayanina\")\n\n\nThe translation \"ኮማ ባያኒና\" is a direct transcription of the given phrase, but the actual translation may vary depending on the context in which it is used."
+
+msgid "Jama'a"
+msgstr "ጃማኢ (Jama'a)"
+
+msgid "Sirri"
+msgstr "ስሪ"
+
+msgid "Littattafai %(count)s"
+msgstr "በተአበበ መጽሐፍት %(count)s"
+
+msgid "Raba"
+msgstr "አጋራ"
+
+msgid "Koma"
+msgstr "ተመለስ"
+
+msgid "Cire"
+msgstr "አስወግድ"
+
+msgid "Babu littattafai a cikin wannan jerin"
+msgstr "በዚህ ዝርዝር ውስጥ የባቡ መጽሐፎች"
+
+msgid "An kwafi!"
+msgstr "ተቀድቷል!"
+
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr "አዲስ ቋንቋ ፍጠረ።\n\n(ከሐዘን እንግሊዘኛ በ አማሪክ ቋንቋ የተተረጎመው ፊደል እንደሆነች በሌላ ቋንቋ የተጠቀመችው ቃል እራሱን በ አማሪክ የለውም ብለን አንድ አንድ ቃላት ለማወቅ ታድርገን ስለሆነ የቀረበው ትርጉም እንዲህ አለ)"
+
+msgid "Sharuddan Kalmar Sirri"
+msgstr "ሻሩዳን ካልማር ስሪ"
+
+msgid "Yana iya zama kamar bayanan sirri"
+msgstr "ሚስጥራዊ መረጃ ሊመስል ይችላል።"
+
+msgid "Yana iya zama shahararre"
+msgstr "ይኸ በደስ ነው"
+
+msgid "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+msgstr "ሐረፍት ፣ ላምቦቢ ፣ ዳ አላሞሚ ብቻ — እንደ URL አስታውሳል\n\n(Note: Please keep in mind that Amharic script and translation might vary slightly based on the context and dialect. The above translation is in the standard Amharic script used in Ethiopia.) \n\nሐረፍት (Haruffa) - ቃል \nላምቦቢ (lambobi) - የላምቦ ብ \nዳ አላሞሚ (da alamomi) - የአላሞ የበለጠ \n\nብቻ (kawai) - ብቻ \nእንደ (zai) - እንደ \nአስታውሳል (bayyana a URL) - አስታውሳል ይዘጋጃል \n\n(Translation might have some variations based on the context and the meaning you are trying to convey)"
+
+msgid "Kana da asusu?"
+msgstr "እንዴት አማሪኮ ነው፣ አንተ ከማን ያስታወቁህ፣ አማሪኮ ትርጉም እንግሊዘኛ በአማሪኮ ማን ነው።"
+
+msgid "Models in the %(name)s application"
+msgstr "በ%(name)s አፕሊኬሽን ውስጥ ሞዴሎች"
+
+msgid "Model name"
+msgstr "ሞዴል ስም"
+
+msgid "Add link"
+msgstr "ሊንክ አክሎ"
+
+msgid "Change or view list link"
+msgstr "ቀውስ ወይም ዝርዝር ማያይዣ አስረጃ"
+
+msgid "Add"
+msgstr "ጨምረው"
+
+msgid "View"
+msgstr "እናሳ (inasa) \n\nor \n\nአይሆን (ayihon)"
+
+msgid "Change"
+msgstr "ለውጥ"
+
+msgid "You don’t have permission to view or edit anything."
+msgstr "በማንኛውም ነገር ላይ መመልከት ወይም አሻሽሎን መቻል የለብዎት።"
+
+msgid "Translations (Rosetta)"
+msgstr "ትርጉሞች (ሮሴታ)"
+
+msgid "Manage translations"
+msgstr "ትርጉሞችን አያይዛችሁ"
+
+msgid "Open"
+msgstr "ኮተት (Kotet)"
+
+msgid "Littattafan Hausa - Dakin Karatu na Ilimi na Musulunci"
+msgstr "የሃውሳ መጻሕፍት - የእስልምና እውቀት ቤተ መጻሕፍት"
+
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr "የሃውሳ ቋንቋ የእስልምና መጻሕፍት መድረክ።"
+
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr "የእስልምና እውቀት ቤተ መጻሕፍት"
+
+msgid "DAKIN KARATU NA ILIMI"
+msgstr "የእውቀት ቤተ መጻሕፍት"
+
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr "መጽሐፍ፣ ደራሲ ወይም ርዕስ ፈልግ..."
+
+msgid "Sanarwa"
+msgstr "ማሳወቂያዎች"
+
+msgid "Duba duka"
+msgstr "ሁሉንም ይመልከቱ"
+
+msgid "Ana loda..."
+msgstr "በመጫን ላይ..."
+
+msgid "Gida"
+msgstr "መነሻ ገጽ"
+
+msgid "Littattafai"
+msgstr "መጻሕፍት"
+
+msgid "Rukunoni"
+msgstr "ምድቦች"
+
+msgid "Nemo littafi..."
+msgstr "መጽሐፍ ፈልግ..."
+
+msgid "Ni"
+msgstr "እኔ"
+
+msgid "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr "ሙስሊም ፊደል አማረኛ. እኛ ሙስሊም ሕክምኖችን ወደ አማሪኮ ቋንቋ ለማቅረብ እና ለማከፍተን፣ የሙስሊም ትምህርትን በአማሪኮ ቋንቋ ለዓለም አቀፍ እንልካለን።"
+
+msgid "Hanyoyi"
+msgstr "ማስፈንጠሪያዎች"
+
+msgid "Game da mu"
+msgstr "ስለ እኛ"
+
+msgid "Akida"
+msgstr "አቂዳህ"
+
+msgid "Fikhu"
+msgstr "ፊቅህ"
+
+msgid "Hadisi"
+msgstr "ሐዲስ"
+
+msgid "Tafsiri"
+msgstr "ተፍሲር"
+
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr "ባለቤት ፡ 2026 ሊታታፋን ሐውሳ. ሁሉም መብቶች ተጠብቀው ነው።"
+
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr "ለሃውሳ ማህበረሰብ በ❤️ የተገነባ"
+
+msgid "Babu sanarwa"
+msgstr "ምንም ማሳወቂያ የለም"
+
+msgid "Ba a iya loda sanarwa"
+msgstr "ማሳወቂያዎችን መጫን አልተቻለም"
+
+msgid "?"
+msgstr "It seems like there's no text to translate. Please provide the text you'd like me to translate into Amharic."
+
+msgid "Karanta"
+msgstr "አንብብ"
+
+msgid "Game da Littattafan Hausa"
+msgstr "ጨዋታዎችና ሐረሪ መጻሕፍት"
+
+msgid "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr "ይህ ግራጫልን አማሪክ ለማሳደስ እንሞክረዋለን:\nላቲፖተፎን ሐዩሳ የትምህርት ማሕበረሰብ ድር ሆኖ ሐይሳ ለሙስሊሞች በሐዩሳ ቋንቋ የተተረጎመውን መጽሐፍትን ይዘንባል። እኛ ማንየ በቅርበታማነት የሙስሊም ትምህርትን ለህዝብ በሙሉ በዓለም አቅጣጫ ለሐይሳ ሕዝብ በቅርበታማነት ማቅረብ ነው።\nሐዩሳ ቋንቋን በፕሮግራም ቋንቋ ለማስተርጃም በአማሪክ ቋንቋ ለማስተርጃም ይህን ገጽን ለማዳመጥ እንችላለን፤ \nላቲፖተፎን ሐዩሳ በድር ትምህርት ማሕበረሰብ ነው። የሙስሊም መጽሐፍትን በሐዩሳ ቋንቋ አውቆታል። ማንዮ የዚህ ማሕበረሰብ በዓለም አቀፍ ለህዝብ ትምህርቱን በሰንበተኞ አዳዲስ ፈጠራ በረዥም ማቅረብ ነው።"
+
+msgid "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr "ከ1,780 በላይ መጻሕፍትን ለመሰብሰብ፣ ለመተርጎም እና ምርምርንና ትንተናን ለማመቻቸት ሙሉ መግለጫዎችን እና ኢንዴክሶችን በመስመር ላይ ለማተም እየሰራን ነው።"
+
+msgid "Tattara Ilimi"
+msgstr "ታታራ ኢሊሚ \n\n(Note: Tattara Ilimi seems to be a name or phrase that doesn't have a direct Amharic equivalent. I've simply transcribed it using the Ge'ez script, which is used to write Amharic. If you could provide more context, I may be able to help you better.)"
+
+msgid "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+msgstr "ሙና በአለማችን ከየትም እስላማዊ መጻሕፍትን አማሪኛ ለማንበብ እንወስናለን።"
+
+msgid "Fassara Duniya"
+msgstr "ዓለምን ተርጉም"
+
+msgid "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr "ሙና በእስማኤል መልእክትን ለሁሉ ማቀረብ ለማለት መጽሐፍቶችን ለ10 ቋንቋዎች ትረጳላ"
+
+msgid "Daidaiton Ilimi"
+msgstr "ዳይዳይተን ኢሊሚ"
+
+msgid "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+msgstr "እያንዳንዱ መጽሐፍ የመረጃውን ጥራት ለማረጋገጥ በአካዳሚክ ባለሙያዎች ይገመገማል።"
+
+msgid "Fasaha ta AI"
+msgstr "ፍራሚንግ አይ"
+
+msgid "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+msgstr "ማና አቅል እና ዐቢ ብሎገር በማንቀሳቀስ ለፅሁፍ ማሳተም፣ ተራራቅ ማድረስ፣ እና SEO ማዘጋጀት ያገለግላሉ።"
+
+msgid "Ƙididdigar"
+msgstr "ስሌት"
+
+msgid "Ƙididdigar (Analytics)"
+msgstr "ማስረጃ (Masrej'a)"
+
+msgid "Duba yadda ake amfani da dakin karatu"
+msgstr "ቤተ መፃህፍቱን እንዴት እንደሚጠቀሙበት ይመልከቱ"
+
+msgid "7 kwanaki"
+msgstr "ሰብቶን ኪንን ሰብት"
+
+msgid "30 kwanaki"
+msgstr "ሠላሳ ቀን"
+
+msgid "90 kwanaki"
+msgstr "በ 90 ቀናት"
+
+msgid "Duka"
+msgstr "ቢት"
+
+msgid "Fitar da CSV"
+msgstr "ፊታራቸውን በ CSV ፋይል ላይ ይጫንጥሱ"
+
+msgid "Ayyukan Masu Amfani"
+msgstr "የተጠቃሚ እንቅስቃሴዎች"
+
+msgid "Masu karatu masu aiki"
+msgstr "ተማሪዎች በአስተማሪዎች"
+
+msgid "Matsakaicin lokacin karatu"
+msgstr "ማጣሰራቸውን በጥንት ጊዜ ማጥራት"
+
+msgid "Bita'i"
+msgstr "ቢታኢ"
+
+msgid "Sharhi"
+msgstr "ሻህሪ"
+
+msgid "Ayyuka na Yau da Kullum"
+msgstr "ዕለታዊ እና ዕለታዊ እንቅስቃሴዎች"
+
+msgid "Rabon Rukunoni"
+msgstr "የቡድን አጋራ"
+
+msgid "Littattafan da aka fi Duba"
+msgstr "የተወዳደረች መጽሐፍት በውቤት"
+
+msgid "Kalmomin Bincike"
+msgstr "ፍለጋ ቁልፍ ቃላት"
+
+msgid "Babu bayanan bincike tukuna."
+msgstr "እስካሁን ምንም የምርምር መረጃ የለም።"
+
+msgid "Yanayin Saukewa"
+msgstr "የማውረጃ ሁነታ"
+
+msgid "Sabon Ra'ayoyi"
+msgstr "አዳዲስ ሀሳቦች"
+
+msgid "%(time)s da suka wuce"
+msgstr "በ%(time)s ሰአት ይሆናል"
+
+msgid "Babu ra'ayoyi tukuna."
+msgstr "እስካሁን ምንም አስተያየቶች የሉም።"
+
+msgid "Bincike"
+msgstr "ፍለጋ"
+
+msgid "Saukewa"
+msgstr "ወርዶች"
+
+msgid "(%(count)s "
+msgstr "መለጠፊያ:(%(count)s"
+
+msgid "bita'i"
+msgstr "ቢታኢ"
+
+msgid "Harshen da bai bayyana ba"
+msgstr "ያልተጠቀሰ ቋንቋ"
+
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr "እንደ ማረጋገጫ በስነ ምግባር"
+
+msgid "Karanta Yanzu"
+msgstr "አሁን አንብብ"
+
+msgid "Sauke PDF"
+msgstr "PDF አውርድ"
+
+msgid "PDF ba a samu ba tukuna"
+msgstr "PDF እስካሁን አልተዘጋጀም"
+
+msgid "Ƙara zuwa Jeri"
+msgstr "ወደ ዝርዝር ጨምር"
+
+msgid "Zaɓi jerin karatu"
+msgstr "ከቅርብ ጋር ፅሑፍ ይሳይት"
+
+msgid "bayyananne"
+msgstr "ግልጽ"
+
+msgid "Kwafi Haɗin gwiwa"
+msgstr "አገናኝ ቅዳ"
+
+msgid "Ƙarin zaɓuɓɓuka"
+msgstr "በዚህ ላይ እንማረጥ"
+
+msgid "Kallon"
+msgstr "ዕይታዎች"
+
+msgid "Favorites"
+msgstr "የፈላጆች"
+
+msgid "Ci gaban Karatu"
+msgstr "የንባብ ሂደት"
+
+msgid "daga %(total)s"
+msgstr "የጠቅላላ ድሀ %(ጠቅላላ)s ዳጋ"
+
+msgid "Bayani game da Littafi"
+msgstr "ስለ መጽሐፉ"
+
+msgid "Abubuwan da ke ciki"
+msgstr "ዝርዝር ይዘቶች"
+
+msgid "Saurara"
+msgstr "አዳምጥ"
+
+msgid "Gudun sauti"
+msgstr "ጉድን ስአትን "
+
+msgid "Bita'i da Ra'ayoyi"
+msgstr "ብጤ ዳ ራአዮይ"
+
+msgid "%(count)s bita'i"
+msgstr "በ%(count)s በኩል"
+
+msgid "Rubuta bita'i"
+msgstr "ግምገማ ጻፍ"
+
+msgid "Ƙima"
+msgstr "\"ቅማ\""
+
+msgid "Taken bita'i"
+msgstr "ተነፋ"
+
+msgid "Rubuta ra'ayin ka..."
+msgstr "አስተያየትዎን ይፃፉ..."
+
+msgid "Aika Bita'i"
+msgstr "አይካ ቢጣይ"
+
+msgid "don rubuta bita'i"
+msgstr "ግምገማ ለመጻፍ"
+
+msgid "da suka wuce"
+msgstr "በፊት"
+
+msgid "Babu bita'i tukuna. Ka zama na farko!"
+msgstr "ባቡ ቢታይ ቱኩና. ካ ዛማ ና ፈርኮ!"
+
+msgid "Tattaunawa"
+msgstr "ተጠባበቅ"
+
+msgid "Rubuta sharhi..."
+msgstr "ለማተሚያ፣አወጣህን ጻፍ።"
+
+msgid "Aika"
+msgstr "አይካ"
+
+msgid "don rubuta sharhi"
+msgstr "የመጀመሪያው ንግግርን ጻፍ።"
+
+msgid "Amsa"
+msgstr "አምሳ"
+
+msgid "Rubuta amsa..."
+msgstr "መልስ ጻፍ..."
+
+msgid "Soke"
+msgstr "ሶኬ "
+
+msgid "Babu sharhi tukuna. Ka fara tattaunawa!"
+msgstr "እስካሁን ምንም አስተያየት የለም። ውይይቱን ጀምር!"
+
+msgid "Bayanan Littafi"
+msgstr "በአማሪን ቋንቋ \"Bayanan Littafi\" የሚቀርብ ከሆነ \"ባያናን ማህደር\" ሊሆን ይችላል። \n\nባያናን ማህደር በአማሪኮ፡ ባያናን ማህደር (Bayanan Littafi) እንደሆነ፡ ይተረጎማል።"
+
+msgid "Rukuni"
+msgstr "ሩኩኒ"
+
+msgid "Ƙaramin Rukuni"
+msgstr "The translation of \"Ƙaramin Rukuni\" to Amharic is \"ማክሰን ቡድን\". \n\nHowever, \"Ƙaramin Rukuni\" seems to be in Hausa language which is spoken in Nigeria. The translation of \"Ƙaramin Rukuni\" from Hausa to Amharic is \"ከፊል ቡድን\" or \"በጣም ታህሣስ\"."
+
+msgid "Harshe"
+msgstr "ሃርሸ"
+
+msgid "Hali"
+msgstr "ሀሊ"
+
+msgid "PDF Akwai"
+msgstr "ፒደኤፍ አለ"
+
+msgid "Babu PDF"
+msgstr "ባቡ ፒዲኤፍ"
+
+msgid "Littattafai masu alaƙa"
+msgstr "ተዛማሚ መጻሕፍት"
+
+msgid "Tabbatar da share wannan sharhi?"
+msgstr "The text you provided is in Hausa, not a language I can directly work with to translate to Amharic. However, I can try to understand the context and provide a possible translation based on my knowledge.\n\n\"Tabbatar\" in Hausa means \"Confirm\" or \"Verify\", \"da\" is a preposition that can mean \"of\" or \"from\", \"share\" could be interpreted as \"the\" or \"a\" in this context, and \"wannan\" means \"this\", and \"sharhi\" means \"comment\".\n\nSo, the translation of \"Tabbatar da share wannan sharhi\" from Hausa to English could be \"Confirm this comment\".\n\nNow, translating \"Confirm this comment\" into Amharic:\n\nእንደዚህ አስተያየትን ይቀልብሉ (Endezih asteyayeten yiqelbllu)\n\nNote: Amharic uses its own unique script, so the translation provided is in the Latin alphabet for easier reading."
+
+msgid "Kuskure ya faru. Sake gwadawa."
+msgstr "It seems like you provided a phrase that might be in a different language, possibly Hausa. \n\nIf I'm correct, the translation to Amharic would be:\nተቃውሞ አይኑ. እራት አድራጊ.\n\nHere's a breakdown:\n- Kuskure = ተቃውሞ (complaint or protest)\n- ya = አይኑ (of the donkey)\n- faru = (donkey)\n- Sake = እራት (food or something to eat)\n- gwadawa = አድራጊ (give or provide for the donkey)"
+
+msgid "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+msgstr "It seems you provided a text in Hausa, not English. Nevertheless, I can translate it to Amharic for you. Here it is:\n\nባቡ ገለ ቃላት. አንድ ይፈጥረው በገጽታዎ ላይ.\n\nPlease let me know if you need any further assistance or have any other text you'd like me to translate."
+
+msgid "Ba a iya loda jerin"
+msgstr "It seems like \"Ba a iya loda jerin\" is not in English, but rather in Hausa. If I'm correct, the translation of \"Ba a iya loda jerin\" from Hausa to Amharic would be:\n\nእንደ አይታወር የማይቀረን\n\nHowever, please note that \"Ba a iya loda jerin\" is in Hausa, and it translates to \"it's not possible to load the list\" in English.\n\nIf you'd like, I can provide the translation from English to Amharic, which would be:\n\nየማይቀረን ነው\n\nPlease let me know which one is correct, or if I'm mistaken, please provide more context."
+
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr "በቤተ-መጻሕፍታችን ያሉ ሁሉም መጻሕፍት"
+
+msgid "Tsara:"
+msgstr "ደርደር:"
+
+msgid "Sabbin"
+msgstr "አዳዲሶቹ"
+
+msgid "Mafi kallo"
+msgstr "በብዛት የታዩ"
+
+msgid "Mafi ƙima"
+msgstr "ከፍተኛ ደረጃ ያላቸው"
+
+msgid "Mafi saukewa"
+msgstr "በብዛት የወረዱ"
+
+msgid "Harshe:"
+msgstr "ቋንቋ:"
+
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr "የፈለገ ውጤት: \"(%ኪዊሪስ)s\" \n\nትርጉም፡- ፈለገው ውጤት: \"(የፈለገው ጥያቄ)s\" \n\nነገር ግን ቃሉ \"ሳካማኮን\" በአማሪኮ ቋንቋ እንደ \"ፈለገው\" ወይም \"የቀረበ ውጤት\" ትርጉም ሊሰካረው አይችልም።"
+
+msgid "Ba a sami littattafai ba."
+msgstr "ምንም መጽሐፍ አልተገኘም።"
+
+msgid "Ƙara nuna"
+msgstr "ተጨማሪ አሳይ"
+
+msgid "Baya"
+msgstr "ቀዳሚ"
+
+msgid "Gaba"
+msgstr "ቀጣይ"
+
+msgid "~%(mins)s "
+msgstr "ጊዜው ~(ደቂቁ)%(mins)s"
+
+msgid "min"
+msgstr "ሚን"
+
+msgid "Rubutu"
+msgstr "ራቡṭu \n\nራቡጡ \n\nPlease note, the word \"Rubutu\" is not a commonly known word in the English language. If you can provide more context, I can give a more accurate translation to Amharic."
+
+msgid "Ƙarami"
+msgstr "\"ታከከል\" (takakal)"
+
+msgid "Matsakaici"
+msgstr "I couldn't find any information on the word \"Matsakaici\". It's possible that it's a word from a specific language or dialect that I'm not familiar with. Can you please provide more context or information about the word \"Matsakaici\" so I can better assist you?\n\nIf you meant to type a different word, please feel free to provide it, and I'll do my best to translate it to Amharic for you.\n\nእንደማይታወቀኝ ስም ማትሳካኢሲ ነው። የሚችለው ከቋንቋ ወይም ልሳነ ሳህተኛ እንዳይተው ነው። እባክዎ የስም ማትሳካኢሲ የተጨማሪ መረጃ አቅርብኝ።\n\nማንኛውንም የስም አስተሪን እንደተፈለገ እንደእንስሳ የአማሪኮ ቋንቋ ትርጉም እፈልጋለሁ።"
+
+msgid "Babba"
+msgstr "ባባ (Baba)"
+
+msgid "Babba ƙwarai"
+msgstr "ባብቧ ቃራይ \n\n(Babba ƙwarai is a Hausa phrase, I translated it to Amharic as \"ባብቧ ቃራይ\")"
+
+msgid "Fari"
+msgstr "ፋሪ"
+
+msgid "Duhu"
+msgstr "ዱሁ"
+
+msgid "Alamomin shafi"
+msgstr "አላሞሚን ሻፊ \n\n(Note: Please keep in mind that Amharic uses its own script, so the translation is written in the Latin alphabet for your convenience, but it's not the traditional way of writing Amharic.)"
+
+msgid "Gajerun hanyoyi"
+msgstr "ገንዘብ መንገዶች"
+
+msgid "Cika Allo"
+msgstr "ቢካ አሎ"
+
+msgid "Buga"
+msgstr "ቡጋ"
+
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr "እችላለሁ ከዚህ ፒዲኤፍ ውስጥ ጽሁፍ ማረድ አችላለሁ"
+
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr "ይህ ሊከበረው የሚችለው እንደሚከበረው ፒዲኤፍ ማለት ነው። እንደሚከበረው ፒዲኤፍ ፎቶግራፎችን ብቻ ካለው ነው።"
+
+msgid "Duba PDF Viewer"
+msgstr "ዱባ ፒዲኤፍ አይረር"
+
+msgid "Ana loda PDF..."
+msgstr "አንተ ሎዳ ፒዲኤፍ... \n\n(Note: \"Ana\" in Spanish or other languages might mean \"I\" or \"me\", but in Amharic, \"አንተ\" is the correct translation for \"you\". \"ሎዳ\" is the Amharic word for \"Loda\" which seems to be a name, and \"ፒዲኤፍ\" is the Amharic translation of the English acronym \"PDF\" standing for Portable Document Format.)"
+
+msgid "Rage girma"
+msgstr "ራጅ ግርማ \n\n(Raj giirma)"
+
+msgid "Ƙara girma"
+msgstr "በጣም የታሰበ"
+
+msgid "Alamar shafi"
+msgstr "አላማር ሻፊ"
+
+msgid "Babu alamomin shafi tukuna"
+msgstr "ባቡ አላሞሚን ሻፊ ቱኩና\n\nNote: Please keep in mind that \"Babu alamomin shafi tukuna\" seems to be a phrase that might not be in a widely spoken language, and I'm assuming it's not in Amharic. Amharic is a Semitic language spoken in Ethiopia, and it uses a unique alphabet. \n\nIf you could provide more context or information about the language and script of the original phrase, I'd be happy to try and assist you further."
+
+msgid "Shafi na gaba"
+msgstr "ሻፊ ና ጋባ \n\n(Note: \"Shafi na gaba\" is already an Amharic phrase. Shafi means \"Shafi\" which is a name and \"na\" means \"and\" while \"gaba\" means \"front\" but in this context, I translated it as it seems like it's a name or a phrase. If you want to translate \"Shafi\" and \"gaba\" to English, it's \"Shafi and front\")"
+
+msgid "Shafi na baya"
+msgstr "ሻፊ ና ባያ \n\n(Note: The given phrase seems to be in Hausa language, and it means \"Good and Bad\" in English. Here is the translation to Amharic) \n\nጥሩ እና መጥሩ"
+
+msgid "Ƙara girman rubutu"
+msgstr "ቃለ መጠይቅን ደማረጥ"
+
+msgid "Rage girman rubutu"
+msgstr "ራጅ ግርማ ሩቡጡ \n\nNote: Please keep in mind that Amharic uses its own alphabet, known as Ge'ez or Ethiopic script, and the translation provided above is written in that script. If you need a romanization or a transliteration of the translation, it would be \"Raji Germna Rubutu\" (using a simplified transliteration system)."
+
+msgid "Cika allo"
+msgstr "ቺካ አሎ (እንግሊዘኛውን አማርኛ ለማትረጃረጅ እዚህ ላይ ነበረን) ቻይና አገር ነው። \n\nአማርኛ ትርጉም፡ ቺካ የቻይና ስነ ስሮቻዊ ጥበብ ማሳዕለቢያ የኮሮንቫይረስ ቫይረስ 2019 ነበረ - በቺካው ቻይናውያን ተጠቃሚ ሰዎችን በማንበረከታቸው።\n\nትርጉም ፡ እንግሊዛን ከቻይና ቀዳሚ  ነው። \n\nእንግሊዛን ከቻይና ቀዳሚ  \"China\"  \"ቺካ\" እንዲሁም \"ኮሮንቫይረስ\" \"ኮሮና\" እንዲሁም እንግሊዛን ከቻይና ቀዳሚ."
+
+msgid "Rufe"
+msgstr "ሩፈ"
+
+msgid "Shafi"
+msgstr "ሻፊ"
+
+msgid "Ƙarshen Littafi"
+msgstr "መጽሐፍን ጨምረው"
+
+msgid "Koma ga Bayani"
+msgstr "ኮማ ጋ ባያኒ"
+
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr "እባክህ ትምህርት ቡድን ይምረጥ።"
+
+msgid "📚 Littattafai 1,780+ na Musulunci"
+msgstr "📚 1,780+ ያህሉ የእስልምና መጻሕፍት"
+
+msgid "Dakin Karatu na Ilimi"
+msgstr "የእውቀት ቤተ-መጻሕፍት"
+
+msgid "na Musulunci"
+msgstr "ኢስላማዊ"
+
+msgid "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr "ሙስሊም በሐይልስላሚክ ቋንቋ በአማሪኛ፡- ሙስሊሞች በሐይልስላሚክ ቋንቋ ከፍተኛ መጽሐፍት። በሞደርን ቴክኖሎጂና ተሰብስቦ፣ ተተረጎመ፣ ተዘጋጀ።"
+
+msgid "📖 Bincika Littattafai"
+msgstr "📖 መጻሕፍትን ፈልግ"
+
+msgid "🔍 Nemo Maudu'i"
+msgstr "🔍 ርዕሶችን ፈልግ"
+
+msgid "Marubuta"
+msgstr "ደራሲዎች"
+
+msgid "Harsuna"
+msgstr "ቋንቋዎች"
+
+msgid "Masu Karatu"
+msgstr "አንባቢዎች"
+
+msgid "Zaɓi rukunin da kake so"
+msgstr "የሚፈልጉትን ምድብ ይምረጡ"
+
+msgid "Sababbin Littattafai"
+msgstr "አዳዲስ መጻሕፍት"
+
+msgid "An ƙara su kwanan nan"
+msgstr "በቅርቡ የተጨመሩ"
+
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr "እስካሁን ምንም መጽሐፍ አልታከለም። ከአስተዳዳሪ ፓናሉ በኩል መጽሐፍ ጨምሩ።"
+
+msgid "Taimaka wajen yada ilimi"
+msgstr "እውቀት ለማስፋፋት ይርዱ"
+
+msgid "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+msgstr "ኢድኖም እንደ ሙስሊም አማሪኮች ሀዊሳ መጽሐፍት አለክ ይሁን እንክን ይህንን ለቤቴ ማእከል ተቀምጥ አድስ"
+
+msgid "Karanta duka"
+msgstr "ካራንታ ዱካ"
+
+msgid "Duba"
+msgstr "ዱባ"
+
+msgid "Yi alama a matsayin an karanta"
+msgstr "ይህ ምልክት እንደ እንተርፕሬተሽን ይሰራል"
+
+msgid "Ba a haɗa da yanar gizo ba"
+msgstr "በኢንተርኔት ላይ አለንህስ"
+
+msgid "Ka duba haɗin yanar gizo ka sake gwadawa"
+msgstr "ካበረከት ድረ ግንብ አውጣና እንደገና ይጀምረው።"
+
+msgid "Sake gwadawa"
+msgstr "ሳኬ ጎዳዋ"
+
+msgid "Shekaru {{ age }}"
+msgstr "ዕድሜ {{ age }}"
+
+msgid "Ƙarin Bayani"
+msgstr "ተጨማሪ መረጃ"
+
+msgid "Misali: +234 801 234 5678"
+msgstr "ምሳሌ: +234 801 234 5678"
+
+msgid "Suna Cikakke (Display Name)"
+msgstr "ሙሉ ስም"
+
+msgid "Sunan Mai Amfani (Username)"
+msgstr "የተጠቃሚ ስም"
+
+msgid "Imel (Email)"
+msgstr "ኢሜይል"
+
+msgid "Hoton Profil"
+msgstr "የመገለጫ ፎቶ"
+
+msgid "Jinsi"
+msgstr "ጾታ"
+
+msgid "Lambar Waya"
+msgstr "ስልክ ቁጥር"
+
+msgid "Kalmar Sirri ta Yanzu"
+msgstr "የአሁኑ የይለፍ ቃል"
+
+msgid "Sabuwar Kalmar Sirri"
+msgstr "አዲስ የይለፍ ቃል"
+
+msgid "Tabbatar Kalmar Sirri"
+msgstr "የይለፍ ቃል አረጋግጥ"
+
+msgid "Suna dole ne ya kasance haruffa 8 aƙalla."
+msgstr "ሙሉ ስም ቢያንስ 8 ቁምፊዎች መሆን አለበት።"
+
+msgid "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+msgstr "የተጠቃሚ ስም ቢያንስ 8 ቁምፊዎች መሆን አለበት።"
+
+msgid "Lambar waya ba daidai ba ce."
+msgstr "ስልክ ቁጥሩ ልክ አይደለም።"
+
+msgid "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+msgstr "ስልክ ቁጥር ከ7 እስከ 15 አሃዞች መሆን አለበት።"
+
+msgid "Dole ne ka rubuta kalmar sirri ta yanzu."
+msgstr "የአሁኑን የይለፍ ቃልዎን ማስገባት አለብዎት።"
+
+msgid "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+msgstr "የአሁኑ የይለፍ ቃል ትክክል አይደለም። እንደገና ይሞክሩ።"
+
+msgid "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+msgstr "የይለፍ ቃል ቢያንስ 4 ቁምፊዎች መሆን አለበት።"
+
+msgid "Kalmomin sirri biyu ba ɗaya ba ne."
+msgstr "ሁለቱ የይለፍ ቃሎች አይመሳሰሉም።"
+
+msgid "page_title_register"
+msgstr "ይመዝገቡ"
+
+msgid "register_heading"
+msgstr "አዲስ መለያ ይፍጠሩ"
+
+msgid "register_subheading"
+msgstr "ወደ ቤተ መጻሕፍታችን ይግቡ"
+
+msgid "field_label_full_name"
+msgstr "ሙሉ ስም"
+
+msgid "field_label_username"
+msgstr "ተጠቃሚ ስም"
+
+msgid "field_label_email"
+msgstr "ኢሜይል"
+
+msgid "field_label_password"
+msgstr "የይለፍ ቃል"
+
+msgid "field_label_password_confirm"
+msgstr "የይለፍ ቃል ያረጋግጡ"
+
+msgid "btn_register"
+msgstr "ይመዝገቡ"
+
+msgid "already_have_account"
+msgstr "ቀድሞውኑ መለያ አለዎት?"
+
+msgid "divider_or"
+msgstr "ወይም"
+
+msgid "btn_login"
+msgstr "ግባ"
+
+msgid "username_hint"
+msgstr "ፊደላት፣ ቁጥሮች እና ምልክቶች ብቻ — በURL ውስጥ ይታያል"
+
+msgid "terms_accept_label"
+msgstr "በውሎች፣ ሁኔታዎች እና የግላዊነት ፖሊሲ እስማማለሁ"
+
+msgid "tooltip_password_requirements_title"
+msgstr "የይለፍ ቃል መስፈርቶች"
+
+msgid "tooltip_pw_min_chars"
+msgstr "ቢያንስ 4 ቁምፊዎች"
+
+msgid "tooltip_pw_numbers_ok"
+msgstr "ቁጥሮች ብቻ ይፈቀዳሉ"
+
+msgid "tooltip_pw_personal_ok"
+msgstr "ከግል መረጃ ጋር ተመሳሳይ ሊሆን ይችላል"
+
+msgid "tooltip_pw_common_ok"
+msgstr "የተለመደ ሊሆን ይችላል"
+
+msgid "pw_strength_very_weak"
+msgstr "በጣም ደካማ"
+
+msgid "pw_strength_weak"
+msgstr "ደካማ"
+
+msgid "pw_strength_medium"
+msgstr "መካከለኛ"
+
+msgid "pw_strength_strong"
+msgstr "ጠንካራ"
+
+msgid "pw_strength_very_strong"
+msgstr "በጣም ጠንካራ"
+
+msgid "error_password_min_length"
+msgstr "የይለፍ ቃሉ ቢያንስ 4 ቁምፊዎች ርዝመት ሊኖረው ይገባል።"
+
+msgid "error_email_exists"
+msgstr "ይህ የኢሜይል አድራሻ አስቀድሞ ጥቅም ላይ ውሏል።"
+
+msgid "error_username_exists"
+msgstr "ይህ የተጠቃሚ ስም አስቀድሞ ጥቅም ላይ ውሏል።"
+
+msgid "error_current_password_required"
+msgstr "የአሁኑን የይለፍ ቃልዎን ማስገባት አለብዎት።"
+
+msgid "error_current_password_wrong"
+msgstr "የአሁኑ የይለፍ ቃል የተሳሳተ ነው። እባክዎ እንደገና ይሞክሩ።"
+
+msgid "error_passwords_mismatch"
+msgstr "ሁለቱ የይለፍ ቃል መስኮች አልተዛመዱም።"
+

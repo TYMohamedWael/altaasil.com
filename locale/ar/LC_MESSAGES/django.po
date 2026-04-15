@@ -1,0 +1,959 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-14 10:58+0200\n"
+"PO-Revision-Date: 2026-03-17 08:48+0000\n"
+"Last-Translator:   <admin@admin.com>\n"
+"Language: ar\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+msgid "الاسم الكامل"
+msgstr ""
+
+msgid "البريد الإلكتروني"
+msgstr ""
+
+msgid "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+msgstr ""
+
+msgid "هذا البريد الإلكتروني مستخدم بالفعل."
+msgstr ""
+
+msgid "اسم المستخدم هذا مستخدم بالفعل."
+msgstr ""
+
+msgid "الاسم الكامل (Display Name)"
+msgstr ""
+
+msgid "اسم المستخدم (Username)"
+msgstr ""
+
+msgid "البريد الإلكتروني (Email)"
+msgstr ""
+
+msgid "الصورة الشخصية"
+msgstr ""
+
+msgid "الدولة"
+msgstr "الدولة"
+
+msgid "اليوم"
+msgstr ""
+
+msgid "الشهر"
+msgstr ""
+
+msgid "السنة"
+msgstr ""
+
+msgid "كلمة المرور الحالية"
+msgstr ""
+
+msgid "كلمة المرور الجديدة"
+msgstr ""
+
+msgid "تأكيد كلمة المرور الجديدة"
+msgstr ""
+
+msgid "Wannan adireshin email yana amfani da shi."
+msgstr "هذا البريد الإلكتروني قيد الاستخدام"
+
+msgid "Wannan sunan mai amfani yana amfani da shi."
+msgstr "هذا الاسم المستخدم يستخدمه."
+
+msgid "يجب عليك كتابة كلمة المرور الحالية."
+msgstr ""
+
+msgid "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+msgstr ""
+
+msgid "كلمتا المرور غير متطابقتين."
+msgstr ""
+
+msgid "Hausa"
+msgstr ""
+
+msgid "العربية"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Amharic"
+msgstr ""
+
+msgid "Swahili"
+msgstr ""
+
+msgid "Arabic"
+msgstr ""
+
+msgid "Shiga"
+msgstr "تسجيل الدخول"
+
+msgid "Littattafan Hausa"
+msgstr "كتب الهوسا"
+
+msgid "Shiga Asusun ka"
+msgstr "تسجيل الدخول إلى حسابك"
+
+msgid "Sunan mai amfani (Username)"
+msgstr "اسم المستخدم"
+
+msgid "Kalmar sirri"
+msgstr "كلمة المرور"
+
+msgid "Ba ka da asusu?"
+msgstr "ليس لديك حساب؟"
+
+msgid "Yi Rajista"
+msgstr "إنشاء حساب"
+
+msgid "Barka da zuwa!"
+msgstr "مرحباً بك!"
+
+msgid "Gyara Bayanai"
+msgstr "التفاصيل"
+
+msgid "Ana Karatu"
+msgstr "قيد القراءة"
+
+msgid "Shafi %(page)s"
+msgstr "صفحة %(page)s"
+
+msgid "Jerin Karatu na"
+msgstr "قوائم قراءتي"
+
+msgid "Ƙirƙiri sabon jeri"
+msgstr "إنشاء قائمة جديدة"
+
+msgid "Sunan jeri"
+msgstr "اسم القائمة"
+
+msgid "Bayani (zaɓi)"
+msgstr "وصف (اختياري)"
+
+msgid "Ƙirƙira"
+msgstr "إنشاء"
+
+msgid "%(count)s littattafai"
+msgstr "%(count)s كتاب"
+
+msgid "Na jama'a"
+msgstr "عام"
+
+msgid "Ba ka da jerin karatu tukuna."
+msgstr "ليس لديك قوائم قراءة بعد."
+
+msgid "Littattafai da na fi so"
+msgstr "كتبي المفضلة"
+
+msgid "Ba ka zaɓi wani littafi ba tukuna."
+msgstr "لم تختر أي كتاب بعد."
+
+msgid "Bincika Littattafai"
+msgstr "تصفح الكتب"
+
+msgid "..."
+msgstr "..."
+
+msgid "Foto Profil"
+msgstr "صورة الملف الشخصي"
+
+msgid "Bayanan Asali"
+msgstr "معلومات الكتاب"
+
+msgid "Ƙasa da Ranar Haihuwa"
+msgstr "البلد과 تاريخ الميلاد"
+
+msgid "Zaɓi Ƙasa"
+msgstr "اختر الدولة"
+
+msgid "Wata ƙasa..."
+msgstr "اكتب رداً..."
+
+msgid "Ƙasa"
+msgstr "دولة"
+
+msgid "Rana"
+msgstr "اليوم"
+
+msgid "Wata"
+msgstr "الشهر"
+
+msgid "Shekara"
+msgstr "السنة"
+
+msgid "Canza Kalmar Sirri"
+msgstr "كلمة المرور"
+
+msgid "Bari fanko idan ba ka son canza"
+msgstr "اترك هذا الحقل فارغًا إذا كنت لا ترغب في التغيير."
+
+msgid "Sharuddan"
+msgstr "الشروط والأحكام"
+
+msgid "Haruffa 4 aƙalla"
+msgstr "حرفها ٤ على الأقل"
+
+msgid "Lambobi kawai yana yiwuwa"
+msgstr "الأرقام هي الخيارات الوحيدة المتاحة."
+
+msgid "Adana Canje-canje"
+msgstr "حفظ التغييرات"
+
+msgid "Koma Bayanina"
+msgstr "العودة للتفاصيل"
+
+msgid "Jama'a"
+msgstr "جماعة"
+
+msgid "Sirri"
+msgstr "خاص"
+
+msgid "Littattafai %(count)s"
+msgstr "الكتب"
+
+msgid "Raba"
+msgstr "مشاركة"
+
+msgid "Koma"
+msgstr "عودة"
+
+msgid "Cire"
+msgstr "حذف"
+
+msgid "Babu littattafai a cikin wannan jerin"
+msgstr "لا توجد كتب في هذه القائمة"
+
+msgid "An kwafi!"
+msgstr "تم النسخ!"
+
+msgid "Ƙirƙiri Sabon Asusu"
+msgstr "إنشاء حساب جديد"
+
+msgid "Sharuddan Kalmar Sirri"
+msgstr "كلمة المرور"
+
+msgid "Yana iya zama kamar bayanan sirri"
+msgstr "يمكن أن يصبح مثل الإعلان السري"
+
+msgid "Yana iya zama shahararre"
+msgstr "فشل تحميل الإشعارات"
+
+msgid "Haruffa, lambobi, da alamomi kawai — zai bayyana a URL"
+msgstr "حروفا، لمبوست، ورموز فقط — سوف يعرّف عنوان ويب"
+
+msgid "Kana da asusu?"
+msgstr "لديك حساب بالفعل؟"
+
+msgid "Models in the %(name)s application"
+msgstr "النماذج في تطبيق %(name)s"
+
+msgid "Model name"
+msgstr "اسم المُوديل"
+
+msgid "Add link"
+msgstr "أضف رابط"
+
+msgid "Change or view list link"
+msgstr "تغيير أو عرض وصلة القائمة"
+
+msgid "Add"
+msgstr "أضف"
+
+msgid "View"
+msgstr "عرض"
+
+msgid "Change"
+msgstr "تغيير"
+
+msgid "You don’t have permission to view or edit anything."
+msgstr "أنت لا تمتلك صلاحيات للعرض أو التعديل على أي شيء."
+
+msgid "Translations (Rosetta)"
+msgstr "ترجمات (روسيتا)"
+
+msgid "Manage translations"
+msgstr "إدارة الترجمات"
+
+msgid "Open"
+msgstr "مفتوح"
+
+msgid "Littattafan Hausa - Dakin Karatu na Ilimi na Musulunci"
+msgstr "كتب الهوسا - مكتبة المعرفة الإسلامية"
+
+msgid "Manhajar littattafan Musulunci na Hausa."
+msgstr "منصة الكتب الإسلامية بلغة الهوسا."
+
+msgid "Dakin Karatu na Ilimi na Musulunci"
+msgstr "مكتبة المعرفة الإسلامية"
+
+msgid "DAKIN KARATU NA ILIMI"
+msgstr "مكتبة المعرفة الإسلامية"
+
+msgid "Nemo littafi, marubuci, ko maudu'i..."
+msgstr "ابحث عن كتاب أو مؤلف أو موضوع..."
+
+msgid "Sanarwa"
+msgstr "إشعارات"
+
+msgid "Duba duka"
+msgstr "عرض الكل"
+
+msgid "Ana loda..."
+msgstr "جاري التحميل..."
+
+msgid "Gida"
+msgstr "الرئيسية"
+
+msgid "Littattafai"
+msgstr "الكتب"
+
+msgid "Rukunoni"
+msgstr "الأقسام"
+
+msgid "Nemo littafi..."
+msgstr "ابحث عن كتاب..."
+
+msgid "Ni"
+msgstr "أنا"
+
+msgid "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya."
+msgstr "منصة الكتب الإسلامية بلغة الهوسا. نجمع ونترجم وننشر المعرفة الإسلامية بلغة الهوسا في جميع أنحاء العالم."
+
+msgid "Hanyoyi"
+msgstr "روابط"
+
+msgid "Game da mu"
+msgstr "من نحن"
+
+msgid "Akida"
+msgstr "العقيدة"
+
+msgid "Fikhu"
+msgstr "الفقه"
+
+msgid "Hadisi"
+msgstr "الحديث"
+
+msgid "Tafsiri"
+msgstr "التفسير"
+
+msgid "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su."
+msgstr "&copy; 2026 كتب الهوسا. جميع الحقوق محفوظة."
+
+msgid "An gina da ❤️ don al'ummar Hausa"
+msgstr "صُنع بـ ❤️ لمجتمع الهوسا"
+
+msgid "Babu sanarwa"
+msgstr "لا توجد إشعارات"
+
+msgid "Ba a iya loda sanarwa"
+msgstr "فشل تحميل الإشعارات"
+
+msgid "?"
+msgstr "؟"
+
+msgid "Karanta"
+msgstr "اقرأ"
+
+msgid "Game da Littattafan Hausa"
+msgstr "عن كتب الهوسا"
+
+msgid "Littattafan Hausa manhajar ilimi ce ta dijital da ke tattara littattafan Musulunci cikin harshen Hausa. Manufar mu ita ce samar da damar samun ilimin Musulunci ga al'ummar Hausa a duk faɗin duniya, ta hanyar fasaha ta zamani da kuma taimakon Hankali na Wucin Gadi (AI)."
+msgstr "كتب الهوسا هي منصة تعليمية رقمية تجمع الكتب الإسلامية بلغة الهوسا. مهمتنا هي توفير الوصول إلى المعرفة الإسلامية لمجتمع الهوسا في جميع أنحاء العالم، من خلال التكنولوجيا الحديثة وبمساعدة الذكاء الاصطناعي."
+
+msgid "Muna aiki don tattara littattafai 1,780+, fassara su, da kuma buga su a kan yanar gizo tare da bayani cikakke da fihirisa don sauƙaƙe bincike da nazari."
+msgstr "نعمل على جمع أكثر من 1,780 كتاباً وترجمتها ونشرها على الإنترنت مع أوصاف وفهارس مفصلة لتسهيل البحث والدراسة."
+
+msgid "Tattara Ilimi"
+msgstr "جمع المعرفة"
+
+msgid "Muna tattara manyan littattafan Musulunci cikin harshen Hausa daga ko'ina cikin duniya."
+msgstr "نجمع أهم الكتب الإسلامية بلغة الهوسا من جميع أنحاء العالم."
+
+msgid "Fassara Duniya"
+msgstr "الترجمة العالمية"
+
+msgid "Muna fassara littattafai zuwa harsuna 10 don isar da saƙon Musulunci ga kowa."
+msgstr "نترجم الكتب إلى 10 لغات لإيصال رسالة الإسلام للجميع."
+
+msgid "Daidaiton Ilimi"
+msgstr "الدقة العلمية"
+
+msgid "Kowane littafi ana duba shi ta hanyar masana ilimi don tabbatar da ingancin bayani."
+msgstr "يتم مراجعة كل كتاب من قبل العلماء لضمان جودة المعلومات."
+
+msgid "Fasaha ta AI"
+msgstr "تقنية الذكاء الاصطناعي"
+
+msgid "Muna amfani da Hankali na Wucin Gadi don fihirisa, taƙaitawa, da samar da SEO."
+msgstr "نستخدم الذكاء الاصطناعي للفهرسة والتلخيص وتحسين محركات البحث."
+
+msgid "Ƙididdigar"
+msgstr "الإحصائيات"
+
+msgid "Ƙididdigar (Analytics)"
+msgstr "الإحصائيات والتحليلات"
+
+msgid "Duba yadda ake amfani da dakin karatu"
+msgstr "شاهد كيف يتم استخدام المكتبة"
+
+msgid "7 kwanaki"
+msgstr "7 أيام"
+
+msgid "30 kwanaki"
+msgstr "30 يوماً"
+
+msgid "90 kwanaki"
+msgstr "90 يوماً"
+
+msgid "Duka"
+msgstr "الكل"
+
+msgid "Fitar da CSV"
+msgstr "تصدير CSV"
+
+msgid "Ayyukan Masu Amfani"
+msgstr "تفاعل المستخدمين"
+
+msgid "Masu karatu masu aiki"
+msgstr "القراء النشطون"
+
+msgid "Matsakaicin lokacin karatu"
+msgstr "متوسط وقت القراءة"
+
+msgid "Bita'i"
+msgstr "بيطائي"
+
+msgid "Sharhi"
+msgstr "تعليق"
+
+msgid "Ayyuka na Yau da Kullum"
+msgstr "النشاط اليومي"
+
+msgid "Rabon Rukunoni"
+msgstr "توزيع التصنيفات"
+
+msgid "Littattafan da aka fi Duba"
+msgstr "الكتب الأكثر مشاهدة"
+
+msgid "Kalmomin Bincike"
+msgstr "كلمات البحث"
+
+msgid "Babu bayanan bincike tukuna."
+msgstr "لا توجد بيانات بحث بعد."
+
+msgid "Yanayin Saukewa"
+msgstr "اتجاهات التحميل"
+
+msgid "Sabon Ra'ayoyi"
+msgstr "آخر التعليقات"
+
+msgid "%(time)s da suka wuce"
+msgstr "منذ %(time)s"
+
+msgid "Babu ra'ayoyi tukuna."
+msgstr "لا توجد تعليقات بعد."
+
+msgid "Bincike"
+msgstr "عمليات البحث"
+
+msgid "Saukewa"
+msgstr "التحميلات"
+
+msgid "(%(count)s "
+msgstr "%(count)s كتاب"
+
+msgid "bita'i"
+msgstr "بإتي"
+
+msgid "Harshen da bai bayyana ba"
+msgstr "لغة غير محددة"
+
+msgid "An tabbatar da wannan littafi ta hanyar ilimi"
+msgstr "تم التحقق من هذا الكتاب أكاديمياً"
+
+msgid "Karanta Yanzu"
+msgstr "اقرأ الآن"
+
+msgid "Sauke PDF"
+msgstr "تحميل PDF"
+
+msgid "PDF ba a samu ba tukuna"
+msgstr "ملف PDF غير متوفر بعد"
+
+msgid "Ƙara zuwa Jeri"
+msgstr "إضافة إلى القائمة"
+
+msgid "Zaɓi jerin karatu"
+msgstr "اختر قائمة القراءة"
+
+msgid "bayyananne"
+msgstr "مشاركة"
+
+msgid "Kwafi Haɗin gwiwa"
+msgstr "كوفاي حدين غويوا"
+
+msgid "Ƙarin zaɓuɓɓuka"
+msgstr "مزيد من الخيارات"
+
+msgid "Kallon"
+msgstr "المشاهدات"
+
+msgid "Favorites"
+msgstr "المفضلة"
+
+msgid "Ci gaban Karatu"
+msgstr "تقدم القراءة"
+
+msgid "daga %(total)s"
+msgstr "من %(total)s"
+
+msgid "Bayani game da Littafi"
+msgstr "عن الكتاب"
+
+msgid "Abubuwan da ke ciki"
+msgstr "جدول المحتويات"
+
+msgid "Saurara"
+msgstr "استمع"
+
+msgid "Gudun sauti"
+msgstr "سرعة الصوت"
+
+msgid "Bita'i da Ra'ayoyi"
+msgstr "آخر التعليقات"
+
+msgid "%(count)s bita'i"
+msgstr "%(count)s كتاب"
+
+msgid "Rubuta bita'i"
+msgstr "اكتب تعليقاً..."
+
+msgid "Ƙima"
+msgstr "التقييم"
+
+msgid "Taken bita'i"
+msgstr "مأخوذ بتاعي"
+
+msgid "Rubuta ra'ayin ka..."
+msgstr "اكتب رداً..."
+
+msgid "Aika Bita'i"
+msgstr "آيكا بيتاи"
+
+msgid "don rubuta bita'i"
+msgstr "لكتابة تعليق"
+
+msgid "da suka wuce"
+msgstr "منذ"
+
+msgid "Babu bita'i tukuna. Ka zama na farko!"
+msgstr "لا توجد تعليقات بعد. ابدأ المناقشة!"
+
+msgid "Tattaunawa"
+msgstr "المناقشة"
+
+msgid "Rubuta sharhi..."
+msgstr "اكتب تعليقاً..."
+
+msgid "Aika"
+msgstr "إرسال"
+
+msgid "don rubuta sharhi"
+msgstr "لكتابة تعليق"
+
+msgid "Amsa"
+msgstr "رد"
+
+msgid "Rubuta amsa..."
+msgstr "اكتب رداً..."
+
+msgid "Soke"
+msgstr "إلغاء"
+
+msgid "Babu sharhi tukuna. Ka fara tattaunawa!"
+msgstr "لا توجد تعليقات بعد. ابدأ المناقشة!"
+
+msgid "Bayanan Littafi"
+msgstr "معلومات الكتاب"
+
+msgid "Rukuni"
+msgstr "القسم"
+
+msgid "Ƙaramin Rukuni"
+msgstr "القسم الفرعي"
+
+msgid "Harshe"
+msgstr "اللغة"
+
+msgid "Hali"
+msgstr "الحالة"
+
+msgid "PDF Akwai"
+msgstr "PDF متوفر"
+
+msgid "Babu PDF"
+msgstr "لا يوجد PDF"
+
+msgid "Littattafai masu alaƙa"
+msgstr "كتب ذات صلة"
+
+msgid "Tabbatar da share wannan sharhi?"
+msgstr "Tabbatar da share wannan sharhi? \n\nكيف يتم تأكيد صحة هذا التعليق؟"
+
+msgid "Kuskure ya faru. Sake gwadawa."
+msgstr "عذر الفأر. ساق الغداء."
+
+msgid "Babu jerin karatu. Ka ƙirƙiri ɗaya a shafin ka."
+msgstr "لا توجد قوائم قراءة. أنشئ واحدة في ملفك الشخصي."
+
+msgid "Ba a iya loda jerin"
+msgstr "فشل تحميل القائمة"
+
+msgid "Duk littattafan da ke cikin dakin karatu na mu"
+msgstr "جميع الكتب في مكتبتنا"
+
+msgid "Tsara:"
+msgstr "ترتيب حسب:"
+
+msgid "Sabbin"
+msgstr "جديد"
+
+msgid "Mafi kallo"
+msgstr "الأكثر مشاهدة"
+
+msgid "Mafi ƙima"
+msgstr "الأعلى تقييماً"
+
+msgid "Mafi saukewa"
+msgstr "الأكثر تحميلاً"
+
+msgid "Harshe:"
+msgstr "اللغة:"
+
+msgid "Sakamakon bincike: \"%(query)s\""
+msgstr "نتائج البحث: \"%(query)s\""
+
+msgid "Ba a sami littattafai ba."
+msgstr "لم يتم العثور على كتب."
+
+msgid "Ƙara nuna"
+msgstr "إظهار المزيد"
+
+msgid "Baya"
+msgstr "السابق"
+
+msgid "Gaba"
+msgstr "التالي"
+
+msgid "~%(mins)s "
+msgstr "~ %(دقائق)s"
+
+msgid "min"
+msgstr "دقيقة"
+
+msgid "Rubutu"
+msgstr "نص"
+
+msgid "Ƙarami"
+msgstr "صغير"
+
+msgid "Matsakaici"
+msgstr "متوسط"
+
+msgid "Babba"
+msgstr "كبير"
+
+msgid "Babba ƙwarai"
+msgstr "كبير جداً"
+
+msgid "Fari"
+msgstr "فاتح"
+
+msgid "Duhu"
+msgstr "داكن"
+
+msgid "Alamomin shafi"
+msgstr "الإشارات المرجعية"
+
+msgid "Gajerun hanyoyi"
+msgstr "الاختصارات"
+
+msgid "Cika Allo"
+msgstr "ملء الشاشة"
+
+msgid "Buga"
+msgstr "طباعة"
+
+msgid "Ba a iya ciro rubutu daga wannan PDF ba"
+msgstr "لا يمكن استخراج النص من ملف PDF هذا"
+
+msgid "Wannan na iya faruwa idan PDF yana dauke da hotuna kacal"
+msgstr "قد يحدث هذا إذا كان ملف PDF يحتوي على صور فقط"
+
+msgid "Duba PDF Viewer"
+msgstr "جرب عارض PDF"
+
+msgid "Ana loda PDF..."
+msgstr "جاري تحميل PDF..."
+
+msgid "Rage girma"
+msgstr "تصغير"
+
+msgid "Ƙara girma"
+msgstr "تكبير"
+
+msgid "Alamar shafi"
+msgstr "إشارة مرجعية"
+
+msgid "Babu alamomin shafi tukuna"
+msgstr "لا توجد إشارات مرجعية بعد"
+
+msgid "Shafi na gaba"
+msgstr "الصفحة التالية"
+
+msgid "Shafi na baya"
+msgstr "الصفحة السابقة"
+
+msgid "Ƙara girman rubutu"
+msgstr "تكبير الخط"
+
+msgid "Rage girman rubutu"
+msgstr "تصغير الخط"
+
+msgid "Cika allo"
+msgstr "ملء الشاشة"
+
+msgid "Rufe"
+msgstr "إغلاق"
+
+msgid "Shafi"
+msgstr "صفحة"
+
+msgid "Ƙarshen Littafi"
+msgstr "نهاية الكتاب"
+
+msgid "Koma ga Bayani"
+msgstr "العودة للتفاصيل"
+
+msgid "Zaɓi rukunin ilimi da kake so"
+msgstr "اختر قسم المعرفة الذي تريده"
+
+msgid "📚 Littattafai 1,780+ na Musulunci"
+msgstr "📚 أكثر من 1,780 كتابا أسلامياََ"
+
+msgid "Dakin Karatu na Ilimi"
+msgstr "مكتبة المعرفة"
+
+msgid "na Musulunci"
+msgstr "الإسلامية"
+
+msgid "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."
+msgstr "أكبر مجموعة من الكتب الإسلامية بلغة الهوسا. تم جمعها وترجمتها وتنظيمها باستخدام التكنولوجيا الحديثة."
+
+msgid "📖 Bincika Littattafai"
+msgstr "📖 تصفح الكتب"
+
+msgid "🔍 Nemo Maudu'i"
+msgstr "البحث الموضوعي"
+
+msgid "Marubuta"
+msgstr "المؤلفون"
+
+msgid "Harsuna"
+msgstr "اللغات"
+
+msgid "Masu Karatu"
+msgstr "القراء"
+
+msgid "Zaɓi rukunin da kake so"
+msgstr "اختر القسم الذي تريده"
+
+msgid "Sababbin Littattafai"
+msgstr "أحدث الكتب"
+
+msgid "An ƙara su kwanan nan"
+msgstr "أُضيفت مؤخراً"
+
+msgid "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin."
+msgstr "لم يتم العثور على كتب بعد. أضف كتباً من خلال لوحة الإدارة."
+
+msgid "Taimaka wajen yada ilimi"
+msgstr "ساعد في نشر المعرفة"
+
+msgid "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."
+msgstr "إذا كان لديك كتب إسلامية بلغة الهوسا، ساعدنا بإضافتها إلى مكتبتنا."
+
+msgid "Karanta duka"
+msgstr "قراءة الكل"
+
+msgid "Duba"
+msgstr "عرض"
+
+msgid "Yi alama a matsayin an karanta"
+msgstr "تحديد كمقروء"
+
+msgid "Ba a haɗa da yanar gizo ba"
+msgstr "أنت غير متصل بالإنترنت"
+
+msgid "Ka duba haɗin yanar gizo ka sake gwadawa"
+msgstr "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى"
+
+msgid "Sake gwadawa"
+msgstr "إعادة المحاولة"
+
+msgid "Shekaru {{ age }}"
+msgstr "العمر {{ age }} سنة"
+
+msgid "Ƙarin Bayani"
+msgstr "معلومات إضافية"
+
+msgid "Misali: +234 801 234 5678"
+msgstr "مثال: +234 801 234 5678"
+
+msgid "Suna Cikakke (Display Name)"
+msgstr "الاسم الكامل"
+
+msgid "Sunan Mai Amfani (Username)"
+msgstr "اسم المستخدم"
+
+msgid "Imel (Email)"
+msgstr "البريد الإلكتروني"
+
+msgid "Hoton Profil"
+msgstr "صورة الملف الشخصي"
+
+msgid "Jinsi"
+msgstr "الجنس"
+
+msgid "Lambar Waya"
+msgstr "رقم الهاتف"
+
+msgid "Kalmar Sirri ta Yanzu"
+msgstr "كلمة المرور الحالية"
+
+msgid "Sabuwar Kalmar Sirri"
+msgstr "كلمة المرور الجديدة"
+
+msgid "Tabbatar Kalmar Sirri"
+msgstr "تأكيد كلمة المرور"
+
+msgid "Suna dole ne ya kasance haruffa 8 aƙalla."
+msgstr "يجب أن يكون الاسم الكامل 8 أحرف على الأقل."
+
+msgid "Sunan mai amfani dole ne ya kasance haruffa 8 aƙalla."
+msgstr "يجب أن يكون اسم المستخدم 8 أحرف على الأقل."
+
+msgid "Lambar waya ba daidai ba ce."
+msgstr "رقم الهاتف غير صحيح."
+
+msgid "Lambar waya dole ne ta kasance tsakanin 7 zuwa 15 lambobi."
+msgstr "يجب أن يكون رقم الهاتف بين 7 و15 رقماً."
+
+msgid "Dole ne ka rubuta kalmar sirri ta yanzu."
+msgstr "يجب إدخال كلمة المرور الحالية."
+
+msgid "Kalmar sirri ta yanzu ba daidai ba. Gwada sake."
+msgstr "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+
+msgid "Kalmar sirri dole ne ta kasance haruffa 4 aƙalla."
+msgstr "يجب أن تكون كلمة المرور 4 أحرف على الأقل."
+
+msgid "Kalmomin sirri biyu ba ɗaya ba ne."
+msgstr "كلمتا المرور غير متطابقتين."
+
+msgid "page_title_register"
+msgstr "التسجيل"
+
+msgid "register_heading"
+msgstr "إنشاء حساب جديد"
+
+msgid "register_subheading"
+msgstr "ادخل إلى مكتبتنا"
+
+msgid "field_label_full_name"
+msgstr "الاسم الكامل"
+
+msgid "field_label_username"
+msgstr "اسم المستخدم"
+
+msgid "field_label_email"
+msgstr "البريد الإلكتروني"
+
+msgid "field_label_password"
+msgstr "كلمة المرور"
+
+msgid "field_label_password_confirm"
+msgstr "تأكيد كلمة المرور"
+
+msgid "btn_register"
+msgstr "إنشاء حساب"
+
+msgid "already_have_account"
+msgstr "لديك حساب بالفعل؟"
+
+msgid "divider_or"
+msgstr "أو"
+
+msgid "btn_login"
+msgstr "تسجيل الدخول"
+
+msgid "username_hint"
+msgstr "أحرف وأرقام ورموز فقط - سيظهر في الرابط (URL)"
+
+msgid "terms_accept_label"
+msgstr "أوافق على الشروط والأحكام وسياسة الخصوصية"
+
+msgid "tooltip_password_requirements_title"
+msgstr "متطلبات كلمة المرور"
+
+msgid "tooltip_pw_min_chars"
+msgstr "يجب أن لا تقل عن 4 أحرف"
+
+msgid "tooltip_pw_numbers_ok"
+msgstr "يمكن استخدام الأرقام فقط"
+
+msgid "tooltip_pw_personal_ok"
+msgstr "يمكن أن تتضمن بيانات شخصية"
+
+msgid "tooltip_pw_common_ok"
+msgstr "يمكن أن تكون شائعة"
+
+msgid "pw_strength_very_weak"
+msgstr "ضعيفة جداً"
+
+msgid "pw_strength_weak"
+msgstr "ضعيفة"
+
+msgid "pw_strength_medium"
+msgstr "متوسطة"
+
+msgid "pw_strength_strong"
+msgstr "قوية"
+
+msgid "pw_strength_very_strong"
+msgstr "قوية جداً"
+
+msgid "error_password_min_length"
+msgstr "يجب أن لا تقل كلمة المرور عن 4 أحرف."
+
+msgid "error_email_exists"
+msgstr "هذا البريد الإلكتروني مستخدم بالفعل."
+
+msgid "error_username_exists"
+msgstr "اسم المستخدم هذا مستخدم بالفعل."
+
+msgid "error_current_password_required"
+msgstr "يجب عليك كتابة كلمة المرور الحالية."
+
+msgid "error_current_password_wrong"
+msgstr "كلمة المرور الحالية غير صحيحة. حاول مرة أخرى."
+
+msgid "error_passwords_mismatch"
+msgstr "كلمتا المرور غير متطابقتين."
+

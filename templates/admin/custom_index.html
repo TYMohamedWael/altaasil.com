@@ -1,0 +1,30 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block content %}
+<!-- Dashboard Stats -->
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-value">{{ book_count|default:"—" }}</div>
+        <div class="stat-label">إجمالي الكتب</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📂</div>
+        <div class="stat-value">{{ category_count|default:"—" }}</div>
+        <div class="stat-label">التصنيفات</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ user_count|default:"—" }}</div>
+        <div class="stat-label">المستخدمين</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">👁️</div>
+        <div class="stat-value">{{ total_views|default:"—" }}</div>
+        <div class="stat-label">إجمالي المشاهدات</div>
+    </div>
+</div>
+
+{{ block.super }}
+{% endblock %}

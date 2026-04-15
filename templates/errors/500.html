@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ha" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Kuskure! | Littattafan Hausa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:{DEFAULT:"#1a5632",light:"#2d7a4a",dark:"#0f3d22"},gold:{DEFAULT:"#c8a84e",light:"#e0c878",dark:"#a88a2e"},cream:{DEFAULT:"#faf8f0",dark:"#f0ead6"}}}}}</script>
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #faf8f0; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(200,168,78,0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(200,168,78,0); }
+            100% { box-shadow: 0 0 0 0 rgba(200,168,78,0); }
+        }
+
+        .breathe { animation: breathe 3s ease-in-out infinite; }
+        .fade-in-1 { animation: fadeInUp 0.6s ease-out 0.1s both; }
+        .fade-in-2 { animation: fadeInUp 0.6s ease-out 0.3s both; }
+        .fade-in-3 { animation: fadeInUp 0.6s ease-out 0.5s both; }
+
+        /* Gear icon */
+        .gear-wrapper { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+        .gear-outer {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a5632, #0f3d22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-ring 2s ease-in-out infinite;
+        }
+        .gear-inner {
+            font-size: 48px;
+            animation: spin-slow 8s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full text-center">
+        <!-- Animated Gear -->
+        <div class="flex justify-center mb-8 fade-in-1">
+            <div class="gear-wrapper breathe">
+                <div class="gear-outer">
+                    <span class="gear-inner">⚙️</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Code -->
+        <div class="fade-in-1">
+            <span class="text-8xl font-black text-primary/10">500</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl md:text-4xl font-bold text-primary mt-2 fade-in-2">
+            Kuskure!
+        </h1>
+        <p class="text-xl text-gold mt-2 fade-in-2" dir="rtl" style="font-family: serif;">
+            خطأ في الخادم
+        </p>
+
+        <!-- Calming message -->
+        <div class="mt-6 bg-white rounded-2xl p-6 shadow-sm border border-primary/10 fade-in-3">
+            <p class="text-gray-600">
+                An sami kuskure a cikin tsarin mu. Kada ku damu — mun riga mun sani kuma muna gyara shi.
+            </p>
+            <p class="text-sm text-gray-400 mt-3">
+                Don Allah ku sake gwadawa bayan ɗan lokaci kaɗan.
+            </p>
+        </div>
+
+        <!-- Home Link -->
+        <div class="mt-8 fade-in-3">
+            <a href="/" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-xl text-sm font-semibold hover:bg-primary-light transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Koma Gida
+            </a>
+        </div>
+
+        <p class="mt-12 text-xs text-gray-300 fade-in-3">
+            Littattafan Hausa — Dakin Karatu na Ilimi na Musulunci
+        </p>
+    </div>
+</body>
+</html>

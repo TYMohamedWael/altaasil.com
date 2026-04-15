@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load i18n site_text %}
+{% get_current_language as CURRENT_LANG %}
+
+{% block content %}
+<!-- Hero -->
+<section class="bg-gradient-to-br from-primary via-primary-light to-primary text-white py-20 px-4 relative overflow-hidden">
+    <!-- Animated dot pattern -->
+    <div class="absolute inset-0 hero-pattern opacity-40"></div>
+    <div class="absolute top-10 right-10 w-64 h-64 bg-gold/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-10 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="inline-block bg-gold/20 text-gold-light text-sm px-5 py-1.5 rounded-full mb-6 border border-gold/30 backdrop-blur-sm">
+            {% trans "📚 Littattafai 1,780+ na Musulunci"%}
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight">
+            {% trans "Dakin Karatu na Ilimi"%}<br>
+            <span class="text-gradient" style="-webkit-text-fill-color:transparent; background:linear-gradient(135deg,#c8a84e,#e0c878); -webkit-background-clip:text; background-clip:text;">{% trans "na Musulunci"%}</span>
+        </h1>
+        <p class="text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+            {% trans "Mafi girman tarin littattafan Musulunci a cikin harshen Hausa. An tattara, an fassara, kuma an shirya su ta hanyar fasaha ta zamani."%}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'books:book_list' %}" class="bg-gold text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-gold-light transition-all duration-300 inline-flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5" style="background-color:#c8a84e; color:#1a5632;">
+                {% trans "📖 Bincika Littattafai"%}
+            </a>
+            <a href="{% url 'books:category_list' %}" class="border-2 border-white/30 px-8 py-3.5 rounded-xl hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                {% trans "🔍 Nemo Maudu'i"%}
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="max-w-7xl mx-auto px-4 -mt-8 relative z-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+            <div class="text-3xl mb-2">📚</div>
+            <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_books|default:"1,780+" }}</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Littattafai" %}</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+            <div class="text-3xl mb-2">📝</div>
+            <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_authors|default:"340+" }}</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Marubuta" %}</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+            <div class="text-3xl mb-2">🌍</div>
+            <div class="text-2xl font-bold text-gray-800 stat-number">10</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Harsuna" %}</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+            <div class="text-3xl mb-2">👥</div>
+            <div class="text-2xl font-bold text-gray-800 stat-number">50K+</div>
+            <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Masu Karatu" %}</div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories -->
+<section class="max-w-7xl mx-auto px-4 mt-16">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-primary">{% trans "Rukunoni" %}</h2>
+            <p class="text-sm text-gray-500 mt-1">{% trans "Zaɓi rukunin da kake so" %}</p>
+        </div>
+        <a href="{% url 'books:category_list' %}" class="text-sm font-semibold hover:underline" style="color:#c8a84e;">{% trans "Duba duka" %} →</a>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {% for cat in categories %}
+        <a href="{% url 'books:book_list' %}?category={{ cat.slug }}" class="block">
+            <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100 hover:border-yellow-300/40 hover:shadow-md transition-all duration-300 card-hover h-full flex flex-col items-center justify-center">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-3 bg-gradient-to-br" style="background:linear-gradient(135deg,rgba(26,86,50,0.1),rgba(200,168,78,0.15));">
+                    <svg class="w-5 h-5" style="color:#1a5632;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div class="text-sm font-bold text-primary leading-tight">{{ cat.localized_name }}</div>
+                {% if cat.alternate_name %}
+                <div class="text-[10px] text-gray-400 mt-1" dir="{% if CURRENT_LANG == 'ar' %}ltr{% else %}rtl{% endif %}">{{ cat.alternate_name }}</div>
+                {% endif %}
+                <div class="text-[10px] mt-2 font-semibold" style="color:#c8a84e;">{% blocktrans with count=cat.book_count %}{{ count }} littattafai{% endblocktrans %}</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Latest Books -->
+<section class="max-w-7xl mx-auto px-4 mt-16">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-primary">{% trans "Sababbin Littattafai" %}</h2>
+            <p class="text-sm text-gray-500 mt-1">{% trans "An ƙara su kwanan nan" %}</p>
+        </div>
+        <a href="{% url 'books:book_list' %}" class="text-sm font-semibold hover:underline" style="color:#c8a84e;">{% trans "Duba duka" %} →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for book in latest_books %}
+        {% include 'books/_book_card.html' with book=book %}
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+            <div class="text-5xl mb-4">📚</div>
+            <p class="text-gray-500">{% trans "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin." %}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Most Popular -->
+{% if popular_books %}
+<section class="max-w-7xl mx-auto px-4 mt-16">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-primary">🔥 {% trans "Mafi shahara" %}</h2>
+            <p class="text-sm text-gray-500 mt-1">{% trans "Littattafan da ake fi karantawa" %}</p>
+        </div>
+        <a href="{% url 'books:book_list' %}?sort=most_viewed" class="text-sm font-semibold hover:underline" style="color:#c8a84e;">{% trans "Duba duka" %} →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for book in popular_books %}
+        {% include 'books/_book_card.html' with book=book %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="max-w-4xl mx-auto px-4 mt-16 mb-8">
+    <div class="relative bg-gradient-to-r from-primary to-primary-light rounded-2xl p-8 md:p-12 text-center text-white overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute top-4 left-8 text-6xl opacity-10">📖</div>
+        <div class="absolute bottom-4 right-8 text-6xl opacity-10">✨</div>
+        <div class="relative z-10">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">{% trans "Taimaka wajen yada ilimi"%}</h2>
+            <p class="text-white/80 mb-8 max-w-lg mx-auto text-sm leading-relaxed">
+                {% trans "Idan kana da littattafan Musulunci na Hausa, ka taimaka wajen ƙara su a cikin dakin karatu na mu."%}
+            </p>
+            <a href="{% url 'books:book_list' %}" class="inline-flex items-center gap-2 bg-white/20 border-2 border-white/40 px-8 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 font-semibold">
+                {% trans "Bincika Littattafai" %} →
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
