@@ -33,7 +33,19 @@ class SiteTextAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name_hausa', 'name_arabic', 'name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
-    search_fields = ['name', 'name_hausa', 'name_arabic']
+    search_fields = ['name', 'name_hausa', 'name_arabic', 'name_english', 'name_swahili', 'name_amharic']
+    fieldsets = (
+        ('الأسماء الأساسية', {
+            'fields': ('name', 'name_hausa', 'name_arabic')
+        }),
+        ('أسماء اللغات الإضافية', {
+            'fields': ('name_english', 'name_swahili', 'name_amharic'),
+            'description': 'أدخل اسم التصنيف بكل لغة ليظهر للمستخدم حسب اللغة المختارة',
+        }),
+        ('إعدادات', {
+            'fields': ('slug', 'description', 'language')
+        }),
+    )
 
 # في admin.py أضف هذا الكلاس فوق BookAdmin
 class LanguageFilter(admin.SimpleListFilter):

@@ -124,6 +124,9 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='الاسم الأساسي')
     name_hausa = models.CharField(max_length=100, verbose_name='الاسم بلغة الهوسا')
     name_arabic = models.CharField(max_length=100, verbose_name='الاسم بالعربية')
+    name_english = models.CharField(max_length=100, blank=True, null=True, verbose_name='الاسم بالإنجليزية')
+    name_swahili = models.CharField(max_length=100, blank=True, null=True, verbose_name='الاسم بالسواحيلية')
+    name_amharic = models.CharField(max_length=100, blank=True, null=True, verbose_name='الاسم بالأمهرية')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='الرابط (Slug)')
     description = models.TextField(blank=True, null=True, verbose_name='الوصف')
     language = models.ForeignKey(
@@ -155,9 +158,14 @@ class Category(models.Model):
             return self.name_arabic
         if lang == 'ha' and self.name_hausa:
             return self.name_hausa
-        if lang in ('en', 'am') and self.name:
-            return self.name
-        return self.name_hausa or self.name_arabic or self.name
+        if lang == 'en' and self.name_english:
+            return self.name_english
+        if lang == 'sw' and self.name_swahili:
+            return self.name_swahili
+        if lang == 'am' and self.name_amharic:
+            return self.name_amharic
+        # fallback: try English, then Hausa, then Arabic, then base name
+        return self.name_english or self.name_hausa or self.name_arabic or self.name
 
     @property
     def alternate_name(self):
@@ -681,6 +689,23 @@ class UserProfile(models.Model):
         blank=True,
         null=True,
         verbose_name='تاريخ الميلاد'
+    )
+    GENDER_CHOICES = [
+        ('M', 'ذكر'),
+        ('F', 'أنثى'),
+    ]
+    gender = models.CharField(
+        max_length=1,
+        choices=GENDER_CHOICES,
+        blank=True,
+        null=True,
+        verbose_name='الجنس'
+    )
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        verbose_name='رقم الهاتف'
     )
 
     class Meta:

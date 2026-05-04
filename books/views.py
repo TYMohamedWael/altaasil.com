@@ -3,7 +3,7 @@ import re
 from datetime import timedelta
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Count, Q, Sum, F, Case, When, Value, IntegerField
+from django.db.models import Count, Q, Sum, F, Case, When, Value, IntegerField, Avg
 from django.core.paginator import Paginator
 from django.utils import timezone, translation
 from django.contrib.auth.decorators import login_required
@@ -129,6 +129,18 @@ def book_list(request):
             user=request.user if request.user.is_authenticated else None
         )
 
+    sort_value = request.GET.get('sort', 'newest')
+
+    if not q:
+        if sort_value == 'most_viewed':
+            books = books.order_by('-view_count', '-created_at')
+        elif sort_value == 'most_downloaded':
+            books = books.order_by('-download_count', '-created_at')
+        elif sort_value == 'highest_rated':
+            books = books.annotate(average_rating=Avg('reviews__rating')).order_by('-average_rating', '-created_at')
+        else:
+            books = books.order_by('-created_at')
+    
     paginator = Paginator(books, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -136,8 +148,6 @@ def book_list(request):
     favorite_ids = []
     if request.user.is_authenticated:
         favorite_ids = list(request.user.favorites.values_list('book_id', flat=True))
-
-    sort_value = request.GET.get('sort', '')
 
     return render(request, 'books/book_list.html', {
         'books': page_obj,

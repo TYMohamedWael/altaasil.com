@@ -82,7 +82,16 @@
         var menu = document.getElementById('mobileMenu');
         var openIcon = document.getElementById('menuIcon');
         var closeIcon = document.getElementById('menuCloseIcon');
+        var searchOverlay = document.getElementById('mobileSearchOverlay');
+        
         if (!menu) return;
+        
+        // Hide search overlay if it's open
+        if (searchOverlay && !searchOverlay.classList.contains('opacity-0')) {
+            searchOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+        
         menu.classList.toggle('open');
         if (openIcon) openIcon.classList.toggle('hidden');
         if (closeIcon) closeIcon.classList.toggle('hidden');

@@ -10,12 +10,12 @@
             <div class="relative" id="langSwitcher">
                 <button onclick="toggleLangDropdown()" type="button" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-2.5 py-1 text-xs cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/40" aria-label="{% trans 'Zaɓi harshe' %}" aria-expanded="false" aria-haspopup="listbox" id="langToggleBtn">
                     <span id="langCurrentFlag" class="text-sm leading-none">{% for lang in language_menu %}{% if active_language_code == lang.code %}{{ lang.flag_emoji }}{% endif %}{% endfor %}</span>
-                    <span id="langCurrentName" class="text-white font-medium hidden sm:inline">{% for lang in language_menu %}{% if active_language_code == lang.code %}{{ lang.name_native }}{% endif %}{% endfor %}</span>
+                    <span id="langCurrentName" class="text-white font-medium">{% for lang in language_menu %}{% if active_language_code == lang.code %}{{ lang.name_native }}{% endif %}{% endfor %}</span>
                     <svg class="w-3 h-3 text-white/60 transition-transform duration-200" id="langChevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                 </button>
 
                 <!-- Dropdown -->
-                <div id="langDropdown" class="hidden absolute right-0 top-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-[100] min-w-[180px]" role="listbox" aria-label="{% trans 'Zaɓi harshe' %}" style="direction:ltr;">
+                <div id="langDropdown" class="hidden absolute {% if CURRENT_LANG == 'ar' %}left-0{% else %}right-0{% endif %} top-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-[100] min-w-[180px]" role="listbox" aria-label="{% trans 'Zaɓi harshe' %}" style="direction:ltr;">
                     <div class="px-3 py-2 bg-gray-50 border-b border-gray-100">
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">🌍 {% trans "Zaɓi harshe" %}</p>
                     </div>
@@ -42,7 +42,7 @@
 
 <!-- Header -->
 <header class="bg-primary text-white shadow-lg sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3">
+    <div class="max-w-7xl mx-auto px-4 py-3 relative">
         <div class="flex items-center justify-between">
             <a href="{% url 'books:home' %}" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 bg-gold rounded-lg flex items-center justify-center group-hover:bg-gold-light transition-colors">
@@ -84,6 +84,11 @@
                 </div>
                 {% endif %}
 
+                <!-- Mobile search button -->
+                <button onclick="toggleMobileSearch()" class="md:hidden text-white hover:text-gold transition-colors tap-target mx-2" aria-label="{% trans 'Bincika' %}" id="mobileSearchBtn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </button>
+
                 <!-- Mobile menu button -->
                 <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-gold transition-colors tap-target" aria-label="{% trans 'Buɗe menu' %}" aria-expanded="false" id="mobileMenuBtn">
                     <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -101,9 +106,9 @@
                     <a href="{% url 'books:book_list' %}" class="hover:text-gold transition-colors">{% trans "Littattafai" %}</a>
                     <a href="{% url 'books:category_list' %}" class="hover:text-gold transition-colors">{% trans "Rukunoni" %}</a>
                     {% endif %}
+                    {% comment %}
                     {% if user.is_authenticated %}
                     {% if user.is_staff %}
-                    <!-- <a href="{% url 'books:analytics' %}" class="hover:text-gold transition-colors">📊</a> -->
                     {% endif %}
                     <a href="{% url 'books:profile' %}" class="flex items-center gap-2 bg-gold/20 text-gold px-3 py-1 rounded-full text-xs hover:bg-gold/30 transition-colors">
                         {% if user.profile.avatar_url %}
@@ -117,6 +122,7 @@
                     <a href="{% url 'books:login' %}" class="hover:text-gold transition-colors">{% trans "Shiga" %}</a>
                     <a href="{% url 'books:register' %}" class="bg-gold text-primary px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gold-light transition-colors">{% trans "Yi Rajista" %}</a>
                     {% endif %}
+                    {% endcomment %}
                 </nav>
             </div>
         </div>
@@ -134,17 +140,10 @@
             <a href="{% url 'books:book_list' %}" class="text-white hover:text-gold py-2 tap-target">📚 {% trans "Littattafai" %}</a>
             <a href="{% url 'books:category_list' %}" class="text-white hover:text-gold py-2 tap-target">📂 {% trans "Rukunoni" %}</a>
             {% endif %}
-            <!-- Mobile search -->
-            <form method="GET" action="{% url 'books:book_list' %}" class="mt-1">
-                <div class="relative">
-                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <input type="text" name="q" placeholder="{% trans "Nemo littafi..." %}" class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-sm placeholder-white/50 focus:bg-white/20 focus:outline-none">
-                </div>
-            </form>
-            <hr class="border-white/10">
+
+            {% comment %}
             {% if user.is_authenticated %}
             {% if user.is_staff %}
-            <!-- <a href="{% url 'books:analytics' %}" class="text-white hover:text-gold py-2 tap-target">📊 Analytics</a> -->
             {% endif %}
             <a href="{% url 'books:notifications' %}" class="text-white hover:text-gold py-2 tap-target">🔔 {% trans "Sanarwa" %} <span id="mobileNotifBadge" class="hidden bg-red-500 text-white text-[9px] px-1.5 rounded-full ml-1"></span></a>
             <a href="{% url 'books:profile' %}" class="text-gold py-2 tap-target flex items-center gap-2">
@@ -159,6 +158,48 @@
             <a href="{% url 'books:login' %}" class="text-white hover:text-gold py-2 tap-target">🔑 {% trans "Shiga" %}</a>
             <a href="{% url 'books:register' %}" class="bg-gold text-primary px-3 py-2 rounded-lg text-xs font-bold text-center hover:bg-gold-light transition-colors tap-target">{% trans "Yi Rajista" %}</a>
             {% endif %}
+            {% endcomment %}
+        </div>
+    </div>
+
+        <!-- Mobile Search Overlay -->
+        <div id="mobileSearchOverlay" class="absolute inset-0 bg-primary z-20 flex items-center px-4 transition-all duration-300 opacity-0 pointer-events-none md:hidden">
+            <form method="GET" action="{% url 'books:book_list' %}" class="relative w-full flex items-center gap-2">
+                <div class="relative flex-1">
+                    <svg class="w-4 h-4 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" name="q" id="mobileSearchInput" placeholder="{% trans "Nemo littafi, marubuci..." %}" class="w-full pl-10 rtl:pl-4 rtl:pr-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-sm placeholder-white/50 focus:bg-white/20 focus:outline-none focus:border-gold text-white transition-all">
+                </div>
+                <button type="button" onclick="toggleMobileSearch()" class="p-2 text-white/70 hover:text-white tap-target" aria-label="{% trans 'Rufe' %}">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </form>
         </div>
     </div>
 </header>
+
+<script>
+    function toggleMobileSearch() {
+        var searchOverlay = document.getElementById('mobileSearchOverlay');
+        var mobileMenu = document.getElementById('mobileMenu');
+        
+        // Hide mobile menu if it's open
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+            if (typeof toggleMobileMenu === 'function') {
+                toggleMobileMenu();
+            } else {
+                mobileMenu.classList.remove('open');
+            }
+        }
+        
+        if (searchOverlay.classList.contains('opacity-0')) {
+            // Open search overlay
+            searchOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            searchOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            setTimeout(() => document.getElementById('mobileSearchInput').focus(), 100);
+        } else {
+            // Close search overlay
+            searchOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            searchOverlay.classList.add('opacity-0', 'pointer-events-none');
+        }
+    }
+</script>

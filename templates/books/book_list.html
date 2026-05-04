@@ -44,42 +44,23 @@
         <div class="flex items-center gap-2 flex-wrap">
             <span class="text-xs text-gray-400 font-medium">{% trans "Tsara:" %}</span>
             <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=newest"
-               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'newest' or not sort %}active{% endif %}">
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'newest' or not sort %}active bg-primary text-white border-primary{% else %}text-gray-600{% endif %}">
                 {% trans "Sabbin" %}
             </a>
             <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=most_viewed"
-               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_viewed' %}active{% endif %}">
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_viewed' %}active bg-primary text-white border-primary{% else %}text-gray-600{% endif %}">
                 {% trans "Mafi kallo" %}
             </a>
             <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=highest_rated"
-               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'highest_rated' %}active{% endif %}">
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'highest_rated' %}active bg-primary text-white border-primary{% else %}text-gray-600{% endif %}">
                 {% trans "Mafi ƙima" %}
             </a>
             <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort=most_downloaded"
-               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_downloaded' %}active{% endif %}">
+               class="sort-btn px-3 py-1.5 rounded-full text-xs border border-gray-200 hover:border-primary transition-all tap-target {% if sort == 'most_downloaded' %}active bg-primary text-white border-primary{% else %}text-gray-600{% endif %}">
                 {% trans "Mafi saukewa" %}
             </a>
         </div>
-        <!-- Language filters -->
-        <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-xs text-gray-400 font-medium">{% trans "Harshe:" %}</span>
-            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}"
-               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if not current_language %}active{% endif %}">
-                {% trans "Duka" %}
-            </a>
-            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=ha"
-               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'ha' %}active{% endif %}">
-                🇳🇬 Hausa
-            </a>
-            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=ar"
-               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'ar' %}active{% endif %}">
-                🇸🇦 العربية
-            </a>
-            <a href="?{% if current_category %}category={{ current_category }}&{% endif %}{% if search_query %}q={{ search_query }}&{% endif %}view={{ view_mode }}&sort={{ sort }}&lang=en"
-               class="lang-filter px-3 py-1.5 rounded-full text-xs border border-gray-200 transition-all tap-target {% if current_language == 'en' %}active{% endif %}">
-                🇬🇧 English
-            </a>
-        </div>
+
     </div>
 
     <div class="flex flex-col md:flex-row gap-8">
@@ -139,6 +120,7 @@
                             <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ book.description|truncatewords:30 }}</p>
                             <div class="flex items-center gap-2 mt-2">
                                 {% if book.category %}<span class="text-[10px] bg-cream text-primary px-2 py-0.5 rounded-full font-medium">{{ book.category.localized_name }}</span>{% endif %}
+                                {% if book.language %}<span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">{{ book.language.name_native }}</span>{% endif %}
                                 <span class="text-[10px] text-gray-400">👁 {{ book.view_count }}</span>
                             </div>
                         </div>
