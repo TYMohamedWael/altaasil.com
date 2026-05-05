@@ -17,7 +17,7 @@ from django.conf import settings
 
 from .models import (
     Book, Category, Favorite, ReadingProgress, SearchLog, Feedback,
-    Review, Comment, ReadingList, Notification,
+    Review, Comment, ReadingList, Notification, Language,
 )
 
 # استخدام دالة جلب نموذج المستخدم لدعم النماذج المخصصة لاحقاً
@@ -75,6 +75,8 @@ def home(request):
         'total_books': Book.objects.count(),
         'total_authors': Book.objects.values('author').distinct().count(),
         'total_published': Book.objects.filter(status='published', language__code=content_language).count(),
+        'total_users': User.objects.filter(is_staff=False, is_superuser=False).count(),
+        'total_languages': Language.objects.count(),
         'content_language': content_language,
     }
     return render(request, 'books/home.html', {
