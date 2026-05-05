@@ -33,26 +33,26 @@
 
 <!-- Stats -->
 <section class="max-w-7xl mx-auto px-4 -mt-8 relative z-10">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+    <div class="flex flex-wrap justify-center gap-4 w-full">
+        <div class="w-[calc(50%-0.5rem)] md:w-auto md:flex-1 max-w-[280px] bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
             <div class="text-3xl mb-2">📚</div>
             <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_books|default:"1,780+" }}</div>
             <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Littattafai" %}</div>
         </div>
-        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+        <div class="w-[calc(50%-0.5rem)] md:w-auto md:flex-1 max-w-[280px] bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
             <div class="text-3xl mb-2">📝</div>
             <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_authors|default:"340+" }}</div>
             <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Marubuta" %}</div>
         </div>
         {% if stats.total_languages %}
-        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+        <div class="w-[calc(50%-0.5rem)] md:w-auto md:flex-1 max-w-[280px] bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
             <div class="text-3xl mb-2">🌍</div>
             <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_languages }}</div>
             <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Harsuna" %}</div>
         </div>
         {% endif %}
         {% if stats.total_users %}
-        <div class="bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
+        <div class="w-[calc(50%-0.5rem)] md:w-auto md:flex-1 max-w-[280px] bg-white rounded-xl shadow-md p-5 text-center border border-gray-100 card-hover">
             <div class="text-3xl mb-2">👥</div>
             <div class="text-2xl font-bold text-gray-800 stat-number">{{ stats.total_users }}</div>
             <div class="text-xs text-gray-500 mt-1 font-medium">{% trans "Masu Karatu" %}</div>
