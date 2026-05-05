@@ -20,20 +20,24 @@
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">🌍 {% trans "Zaɓi harshe" %}</p>
                     </div>
                     {% for lang in language_menu %}
-                    <form action="{% url 'set_language' %}" method="post" class="lang-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                        <input type="hidden" name="language" value="{{ lang.code }}">
-                        <button type="submit" role="option" {% if active_language_code == lang.code %}aria-selected="true"{% endif %}
-                            class="w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-all duration-150 hover:bg-primary/5 {% if active_language_code == lang.code %}bg-primary/5 border-r-[3px] border-gold{% endif %}">
-                            <span class="text-lg leading-none">{{ lang.flag_emoji }}</span>
-                            <span class="flex-1 text-left {% if active_language_code == lang.code %}text-primary font-bold{% else %}text-gray-700 font-medium{% endif %}">{{ lang.name_native }}</span>
-                            {% if active_language_code == lang.code %}
-                            <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {% endif %}
-                        </button>
-                    </form>
+                    <button type="button"
+                        onclick="switchLanguage('{{ lang.code }}')"
+                        role="option" {% if active_language_code == lang.code %}aria-selected="true"{% endif %}
+                        class="w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-all duration-150 hover:bg-primary/5 {% if active_language_code == lang.code %}bg-primary/5 border-r-[3px] border-gold{% endif %}">
+                        <span class="text-lg leading-none">{{ lang.flag_emoji }}</span>
+                        <span class="flex-1 text-left {% if active_language_code == lang.code %}text-primary font-bold{% else %}text-gray-700 font-medium{% endif %}">{{ lang.name_native }}</span>
+                        {% if active_language_code == lang.code %}
+                        <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        {% endif %}
+                    </button>
                     {% endfor %}
+
+                    <!-- Hidden form for language switching -->
+                    <form id="langSwitchForm" action="{% url 'set_language' %}" method="post" style="display:none;">
+                        {% csrf_token %}
+                        <input type="hidden" name="language" id="langSwitchCode">
+                        <input type="hidden" name="next" id="langSwitchNext">
+                    </form>
                 </div>
             </div>
         </div>
@@ -178,6 +182,37 @@
 </header>
 
 <script>
+    // Language codes known to the app
+    var KNOWN_LANGS = ['ha', 'ar', 'en', 'sw', 'am'];
+
+    function switchLanguage(targetLang) {
+        var currentPath = window.location.pathname;
+        var newPath = currentPath;
+
+        // Replace leading /<lang>/ prefix if it matches a known language
+        var matched = false;
+        for (var i = 0; i < KNOWN_LANGS.length; i++) {
+            var prefix = '/' + KNOWN_LANGS[i] + '/';
+            if (currentPath === '/' + KNOWN_LANGS[i] || currentPath.indexOf(prefix) === 0) {
+                if (currentPath === '/' + KNOWN_LANGS[i]) {
+                    newPath = '/' + targetLang;
+                } else {
+                    newPath = '/' + targetLang + currentPath.slice(prefix.length - 1);
+                }
+                matched = true;
+                break;
+            }
+        }
+        // No prefix found — just go to /<targetLang>/
+        if (!matched) {
+            newPath = '/' + targetLang + '/';
+        }
+
+        document.getElementById('langSwitchCode').value = targetLang;
+        document.getElementById('langSwitchNext').value = newPath + window.location.search;
+        document.getElementById('langSwitchForm').submit();
+    }
+
     function toggleMobileSearch() {
         var searchOverlay = document.getElementById('mobileSearchOverlay');
         var mobileMenu = document.getElementById('mobileMenu');

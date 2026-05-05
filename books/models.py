@@ -542,7 +542,8 @@ class SovereignGlossary(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews', verbose_name='المستخدم')
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='reviews', verbose_name='المستخدم')
+    session_key = models.CharField(max_length=40, null=True, blank=True, verbose_name='معرف الجلسة')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews', verbose_name='الكتاب')
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='التقييم')
     title = models.CharField(max_length=200, blank=True, verbose_name='عنوان التقييم')
@@ -553,10 +554,10 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'التقييم'
         verbose_name_plural = 'التقييمات'
-        unique_together = ('user', 'book')
 
     def __str__(self):
-        return f"{self.user.username} - {self.book} ({self.rating}★)"
+        reviewer = self.user.username if self.user else f"Session {self.session_key[:8] if self.session_key else 'Unknown'}"
+        return f"{reviewer} - {self.book} ({self.rating}★)"
 
 
 class Comment(models.Model):

@@ -110,6 +110,8 @@
                     </div>
                     {% endif %}
 
+                    {% comment %}
+                    <!-- Temporarily disabled: Favorites and Add to List -->
                     {% if user.is_authenticated %}
                     <button onclick="toggleFav()" id="favBtn" class="{% if is_favorite %}bg-red-500/20 text-red-300 border-red-500/30{% else %}bg-white/10 text-white/70 border-white/20{% endif %} font-medium px-5 py-3 rounded-xl border hover:bg-white/20 transition-all tap-target">
                         <span id="favText">{% if is_favorite %}❤️ Favorites{% else %}🤍 Favorites{% endif %}</span>
@@ -130,6 +132,7 @@
                         </div>
                     </div>
                     {% endif %}
+                    {% endcomment %}
 
                     <!-- Share Dropdown -->
                     <div class="relative" id="shareWrapper">
@@ -293,6 +296,7 @@
                         <button onclick="setAudioSpeed({{ forloop.counter0 }}, 2)" class="speed-btn" data-speed="2">2x</button>
                     </div>
                 </div>
+
                 {% endif %}
                 {% endwith %}
                 {% endfor %}
@@ -329,64 +333,25 @@
                 </div>
                 {% endif %}
 
-                {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'books:submit_review' slug=book.seo_slug %}" class="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                <form method="POST" action="{% url 'books:submit_review' slug=book.seo_slug %}" class="p-4 bg-gray-50 rounded-xl border border-gray-100">
                     {% csrf_token %}
-                    <h3 class="font-semibold text-sm text-primary mb-3">{% trans "Rubuta bita'i" %}</h3>
-                    <div class="mb-3">
-                        <label class="text-xs text-gray-500 mb-1 block">{% trans "Ƙima" %}</label>
-                        <div class="star-rating" id="starSelector">
-                            {% for i in "12345" %}
-                            <span class="star" data-value="{{ forloop.counter }}" onclick="selectRating({{ forloop.counter }})" onmouseover="hoverRating({{ forloop.counter }})" onmouseout="resetRatingHover()">★</span>
-                            {% endfor %}
-                        </div>
-                        <input type="hidden" name="rating" id="ratingInput" value="5" required>
+                    <p class="text-xs text-gray-500 mb-3">{% trans "Bayar da ƙima" %}</p>
+                    <div class="star-rating mb-4" id="starSelector">
+                        {% for i in "12345" %}
+                        <span class="star" data-value="{{ forloop.counter }}" onclick="selectRating({{ forloop.counter }})" onmouseover="hoverRating({{ forloop.counter }})" onmouseout="resetRatingHover()">★</span>
+                        {% endfor %}
                     </div>
-                    <div class="mb-3">
-                        <input type="text" name="title" placeholder="{% trans "Taken bita'i" %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none" maxlength="200">
-                    </div>
-                    <div class="mb-3">
-                        <textarea name="content" rows="3" placeholder="{% trans "Rubuta ra'ayin ka..." %}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary focus:outline-none resize-none" required></textarea>
-                    </div>
+                    <input type="hidden" name="rating" id="ratingInput" value="5" required>
+                    <input type="hidden" name="title" value="">
+                    <input type="hidden" name="content" value="-">
                     <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-primary-light transition-colors tap-target">
-                        {% trans "Aika Bita'i" %}
+                        {% trans "Aika" %}
                     </button>
                 </form>
-                {% else %}
-                <p class="text-sm text-gray-400 mb-4">
-                    <a href="{% url 'books:login' %}" class="text-gold hover:text-gold-dark">{% trans "Shiga" %}</a> {% trans "don rubuta bita'i" %}
-                </p>
-                {% endif %}
-
-                <div class="space-y-0">
-                    {% for review in reviews %}
-                    <div class="review-card">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xs font-bold">{{ review.user.username|first|upper }}</div>
-                            <div>
-                                <p class="text-sm font-semibold text-gray-700">{{ review.user.username }}</p>
-                                <div class="flex items-center gap-2">
-                                    <div class="star-rating star-display" style="font-size: 12px;">
-                                        {% for i in "12345" %}
-                                        <span class="star {% if forloop.counter <= review.rating %}filled{% endif %}" style="font-size: 14px;">★</span>
-                                        {% endfor %}
-                                    </div>
-                                    <span class="text-[10px] text-gray-400">{{ review.created_at|timesince }} {% trans "da suka wuce" %}</span>
-                                </div>
-                            </div>
-                        </div>
-                        {% if review.title %}
-                        <p class="font-semibold text-sm text-gray-800 mb-1">{{ review.title }}</p>
-                        {% endif %}
-                        <p class="text-sm text-gray-600">{{ review.content }}</p>
-                    </div>
-                    {% empty %}
-                    <p class="text-sm text-gray-400 py-4 text-center">{% trans "Babu bita'i tukuna. Ka zama na farko!" %}</p>
-                    {% endfor %}
-                </div>
             </div>
 
             <!-- ====== COMMENTS SECTION ====== -->
+            {% comment %}
             <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm" id="comments">
                 <h2 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">💬 {% trans "Tattaunawa" %}</h2>
 
@@ -460,6 +425,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endcomment %}
         </div>
 
         <!-- Sidebar -->
@@ -489,7 +455,8 @@
                         <dd class="text-gray-700">{{ book.year }}</dd>
                     </div>
                     {% endif %}
-                    <div class="flex justify-between">
+
+<div class="flex justify-between">
                         <dt class="text-gray-400">{% trans "Hali" %}</dt>
                         <dd>
                             {% if book.file or book.drive_url %}

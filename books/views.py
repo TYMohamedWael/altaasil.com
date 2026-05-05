@@ -59,8 +59,7 @@ def _build_drive_embed_url(url: str | None) -> str:
 
 def home(request):
     content_language = get_content_language(request)
-    category_filter = Q(language__code=content_language) | Q(language__isnull=True)
-    categories = Category.objects.filter(category_filter).annotate(
+    categories = Category.objects.all().annotate(
         book_count=Count(
             'books',
             filter=Q(books__status='published', books__language__code=content_language)
@@ -337,7 +336,6 @@ def profile_view(request):
 # ====== التقييمات والتعليقات (REVIEWS & COMMENTS) ======
 
 @require_POST
-@login_required
 def submit_review(request, slug):
     book = get_object_or_404(Book, seo_slug=slug, status='published')
     rating = int(request.POST.get('rating', 0))
@@ -345,14 +343,27 @@ def submit_review(request, slug):
         messages.error(request, 'Rating dole ne ya kasance tsakanin 1 zuwa 5.')
         return redirect('books:book_detail', slug=slug)
 
-    review, created = Review.objects.update_or_create(
-        user=request.user, book=book,
-        defaults={
-            'rating': rating,
-            'title': request.POST.get('title', ''),
-            'content': request.POST.get('content', ''),
-        }
-    )
+    title = request.POST.get('title', '').strip()
+    content = request.POST.get('content', '').strip()
+    if content == '-':
+        content = ''
+
+    user = request.user if request.user.is_authenticated else None
+
+    if user:
+        review, created = Review.objects.update_or_create(
+            user=user, book=book,
+            defaults={'rating': rating, 'title': title, 'content': content}
+        )
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        session_key = request.session.session_key
+        review, created = Review.objects.update_or_create(
+            session_key=session_key, book=book,
+            defaults={'rating': rating, 'title': title, 'content': content}
+        )
+
     messages.success(request, 'An ajiye bitar ku!' if created else 'An sabunta bitar ku!')
     return redirect('books:book_detail', slug=slug)
 
