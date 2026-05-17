@@ -341,6 +341,14 @@
 
   // ── Render ────────────────────────────────────────────────────────────────
   function renderPage(pageNum) {
+    if (totalPages === 0) {
+      document.getElementById("pdf-iframe").srcdoc = 
+        "<html dir='rtl'><body style='display:flex;align-items:center;justify-content:center;height:95%;font-family:sans-serif;color:#666;text-align:center;'><h2>الـ PDF فارغ حالياً.<br>يمكنك رفع صورة أو ملف لبناء الكتاب من الصفر.</h2></body></html>";
+      document.getElementById("preview-page-label").textContent = "فارغ";
+      document.getElementById("page-input").value = 0;
+      return;
+    }
+    document.getElementById("pdf-iframe").removeAttribute('srcdoc');
     document.getElementById("pdf-iframe").src = urlPreviewBase + pageNum + '/';
   }
 

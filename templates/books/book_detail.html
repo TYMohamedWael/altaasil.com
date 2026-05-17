@@ -38,13 +38,13 @@
             {% endif %}
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-8 items-start">
+        <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start max-w-full">
             <!-- Book Cover -->
-            <div class="shrink-0">
-                <div class="book-cover-frame">
-                    <div class="book-cover-inner w-48 h-64">
+            <div class="shrink-0 w-full lg:w-auto flex justify-center max-w-full">
+                <div class="book-cover-frame max-w-full">
+                    <div class="book-cover-inner w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 max-w-full">
                         {% if book.cover %}
-                        <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-cover rounded-lg">
+                        <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-contain rounded-lg">
                         {% else %}
                         <div class="text-center px-4">
                             <div class="text-gold/30 text-5xl mb-3">📖</div>

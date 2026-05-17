@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django.urls import path
+from django.urls import path, reverse
 from django.http import JsonResponse
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .models import Category, Book, Feedback, Favorite, ReadingProgress, AudioVersion, SocialPost, SearchLog, SovereignGlossary, Language, SiteText
 
 admin.site.site_header = "إدارة الموقع"
@@ -70,7 +71,7 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ['title', 'title_hausa', 'author', 'description']
     list_editable = ['status', 'approved']
     prepopulated_fields = {'seo_slug': ('title_hausa',)}
-    readonly_fields = ['view_count', 'download_count', 'created_at', 'updated_at', 'ai_panel']
+    readonly_fields = ['view_count', 'download_count', 'created_at', 'updated_at', 'ai_panel', 'pdf_editor_link']
     
     fieldsets = (
         ('بيانات الكتاب', {
@@ -87,7 +88,7 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('description', 'table_of_contents', 'tags')
         }),
         ('الملفات', {
-            'fields': ('file', 'drive_url', 'cover')
+            'fields': ('file', 'drive_url', 'cover', 'pdf_editor_link')
         }),
         ('السيو (SEO)', {
             'fields': ('seo_title', 'seo_description', 'seo_slug'),
@@ -145,10 +146,35 @@ class BookAdmin(admin.ModelAdmin):
         '''.format(id=obj.pk))
     ai_panel.short_description = 'أدوات الذكاء الاصطناعي'
 
+    @admin.display(description="محرر PDF")
+    def pdf_editor_link(self, obj):
+        if not obj.pk:
+            return "احفظ الكتاب أولاً لتتمكن من فتح المحرر"
+        url = reverse("admin:books_book_pdf-editor", args=[obj.pk])
+        return format_html(
+            '<a href="{}" class="button" '
+            'style="background:#2563eb;color:#fff;padding:8px 18px;'
+            'border-radius:6px;text-decoration:none;font-weight:600;'
+            'display:inline-block;margin-top:4px;">'
+            '🗂 فتح المحرر (إضافة / تعديل الصفحات)</a>',
+            url
+        )
+
     def get_urls(self):
         urls = super().get_urls()
+        from books.views_pdf import (
+            pdf_editor_view, pdf_page_preview, pdf_delete_page,
+            pdf_add_blank_page, pdf_upload_page, pdf_book_info,
+        )
         custom_urls = [
             path('<int:book_id>/ai/<str:field>/', self.admin_site.admin_view(self.ai_generate_view), name='book-ai-generate'),
+            # ── PDF Editor ────────────────────────────────────────────────
+            path('<int:book_id>/pdf-editor/',                          self.admin_site.admin_view(pdf_editor_view),                              name='books_book_pdf-editor'),
+            path('<int:book_id>/pdf-editor/preview/<int:page_number>/', self.admin_site.admin_view(xframe_options_sameorigin(pdf_page_preview)), name='books_book_pdf-preview'),
+            path('<int:book_id>/pdf-editor/delete-page/',              self.admin_site.admin_view(pdf_delete_page),                              name='books_book_pdf-delete-page'),
+            path('<int:book_id>/pdf-editor/add-blank/',                self.admin_site.admin_view(pdf_add_blank_page),                           name='books_book_pdf-add-blank'),
+            path('<int:book_id>/pdf-editor/upload-page/',              self.admin_site.admin_view(pdf_upload_page),                              name='books_book_pdf-upload-page'),
+            path('<int:book_id>/pdf-editor/info/',                     self.admin_site.admin_view(pdf_book_info),                                name='books_book_pdf-info'),
         ]
         return custom_urls + urls
 
