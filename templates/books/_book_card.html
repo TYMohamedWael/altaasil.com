@@ -6,7 +6,7 @@
         <!-- Cover Image Area -->
         <div class="relative h-48 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center overflow-hidden flex-shrink-0">
             {% if book.cover %}
-            <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ book.cover.url }}" alt="{{ book.localized_title }}" loading="lazy" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             {% else %}
             <div class="flex flex-col items-center justify-center gap-2">

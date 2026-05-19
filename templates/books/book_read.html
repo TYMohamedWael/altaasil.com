@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load site_text %}
 {% load i18n %}
 {% get_current_language as CURRENT_LANG %}
@@ -121,7 +121,10 @@
             <button onclick="zoomOut()" class="text-sm font-bold text-gray-600 hover:text-primary tap-target" title="{% trans "Rage girma" %}">➖</button>
             <input type="range" id="zoomSlider" min="50" max="300" value="100" class="zoom-slider" oninput="setZoom(this.value)">
             <button onclick="zoomIn()" class="text-sm font-bold text-gray-600 hover:text-primary tap-target" title="{% trans "Ƙara girma" %}">➕</button>
-            <span id="zoomLabel" class="text-xs text-gray-500 ml-1">100%</span>
+            <div class="inline-flex items-center ml-1" title="اضغط مرتين لتعديل النسبة">
+                <input type="number" id="zoomInput" value="100" class="text-xs text-gray-500 bg-transparent border-none text-center focus:ring-1 focus:ring-primary focus:outline-none p-0 m-0" style="width: 36px; -moz-appearance: textfield;" readonly ondblclick="this.removeAttribute('readonly'); this.focus(); this.select();" onblur="this.setAttribute('readonly', true); setZoom(this.value);" onkeydown="if(event.key==='Enter') this.blur();">
+                <span class="text-xs text-gray-500">%</span>
+            </div>
         </div>
 
         <!-- Bookmark current PDF page -->
@@ -255,20 +258,54 @@
         });
     }
 
+    var lastRenderedPage = null;
+
     function renderPage(num) {
         if (!pdfDoc) return;
         pdfDoc.getPage(num).then(function(page) {
             var container = document.getElementById('pdfContainer');
-            var cw = container.clientWidth - 20;
-            var uv = page.getViewport({scale: 1});
-            var baseScale = Math.min(cw / uv.width, 2);
-            var sc = baseScale * (currentZoom / 100);
-            var vp = page.getViewport({scale: sc});
-            canvas.height = vp.height; canvas.width = vp.width;
-            page.render({canvasContext: ctx, viewport: vp});
+            
+            // 1. حساب مقاس الشاشة للتعبئة التلقائية (مع حد أقصى للقراءة المريحة على الكمبيوتر)
+            var padding = 20;
+            var cw = Math.min(container.clientWidth - padding, 800);
+            var unscaledViewport = page.getViewport({scale: 1});
+            var fitScale = cw / unscaledViewport.width;
+            
+            // 2. تطبيق نسبة التكبير التي اختارها المستخدم من الشريط
+            var displayScale = fitScale * (currentZoom / 100);
+            var displayViewport = page.getViewport({scale: displayScale});
+            
+            // 3. التعديل التلقائي لأفضل جودة (High DPI / Retina)
+            var dpr = window.devicePixelRatio || 1;
+            var internalScale = displayScale * dpr;
+            if (unscaledViewport.width * internalScale > 3500) {
+                 internalScale = 3500 / unscaledViewport.width;
+            }
+            var renderViewport = page.getViewport({scale: internalScale});
+            
+            // 4. تعيين الأبعاد الداخلية للقماش
+            canvas.width = renderViewport.width;
+            canvas.height = renderViewport.height;
+            
+            // 5. حل مشكلة الزووم
+            canvas.style.width = displayViewport.width + 'px';
+            canvas.style.height = displayViewport.height + 'px';
+            canvas.style.maxWidth = 'none'; 
+            
+            // 6. رسم الصفحة
+            page.render({
+                canvasContext: ctx, 
+                viewport: renderViewport
+            });
+            
             document.getElementById('pageInput').value = num;
             pageNum = num;
-            container.scrollTop = 0;
+            
+            if (lastRenderedPage !== num) {
+                container.scrollTop = 0;
+                lastRenderedPage = num;
+            }
+            
             updateProgress(num, pdfDoc.numPages);
             updatePdfBookmarkBtn();
         });
@@ -280,13 +317,22 @@
 
     // ===== Zoom =====
     function setZoom(val) {
-        currentZoom = parseInt(val);
-        document.getElementById('zoomSlider').value = currentZoom;
-        document.getElementById('zoomLabel').textContent = currentZoom + '%';
+        currentZoom = parseInt(val) || 100;
+        if (currentZoom < 10) currentZoom = 10;
+        if (currentZoom > 1000) currentZoom = 1000;
+
+        var slider = document.getElementById('zoomSlider');
+        if (slider) {
+            slider.value = (currentZoom > slider.max) ? slider.max : ((currentZoom < slider.min) ? slider.min : currentZoom);
+        }
+        
+        var zInp = document.getElementById('zoomInput');
+        if (zInp) zInp.value = currentZoom;
+        
         if (pdfDoc) renderPage(pageNum);
     }
-    function zoomIn() { setZoom(Math.min(currentZoom + 25, 300)); }
-    function zoomOut() { setZoom(Math.max(currentZoom - 25, 50)); }
+    function zoomIn() { setZoom(currentZoom + 1); }
+    function zoomOut() { setZoom(currentZoom - 1); }
 
     // ===== Progress =====
     function updateProgress(page, total) {
@@ -304,11 +350,11 @@
         {% endif %}
     }
 
+
     function toggleFullscreen() {
         if (document.fullscreenElement) document.exitFullscreen();
         else document.documentElement.requestFullscreen();
     }
-
     // ===== Bookmarks =====
     function getBookmarks() {
         var key = 'bookmarks_' + BOOK_SLUG;

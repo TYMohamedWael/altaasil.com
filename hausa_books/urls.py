@@ -27,7 +27,6 @@ urlpatterns = [
     path('api/stats/', stats_view, name='api-stats'),
     path('api/ai/generate/', ai_generate_view, name='api-ai-generate'),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('admin/', admin.site.urls),
 ]
 
 # i18n URLs (user-facing pages)
