@@ -94,7 +94,6 @@ def book_list(request):
 
     if content_language != 'all':
         books = books.filter(Q(language__code=content_language) | Q(language__isnull=True))
-        categories = categories.filter(Q(language__code=content_language) | Q(language__isnull=True))
         book_count_filter = Q(books__status='published', books__language__code=content_language)
     else:
         book_count_filter = Q(books__status='published')
@@ -274,7 +273,6 @@ def category_list(request):
     content_language = get_content_language(request, allow_all=True)
     categories = Category.objects.all()
     if content_language != 'all':
-        categories = categories.filter(Q(language__code=content_language) | Q(language__isnull=True))
         book_filter = Q(books__status='published', books__language__code=content_language)
     else:
         book_filter = Q(books__status='published')
@@ -573,6 +571,26 @@ def book_download(request, slug):
 
     # تحديث العداد بطريقة آمنة باستخدام F لمنع تضارب البيانات
     Book.objects.filter(pk=book.pk).update(download_count=F('download_count') + 1)
+
+    # ===== تسجيل المراجعة التلقائية عند التحميل =====
+    try:
+        if request.user.is_authenticated:
+            Review.objects.get_or_create(
+                user=request.user,
+                book=book,
+                defaults={'rating': 5, 'title': '', 'content': ''},
+            )
+        else:
+            if not request.session.session_key:
+                request.session.create()
+            session_key = request.session.session_key
+            Review.objects.get_or_create(
+                session_key=session_key,
+                book=book,
+                defaults={'rating': 5, 'title': '', 'content': ''},
+            )
+    except Exception:
+        pass  # لا نوقف التحميل بسبب خطأ في المراجعة
 
     file_path = _find_file_path(book.file)
 
