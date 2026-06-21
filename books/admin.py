@@ -10,12 +10,63 @@ admin.site.site_title = "إدارة الموقع"
 admin.site.index_title = "الرئيسية"
 
 
+from django.shortcuts import redirect
+from django.template.response import TemplateResponse
+
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
     list_display = ['label', 'code', 'direction', 'is_active', 'is_default', 'order']
     list_editable = ['is_active', 'is_default', 'order']
     search_fields = ['name_native', 'name_english', 'code']
     list_filter = ['direction', 'is_active']
+    actions = ['provision_languages']
+
+    def response_add(self, request, obj, post_url_continue=None):
+        """After adding a new language, redirect to the provisioning progress page."""
+        return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
+
+    @admin.action(description='🔧 إعداد ملفات الترجمة يدوياً')
+    def provision_languages(self, request, queryset):
+        """Manual action to (re-)provision translation files for selected languages."""
+        import threading
+        from django.core.cache import cache
+
+        for lang in queryset:
+            code = lang.code.strip().lower()
+            cache.set(f"provision_progress_{code}", {
+                'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Manual trigger...'], 'errors': []
+            })
+
+            def run(l=lang):
+                from .services.language_setup import provision_language
+                provision_language(l)
+
+            t = threading.Thread(target=run)
+            t.daemon = True
+            t.start()
+
+        return redirect(reverse('admin:books_language_provision_progress', args=[queryset.first().code]))
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path('provision-progress/<str:code>/',
+                 self.admin_site.admin_view(self.progress_view),
+                 name='books_language_provision_progress'),
+            path('provision-progress/<str:code>/json/',
+                 self.admin_site.admin_view(self.progress_json),
+                 name='books_language_provision_progress_json'),
+        ]
+        return custom + urls
+
+    def progress_view(self, request, code):
+        context = {**self.admin_site.each_context(request), 'code': code, 'title': f'Language setup ({code})'}
+        return TemplateResponse(request, 'admin/books/language/provision_progress.html', context)
+
+    def progress_json(self, request, code):
+        from django.core.cache import cache
+        data = cache.get(f"provision_progress_{code.strip().lower()}") or {'status': 'pending'}
+        return JsonResponse(data)
 
 
 @admin.register(SiteText)
@@ -107,7 +158,7 @@ class BookAdmin(admin.ModelAdmin):
         if obj.pk:
             return format_html(
                 '<a class="button" style="padding:2px 8px;font-size:11px;background:#c8a84e;color:#1a5632;border-radius:4px;text-decoration:none" '
-                'href="/admin/books/book/{}/ai/all/">🤖 AI</a>',
+                'href="/admin/books/book/{}/process-progress/run/">🤖 AI</a>',
                 obj.pk
             )
         return '-'
@@ -121,7 +172,7 @@ class BookAdmin(admin.ModelAdmin):
                 <p style="margin:0 0 12px 0;color:#1a5632;font-weight:bold;font-size:14px">🤖 مولد البيانات بالذكاء الاصطناعي</p>
                 <p style="margin:0 0 12px 0;color:#666;font-size:12px">اضغط على الأزرار لتوليد البيانات تلقائياً باستخدام الذكاء الاصطناعي (ChatGPT أو Gemini)</p>
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
-                    <a class="button" href="/admin/books/book/{id}/ai/all/" 
+                    <a class="button" href="/admin/books/book/{id}/process-progress/run/" 
                        style="background:#1a5632;color:white;padding:6px 16px;border-radius:6px;text-decoration:none;font-size:12px">
                        ✨ توليد الكل
                     </a>
@@ -160,6 +211,10 @@ class BookAdmin(admin.ModelAdmin):
             url
         )
 
+    def response_add(self, request, obj, post_url_continue=None):
+        """Redirect to the processing progress page after adding a book"""
+        return redirect(reverse('admin:books_book_process_progress', args=[obj.pk]))
+
     def get_urls(self):
         urls = super().get_urls()
         from books.views_pdf import (
@@ -167,6 +222,9 @@ class BookAdmin(admin.ModelAdmin):
             pdf_add_blank_page, pdf_upload_page, pdf_book_info,
         )
         custom_urls = [
+            path('<int:book_id>/process-progress/', self.admin_site.admin_view(self.process_progress_view), name='books_book_process_progress'),
+            path('<int:book_id>/process-progress/json/', self.admin_site.admin_view(self.process_progress_json), name='books_book_process_progress_json'),
+            path('<int:book_id>/process-progress/run/', self.admin_site.admin_view(self.process_progress_run), name='books_book_process_progress_run'),
             path('<int:book_id>/ai/<str:field>/', self.admin_site.admin_view(self.ai_generate_view), name='book-ai-generate'),
             # ── PDF Editor ────────────────────────────────────────────────
             path('<int:book_id>/pdf-editor/',                          self.admin_site.admin_view(pdf_editor_view),                              name='books_book_pdf-editor'),
@@ -177,6 +235,38 @@ class BookAdmin(admin.ModelAdmin):
             path('<int:book_id>/pdf-editor/info/',                     self.admin_site.admin_view(pdf_book_info),                                name='books_book_pdf-info'),
         ]
         return custom_urls + urls
+
+    def process_progress_view(self, request, book_id):
+        from django.template.response import TemplateResponse
+        context = {
+            **self.admin_site.each_context(request),
+            'book_id': book_id,
+            'title': 'معالجة بيانات الكتاب وتوليد السيو',
+        }
+        return TemplateResponse(request, 'admin/books/book/processing_progress.html', context)
+
+    def process_progress_json(self, request, book_id):
+        from django.core.cache import cache
+        data = cache.get(f"book_processing_{book_id}") or {
+            'status': 'pending',
+            'progress': 5,
+            'message': 'جاري بدء معالجة بيانات الكتاب...',
+            'log': ['بانتظار بدء المهمة الخلفية...'],
+            'errors': []
+        }
+        return JsonResponse(data)
+
+    def process_progress_run(self, request, book_id):
+        """Force/manual trigger and redirect to progress page"""
+        from django.core.cache import cache
+        cache_key = f"book_processing_{book_id}"
+        cache.delete(cache_key)  # clear previous progress
+        cache.delete(f"auto_ai_queued_{book_id}")  # clear queue lock
+
+        from .tasks import queue_auto_generate_book_metadata_task
+        queue_auto_generate_book_metadata_task(book_id)
+
+        return redirect(reverse('admin:books_book_process_progress', args=[book_id]))
 
     def ai_generate_view(self, request, book_id, field):
         from django.shortcuts import redirect

@@ -80,12 +80,15 @@ if DB_ENGINE == 'mysql':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'littattafan_hausa'),
-            'USER': os.environ.get('DB_USER', 'root'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '3306'),
-            'OPTIONS': {'charset': 'utf8'},
+            'NAME': 'kpspxfykfl_littattafan_hausa_db',
+            'USER': 'root',
+            'PASSWORD': '',  # اتركها فارغة كما تظهر في إعدادات XAMPP لديك
+            'HOST': '127.0.0.1',
+            'PORT': '3307',
+            'OPTIONS': {
+                'charset': 'utf8mb4', # يفضل استخدام utf8mb4 لدعم الرموز التعبيرية والنصوص بشكل أفضل
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
         }
     }
 else:
@@ -99,7 +102,7 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = []
 
-LANGUAGE_CODE = 'ar'
+LANGUAGE_CODE = 'ha'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
@@ -107,13 +110,125 @@ USE_I18N = True
 USE_L10N = True
 
 from django.utils.translation import gettext_lazy as _
-LANGUAGES = [
+
+class DynamicLanguagesList(list):
+    def __init__(self, fallback_list):
+        self.fallback_list = fallback_list
+        super().__init__(fallback_list)
+
+    def _get_languages(self):
+        try:
+            from django.apps import apps
+            if not apps.ready:
+                return self.fallback_list
+            from django.db import connection
+            import re
+            import django.conf.locale
+
+            langs = []
+            seen = set()
+
+            # Query distinct languages from the countries table
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT DISTINCT language FROM countries WHERE language IS NOT NULL AND language != ''")
+                rows = cursor.fetchall()
+
+            for row in rows:
+                lang_str = row[0]
+                if not lang_str:
+                    continue
+                # matches e.g. "('ps', _('Pashto'))" or "('en', _('English'))"
+                match = re.search(r"\(\s*'([^']+)'\s*,\s*(?:_\()?'([^']+)'(?:\))?\s*\)", lang_str)
+                if match:
+                    code = match.group(1).strip().lower()
+                    name = match.group(2).strip()
+                    if code not in seen:
+                        langs.append((code, name))
+                        seen.add(code)
+                        # Ensure language info is loaded in django locale mapping
+                        if code not in django.conf.locale.LANG_INFO:
+                            django.conf.locale.LANG_INFO[code] = {
+                                'bidi': code in ['ar', 'fa', 'ur', 'he', 'ps', 'sd'],
+                                'code': code,
+                                'name': name,
+                                'name_local': name,
+                            }
+            # Fallback list merge
+            for code, name in self.fallback_list:
+                if code not in seen:
+                    langs.append((code, name))
+                    seen.add(code)
+                    if code not in django.conf.locale.LANG_INFO:
+                        django.conf.locale.LANG_INFO[code] = {
+                            'bidi': code in ['ar', 'fa', 'ur', 'he', 'ps', 'sd'],
+                            'code': code,
+                            'name': str(name),
+                            'name_local': str(name),
+                        }
+            if not langs:
+                return self.fallback_list
+            return langs
+        except Exception:
+            return self.fallback_list
+
+    def __iter__(self):
+        return iter(self._get_languages())
+
+    def __len__(self):
+        return len(self._get_languages())
+
+    def __getitem__(self, index):
+        return self._get_languages()[index]
+
+    def __repr__(self):
+        return repr(self._get_languages())
+
+    def __str__(self):
+        return str(self._get_languages())
+
+    def __contains__(self, item):
+        return item in self._get_languages()
+
+    def __eq__(self, other):
+        return self._get_languages() == other
+
+    def copy(self):
+        return list(self._get_languages())
+
+    def append(self, item):
+        if item not in self.fallback_list:
+            self.fallback_list.append(item)
+
+    def extend(self, items):
+        for item in items:
+            self.append(item)
+
+LANGUAGES = DynamicLanguagesList([
     ('ha', _('Hausa')),
     ('ar', _('العربية')),
     ('en', _('English')),
     ('am', _('Amharic')),
-    ('sw', _('Swahili'))
-]
+    ('sw', _('Swahili')),
+    ('bn', _('Bengali'))
+])
+
+EXTRA_LANG_INFO = {
+    'ha': {
+        'bidi': False,
+        'code': 'ha',
+        'name': 'Hausa',
+        'name_local': 'Hausa',
+    },
+    'am': {
+        'bidi': False,
+        'code': 'am',
+        'name': 'Amharic',
+        'name_local': 'Amharic',
+    },
+}
+
+import django.conf.locale
+django.conf.locale.LANG_INFO.update(EXTRA_LANG_INFO)
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
 STATIC_URL = 'static/'
@@ -126,6 +241,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

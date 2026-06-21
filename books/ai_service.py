@@ -344,3 +344,146 @@ def extract_text_from_pdf(file_path: str, max_pages: int = 10) -> str:
     except Exception as e:
         logger.error(f"PDF extraction error: {e}")
         return ""
+
+
+def _generate_selected_fields(book, fields_to_generate):
+    """
+    Generate selected fields for a book using the AI model.
+    fields_to_generate can contain: 'description', 'toc', 'tags', 'seo', 'all'.
+    """
+    try:
+        from books.tasks import update_book_processing_progress
+    except ImportError:
+        update_book_processing_progress = None
+
+    def report_progress(progress, message, log_line=None, status='processing', error_msg=None):
+        if update_book_processing_progress:
+            update_book_processing_progress(book.pk, progress, message, log_line, status, error_msg)
+
+    report_progress(10, "جاري استخراج النص من ملف الـ PDF...", "بدء قراءة ملف الـ PDF لاستخراج المحتوى واستخدامه للتوليد.")
+
+    text_content = ""
+    if book.file:
+        try:
+            text_content = extract_text_from_pdf(book.file.path)
+            report_progress(20, "تم استخراج النص بنجاح.", f"تم استخراج {len(text_content)} حرفاً من ملف PDF.")
+        except Exception as e:
+            report_progress(20, "فشل استخراج النص من PDF (سيتم استخدام العنوان فقط).", f"فشل استخراج النص: {e}")
+    else:
+        report_progress(20, "لا يوجد ملف PDF مرفق (سيتم التوليد بناءً على العنوان فقط).", "تنبيه: لا يوجد ملف PDF، سيتم الاعتماد على بيانات العنوان والمؤلف.")
+
+    category_name = book.category.localized_name if book.category else ""
+    lang_code = book.language.code if book.language else 'ha'
+
+    # If more than one field is requested, or if 'all' is requested, call generate_all to save API calls
+    if len(fields_to_generate) > 1 or 'all' in fields_to_generate:
+        from books.ai_service import get_ai_provider
+        provider = get_ai_provider() or "AI"
+        report_progress(35, f"جاري الاتصال بـ {provider} لتوليد البيانات...", f"إرسال الطلب إلى {provider} لتوليد (الوصف، الفهرس، الكلمات الدلالية، والسيو)...")
+
+        try:
+            result = generate_all(book.title, book.title_hausa or "", book.author, category_name, lang_code, text_content)
+            report_progress(75, "تم استلام البيانات من الذكاء الاصطناعي بنجاح.", "تم استلام البيانات بنجاح وجاري فك شفرة JSON وتحديث الحقول...")
+
+            updated_fields = []
+            if 'description' in fields_to_generate or 'all' in fields_to_generate:
+                if result.get('description'):
+                    book.description = result['description']
+                    updated_fields.append('description')
+                    report_progress(80, "تم توليد الوصف وتحديث الحقل.", "تحديث حقل الوصف.")
+            if 'toc' in fields_to_generate or 'all' in fields_to_generate:
+                if result.get('chapters'):
+                    book.table_of_contents = result['chapters']
+                    updated_fields.append('table_of_contents')
+                    report_progress(85, "تم توليد الفهرس وتحديث الحقل.", "تحديث حقل الفهرس.")
+            if 'tags' in fields_to_generate or 'all' in fields_to_generate:
+                if result.get('tags'):
+                    book.tags = result['tags']
+                    updated_fields.append('tags')
+                    report_progress(90, "تم توليد الكلمات الدلالية وتحديث الحقل.", "تحديث حقل الكلمات الدلالية.")
+            if 'seo' in fields_to_generate or 'all' in fields_to_generate:
+                if result.get('seo_title'):
+                    book.seo_title = result['seo_title']
+                    updated_fields.append('seo_title')
+                if result.get('seo_description'):
+                    book.seo_description = result['seo_description']
+                    updated_fields.append('seo_description')
+                if result.get('slug') or result.get('seo_slug'):
+                    book.seo_slug = result.get('slug') or result.get('seo_slug')
+                    updated_fields.append('seo_slug')
+                report_progress(95, "تم توليد بيانات السيو وتحديث الحقول.", "تحديث حقول السيو (العنوان، الوصف، الرابط).")
+
+            if updated_fields:
+                updated_fields.append('updated_at')
+                book.save(update_fields=updated_fields)
+
+            report_progress(100, "تمت العملية بنجاح!", "اكتملت جميع العمليات وتوليد البيانات بنجاح.", status='completed')
+
+        except Exception as e:
+            report_progress(100, "حدث خطأ أثناء التوليد بالذكاء الاصطناعي", str(e), status='failed', error_msg=str(e))
+            raise e
+    else:
+        # Generate single field
+        field = fields_to_generate[0]
+        from books.ai_service import get_ai_provider
+        provider = get_ai_provider() or "AI"
+
+        if field == 'description':
+            report_progress(40, f"جاري توليد الوصف باستخدام {provider}...", f"إرسال الطلب لتوليد الوصف...")
+            try:
+                desc = generate_book_description(book.title, book.title_hausa or "", book.author, category_name, lang_code, text_content)
+                if desc:
+                    book.description = desc
+                    book.save(update_fields=['description', 'updated_at'])
+                report_progress(100, "تم توليد الوصف بنجاح!", "تحديث حقل الوصف واكتمال العملية.", status='completed')
+            except Exception as e:
+                report_progress(100, "فشل توليد الوصف", str(e), status='failed', error_msg=str(e))
+                raise e
+
+        elif field == 'toc':
+            report_progress(40, f"جاري توليد الفهرس باستخدام {provider}...", f"إرسال الطلب لتوليد الفهرس...")
+            try:
+                toc = generate_table_of_contents(book.title, book.title_hausa or "", book.author, lang_code, text_content)
+                if toc:
+                    book.table_of_contents = toc
+                    book.save(update_fields=['table_of_contents', 'updated_at'])
+                report_progress(100, "تم توليد الفهرس بنجاح!", "تحديث حقل الفهرس واكتمال العملية.", status='completed')
+            except Exception as e:
+                report_progress(100, "فشل توليد الفهرس", str(e), status='failed', error_msg=str(e))
+                raise e
+
+        elif field == 'tags':
+            report_progress(40, f"جاري توليد الكلمات الدلالية باستخدام {provider}...", f"إرسال الطلب لتوليد الكلمات...")
+            try:
+                desc_text = book.description or ""
+                tags = generate_tags(book.title, book.title_hausa or "", book.author, desc_text, category_name)
+                if tags:
+                    book.tags = tags
+                    book.save(update_fields=['tags', 'updated_at'])
+                report_progress(100, "تم توليد الكلمات الدلالية بنجاح!", "تحديث حقل الكلمات الدلالية واكتمال العملية.", status='completed')
+            except Exception as e:
+                report_progress(100, "فشل توليد الكلمات الدلالية", str(e), status='failed', error_msg=str(e))
+                raise e
+
+        elif field == 'seo':
+            report_progress(40, f"جاري توليد بيانات السيو باستخدام {provider}...", f"إرسال الطلب لتوليد السيو...")
+            try:
+                desc_text = book.description or ""
+                seo = generate_seo(book.title, book.title_hausa or "", desc_text)
+                updated_fields = []
+                if seo.get('seo_title'):
+                    book.seo_title = seo.get('seo_title')
+                    updated_fields.append('seo_title')
+                if seo.get('seo_description'):
+                    book.seo_description = seo.get('seo_description')
+                    updated_fields.append('seo_description')
+                if seo.get('seo_slug'):
+                    book.seo_slug = seo.get('seo_slug')
+                    updated_fields.append('seo_slug')
+                if updated_fields:
+                    updated_fields.append('updated_at')
+                    book.save(update_fields=updated_fields)
+                report_progress(100, "تم توليد بيانات السيو بنجاح!", "تحديث حقول السيو واكتمال العملية.", status='completed')
+            except Exception as e:
+                report_progress(100, "فشل توليد السيو", str(e), status='failed', error_msg=str(e))
+                raise e
