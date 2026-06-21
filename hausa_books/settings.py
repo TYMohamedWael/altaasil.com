@@ -80,15 +80,12 @@ if DB_ENGINE == 'mysql':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'kpspxfykfl_littattafan_hausa_db',
-            'USER': 'root',
-            'PASSWORD': '',  # اتركها فارغة كما تظهر في إعدادات XAMPP لديك
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-            'OPTIONS': {
-                'charset': 'utf8mb4', # يفضل استخدام utf8mb4 لدعم الرموز التعبيرية والنصوص بشكل أفضل
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
+            'NAME': os.environ.get('DB_NAME', 'littattafan_hausa'),
+            'USER': os.environ.get('DB_USER', 'root'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
+            'OPTIONS': {'charset': 'utf8'},
         }
     }
 else:
