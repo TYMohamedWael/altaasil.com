@@ -84,7 +84,7 @@ if DB_ENGINE == 'mysql':
             'USER': 'root',
             'PASSWORD': '',  # اتركها فارغة كما تظهر في إعدادات XAMPP لديك
             'HOST': '127.0.0.1',
-            'PORT': '3307',
+            'PORT': '3306',
             'OPTIONS': {
                 'charset': 'utf8mb4', # يفضل استخدام utf8mb4 لدعم الرموز التعبيرية والنصوص بشكل أفضل
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
