@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="max-width: 620px; margin: 30px auto; padding: 24px; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+    <h2 style="color: #1a5632; margin-bottom: 6px; font-size: 20px;">🌐 Processing Language: <strong>{{ code }}</strong></h2>
+    <p style="color: #888; font-size: 13px; margin-bottom: 18px;">Translating locale files and setting up the language…</p>
+
+    <!-- Progress Bar -->
+    <div style="background: #eee; height: 22px; border-radius: 11px; overflow: hidden; margin: 15px 0; position: relative;">
+        <div id="bar" style="background: linear-gradient(90deg, #1a5632, #2d7a4a); width: 0%; height: 100%; transition: width 0.5s ease; border-radius: 11px;"></div>
+        <span id="pct" style="position: absolute; right: 10px; top: 2px; font-size: 12px; font-weight: bold; color: #333;">0%</span>
+    </div>
+
+    <!-- Status Message -->
+    <p id="msg" style="font-size: 14px; color: #555; margin-bottom: 14px;">⏳ Initializing…</p>
+
+    <!-- Terminal-Style Log -->
+    <div id="log" style="background: #111; color: #4ade80; height: 220px; overflow-y: auto; padding: 12px; font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; border-radius: 8px; border: 1px solid #333; line-height: 1.7;"></div>
+
+    <!-- Errors (hidden by default) -->
+    <div id="errBox" style="display: none; margin-top: 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px;">
+        <p style="color: #b91c1c; font-weight: bold; font-size: 13px; margin: 0 0 6px 0;">⚠️ Errors encountered:</p>
+        <ul id="errList" style="color: #dc2626; font-size: 12px; margin: 0; padding-left: 18px;"></ul>
+    </div>
+
+    <!-- Done Banner (hidden by default) -->
+    <div id="doneBanner" style="display: none; margin-top: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px; text-align: center;">
+        <p style="color: #15803d; font-weight: bold; font-size: 15px; margin: 0 0 8px 0;">✅ Language setup completed!</p>
+        <a href="{% url 'admin:books_language_changelist' %}" style="color: #1a5632; text-decoration: underline; font-size: 13px;">← Back to Languages list</a>
+    </div>
+</div>
+
+<script>
+    const code = "{{ code }}";
+    const url = "{% url 'admin:books_language_provision_progress_json' code %}";
+
+    function poll() {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                // Progress bar
+                const pct = data.progress || 0;
+                document.getElementById('bar').style.width = pct + '%';
+                document.getElementById('pct').innerText = pct + '%';
+
+                // Status message
+                document.getElementById('msg').innerText = data.message || 'Processing…';
+
+                // Log
+                const logDiv = document.getElementById('log');
+                logDiv.innerHTML = (data.log || []).map(line => `<div>${line}</div>`).join('');
+                logDiv.scrollTop = logDiv.scrollHeight;
+
+                // Errors
+                if (data.errors && data.errors.length > 0) {
+                    document.getElementById('errBox').style.display = 'block';
+                    document.getElementById('errList').innerHTML = data.errors.map(e => `<li>${e}</li>`).join('');
+                }
+
+                // Done / Failed
+                if (data.status === 'completed') {
+                    document.getElementById('doneBanner').style.display = 'block';
+                    document.getElementById('msg').innerText = '✅ Done!';
+                } else if (data.status === 'failed') {
+                    document.getElementById('msg').innerText = '❌ Failed — see errors below.';
+                } else {
+                    setTimeout(poll, 1500);
+                }
+            })
+            .catch(() => {
+                setTimeout(poll, 3000);
+            });
+    }
+    setTimeout(poll, 1000);
+</script>
+{% endblock %}

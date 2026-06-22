@@ -1,0 +1,419 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    .progress-container {
+        font-family: 'Cairo', sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border: 1px solid #eef2f6;
+        direction: rtl;
+        text-align: right;
+    }
+    
+    .progress-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 15px;
+    }
+    
+    .progress-icon {
+        font-size: 2.5rem;
+        animation: pulse 2s infinite ease-in-out;
+    }
+    
+    .progress-title {
+        color: #1a5632;
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+    }
+    
+    .progress-subtitle {
+        color: #6b7280;
+        font-size: 14px;
+        margin: 4px 0 0 0;
+    }
+    
+    /* Progress Track */
+    .track-wrapper {
+        background: #f3f4f6;
+        height: 24px;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 20px 0;
+        position: relative;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .track-bar {
+        background: linear-gradient(90deg, #10b981, #10b981);
+        width: 0%;
+        height: 100%;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 12px;
+        position: relative;
+    }
+    
+    .track-bar::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background-image: linear-gradient(
+            -45deg, 
+            rgba(255, 255, 255, .15) 25%, 
+            transparent 25%, 
+            transparent 50%, 
+            rgba(255, 255, 255, .15) 50%, 
+            rgba(255, 255, 255, .15) 75%, 
+            transparent 75%, 
+            transparent
+        );
+        z-index: 1;
+        background-size: 40px 40px;
+        animation: move-stripes 2s linear infinite;
+    }
+    
+    .track-text {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 13px;
+        font-weight: 700;
+        color: #1f2937;
+        z-index: 2;
+    }
+    
+    /* Status Message */
+    .status-msg {
+        font-size: 15px;
+        color: #374151;
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    /* Steps list */
+    .steps-list {
+        margin: 25px 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 20px;
+    }
+    
+    .step-item {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        color: #9ca3af;
+        transition: all 0.3s ease;
+    }
+    
+    .step-item.active {
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        color: #065f46;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    
+    .step-item.done {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #15803d;
+    }
+
+    .step-item.failed {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #b91c1c;
+    }
+    
+    /* Terminal Console */
+    .terminal-console {
+        background: #0f172a;
+        color: #38bdf8;
+        height: 240px;
+        overflow-y: auto;
+        padding: 15px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 12px;
+        border-radius: 10px;
+        box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        line-height: 1.8;
+        border: 1px solid #1e293b;
+    }
+    
+    .terminal-line {
+        margin-bottom: 4px;
+        border-left: 2px solid transparent;
+        padding-left: 8px;
+    }
+    
+    .terminal-line.info { color: #38bdf8; }
+    .terminal-line.success { color: #4ade80; }
+    .terminal-line.error { color: #f87171; border-color: #ef4444; }
+    
+    /* Done Banner */
+    .done-banner {
+        display: none;
+        margin-top: 25px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        animation: slideUp 0.5s ease-out;
+    }
+    
+    .done-title {
+        color: #15803d;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0 0 10px 0;
+    }
+    
+    .done-button {
+        display: inline-block;
+        background: #1a5632;
+        color: #ffffff !important;
+        padding: 10px 24px;
+        border-radius: 8px;
+        text-decoration: none !important;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(26, 86, 50, 0.2);
+    }
+    
+    .done-button:hover {
+        background: #144527;
+    }
+
+    .error-banner {
+        display: none;
+        margin-top: 25px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .error-title {
+        color: #b91c1c;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0 0 10px 0;
+    }
+    
+    @keyframes move-stripes {
+        from { background-position: 0 0; }
+        to { background-position: 40px 0; }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
+    
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="progress-container">
+    <div class="progress-header">
+        <div class="progress-icon">🤖</div>
+        <div>
+            <h2 class="progress-title">توليد بيانات الكتاب بالذكاء الاصطناعي</h2>
+            <p class="progress-subtitle">جاري قراءة الكتاب، توليد الفهرس، الوصف، الكلمات الدلالية، وتهيئة السيو (SEO) تلقائياً…</p>
+        </div>
+    </div>
+    
+    <!-- Steps Progress -->
+    <ul class="steps-list">
+        <li id="step1" class="step-item active">1. رفع الملف</li>
+        <li id="step2" class="step-item">2. قراءة النصوص</li>
+        <li id="step3" class="step-item">3. توليد المحتوى</li>
+        <li id="step4" class="step-item">4. تهيئة السيو</li>
+    </ul>
+
+    <!-- Status Message -->
+    <div class="status-msg">
+        <span class="spinner">⏳</span>
+        <span id="msg-text">جاري بدء عملية المعالجة...</span>
+    </div>
+
+    <!-- Progress Track -->
+    <div class="track-wrapper">
+        <div id="progress-bar" class="track-bar" style="width: 0%;"></div>
+        <span id="progress-pct" class="track-text">0%</span>
+    </div>
+
+    <!-- Console Log -->
+    <div id="console-log" class="terminal-console">
+        <div class="terminal-line info">[INFO] بدء الاتصال بالخادم لمراقبة التقدم...</div>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="error-box" class="error-banner">
+        <h3 class="error-title">❌ فشلت عملية توليد البيانات</h3>
+        <p id="error-msg-text" style="color: #ef4444; font-size: 13px; margin-bottom: 15px;"></p>
+        <a href="{% url 'admin:books_book_change' book_id %}" class="done-button" style="background:#dc2626">الرجوع لتعديل الكتاب</a>
+    </div>
+
+    <!-- Done Banner -->
+    <div id="done-box" class="done-banner">
+        <h3 class="done-title">✨ اكتملت معالجة الكتاب وتوليد البيانات بنجاح!</h3>
+        <p style="color: #4b5563; font-size: 13px; margin-bottom: 15px;">تم ملء جميع الحقول المطلوبة (الوصف، الفهرس، الكلمات الدلالية، وعناوين السيو) وحفظها في قاعدة البيانات.</p>
+        <a href="{% url 'admin:books_book_change' book_id %}" class="done-button">الذهاب لصفحة الكتاب ←</a>
+    </div>
+</div>
+
+<script>
+    const bookId = "{{ book_id }}";
+    const statusUrl = "{% url 'admin:books_book_process_progress_json' book_id %}";
+    let failuresCount = 0;
+
+    function formatTime() {
+        const now = new Date();
+        return now.toTimeString().split(' ')[0];
+    }
+
+    function addConsoleLog(text, type='info') {
+        const consoleDiv = document.getElementById('console-log');
+        const line = document.createElement('div');
+        line.className = `terminal-line ${type}`;
+        line.innerText = `[${formatTime()}] [${type.toUpperCase()}] ${text}`;
+        consoleDiv.appendChild(line);
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    }
+
+    function updateSteps(progress, status) {
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+
+        // Reset all
+        [step1, step2, step3, step4].forEach(el => el.className = 'step-item');
+
+        if (status === 'failed') {
+            [step1, step2, step3, step4].forEach(el => el.classList.add('failed'));
+            return;
+        }
+
+        // File upload is always 100% done once we reach this page
+        step1.className = 'step-item done';
+
+        if (progress >= 10 && progress < 20) {
+            step2.className = 'step-item active';
+        } else if (progress >= 20 && progress < 35) {
+            step2.className = 'step-item done';
+            step3.className = 'step-item active';
+        } else if (progress >= 35 && progress < 95) {
+            step2.className = 'step-item done';
+            step3.className = 'step-item active';
+        } else if (progress >= 95 && progress < 100) {
+            step2.className = 'step-item done';
+            step3.className = 'step-item done';
+            step4.className = 'step-item active';
+        } else if (progress === 100) {
+            step2.className = 'step-item done';
+            step3.className = 'step-item done';
+            step4.className = 'step-item done';
+        }
+    }
+
+    let processedLogs = new Set();
+
+    function pollProgress() {
+        fetch(statusUrl)
+            .then(res => {
+                if (!res.ok) throw new Error("HTTP error " + res.status);
+                return res.json();
+            })
+            .then(data => {
+                failuresCount = 0;
+                
+                const progress = data.progress || 0;
+                const status = data.status || 'processing';
+                const message = data.message || 'جاري المعالجة...';
+                
+                // Update progress bar
+                document.getElementById('progress-bar').style.width = progress + '%';
+                document.getElementById('progress-pct').innerText = progress + '%';
+                document.getElementById('msg-text').innerText = message;
+
+                updateSteps(progress, status);
+
+                // Update logs
+                const logs = data.log || [];
+                logs.forEach(logLine => {
+                    if (!processedLogs.has(logLine)) {
+                        let type = 'info';
+                        if (logLine.includes('✅') || logLine.includes('تمت') || logLine.includes('بنجاح')) {
+                            type = 'success';
+                        } else if (logLine.includes('❌') || logLine.includes('خطأ') || logLine.includes('فشل')) {
+                            type = 'error';
+                        }
+                        addConsoleLog(logLine, type);
+                        processedLogs.add(logLine);
+                    }
+                });
+
+                if (status === 'completed') {
+                    document.getElementById('done-box').style.display = 'block';
+                    document.querySelector('.spinner').innerText = '✅';
+                    addConsoleLog("كتملت معالجة الكتاب وحفظ البيانات بنجاح!", "success");
+                } else if (status === 'failed') {
+                    document.getElementById('error-box').style.display = 'block';
+                    document.querySelector('.spinner').innerText = '❌';
+                    
+                    const errors = data.errors || [];
+                    const errorMsg = errors.length > 0 ? errors.join(', ') : 'خطأ غير معروف أثناء التوليد بالذكاء الاصطناعي.';
+                    document.getElementById('error-msg-text').innerText = errorMsg;
+                    addConsoleLog(`فشلت المعالجة: ${errorMsg}`, "error");
+                } else {
+                    // Continue polling
+                    setTimeout(pollProgress, 3000);
+                }
+            })
+            .catch(err => {
+                failuresCount++;
+                console.error("Polling error:", err);
+                if (failuresCount > 5) {
+                    document.getElementById('error-box').style.display = 'block';
+                    document.getElementById('error-msg-text').innerText = "فقد الاتصال بالخادم. يرجى مراجعة حالة الخادم والمحاولة مرة أخرى.";
+                } else {
+                    setTimeout(pollProgress, 5000);
+                }
+            });
+    }
+
+    // First fetch delay
+    setTimeout(pollProgress, 2000);
+</script>
+{% endblock %}
