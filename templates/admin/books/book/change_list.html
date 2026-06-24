@@ -1,0 +1,245 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    /* Sleek custom styling for collapse/expand filter toggling */
+    #changelist {
+        position: relative; /* to anchor the absolute collapsed bar */
+        transition: all 0.2s ease;
+    }
+
+    /* Close button inside filter header */
+    #changelist-filter h2 {
+        position: relative;
+        padding-left: 40px !important; /* leave space for the X button */
+        padding-right: 15px !important;
+    }
+
+    .filter-close-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 12px;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.2s ease-in-out;
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: sans-serif;
+    }
+
+    .filter-close-btn:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-50%) scale(1.15);
+    }
+
+    /* Collapsed Bar styling */
+    #filter-collapsed-bar {
+        display: none;
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 100%;
+        min-height: 450px;
+        z-index: 100;
+        box-sizing: border-box;
+    }
+
+    .filter-collapsed #filter-collapsed-bar {
+        display: block;
+    }
+
+    .collapsed-bar-stripe {
+        width: 8px;
+        height: 100%;
+        background-color: #1a5632; /* matching dark green */
+        position: absolute;
+        top: 0;
+        transition: background-color 0.2s ease;
+        border-radius: 4px;
+    }
+
+    #filter-collapsed-bar:hover .collapsed-bar-stripe {
+        background-color: #247a47; /* lighter green */
+    }
+
+    .collapsed-bar-toggle-btn {
+        position: absolute;
+        top: 60px;
+        background-color: #1a5632;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        padding: 12px 6px;
+        cursor: pointer;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .collapsed-bar-toggle-btn:hover {
+        background-color: #c8a84e; /* gold hover color matching system styles */
+        color: #1a5632;
+        font-weight: 700;
+    }
+
+    /* Directional styling - Right aligned filter (default LTR) */
+    #changelist.filter-on-right.filter-collapsed {
+        padding-right: 40px !important;
+        grid-template-columns: 1fr !important;
+    }
+    #changelist.filter-on-right.filter-collapsed #changelist-filter {
+        display: none !important;
+    }
+    #changelist.filter-on-right #filter-collapsed-bar {
+        right: 0;
+        left: auto;
+    }
+    #changelist.filter-on-right .collapsed-bar-stripe {
+        right: 0;
+        left: auto;
+    }
+    #changelist.filter-on-right .collapsed-bar-toggle-btn {
+        right: 4px;
+        left: auto;
+        border-radius: 6px 0 0 6px;
+    }
+    #changelist.filter-on-right .collapsed-bar-toggle-btn:hover {
+        transform: translateX(-4px);
+    }
+
+    /* Directional styling - Left aligned filter (default RTL) */
+    #changelist.filter-on-left.filter-collapsed {
+        padding-left: 40px !important;
+        grid-template-columns: 1fr !important;
+    }
+    #changelist.filter-on-left.filter-collapsed #changelist-filter {
+        display: none !important;
+    }
+    #changelist.filter-on-left #filter-collapsed-bar {
+        left: 0;
+        right: auto;
+    }
+    #changelist.filter-on-left .collapsed-bar-stripe {
+        left: 0;
+        right: auto;
+    }
+    #changelist.filter-on-left .collapsed-bar-toggle-btn {
+        left: 4px;
+        right: auto;
+        border-radius: 0 6px 6px 0;
+    }
+    #changelist.filter-on-left .collapsed-bar-toggle-btn:hover {
+        transform: translateX(4px);
+    }
+    
+    /* Responsive layout tweaks when collapsed */
+    .filter-collapsed #changelist-form {
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+  </style>
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterEl = document.getElementById('changelist-filter');
+        const changelistEl = document.getElementById('changelist');
+        
+        if (!filterEl || !changelistEl) return;
+        
+        // Create the collapsed bar
+        const bar = document.createElement('div');
+        bar.id = 'filter-collapsed-bar';
+        
+        const stripe = document.createElement('div');
+        stripe.className = 'collapsed-bar-stripe';
+        bar.appendChild(stripe);
+        
+        const btn = document.createElement('button');
+        btn.className = 'collapsed-bar-toggle-btn';
+        btn.type = 'button';
+        btn.title = 'عرض أدوات التصفية';
+        
+        const arrow = document.createElement('span');
+        arrow.className = 'arrow-icon';
+        
+        const text = document.createElement('span');
+        text.className = 'btn-text';
+        text.innerText = 'عرض الفلاتر (Show)';
+        
+        btn.appendChild(arrow);
+        btn.appendChild(text);
+        bar.appendChild(btn);
+        
+        changelistEl.appendChild(bar);
+        
+        // Detect side of filter relative to changelist
+        const filterRect = filterEl.getBoundingClientRect();
+        const changelistRect = changelistEl.getBoundingClientRect();
+        const filterCenter = filterRect.left + filterRect.width / 2;
+        const changelistCenter = changelistRect.left + changelistRect.width / 2;
+        
+        if (filterCenter > changelistCenter) {
+            changelistEl.classList.add('filter-on-right');
+            arrow.innerHTML = '◀';
+        } else {
+            changelistEl.classList.add('filter-on-left');
+            arrow.innerHTML = '▶';
+        }
+        
+        // Add close button to filter header
+        const filterHeader = filterEl.querySelector('h2');
+        if (filterHeader) {
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'filter-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.title = 'إخفاء الفلاتر';
+            filterHeader.appendChild(closeBtn);
+            
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                setFilterState(true); // collapse
+            });
+        }
+        
+        btn.addEventListener('click', function() {
+            setFilterState(false); // expand
+        });
+        
+        // Function to set filter state
+        function setFilterState(collapse) {
+            if (collapse) {
+                changelistEl.classList.add('filter-collapsed');
+                localStorage.setItem('book-filter-collapsed', 'true');
+            } else {
+                changelistEl.classList.remove('filter-collapsed');
+                localStorage.setItem('book-filter-collapsed', 'false');
+            }
+        }
+        
+        // Check initial state from localStorage
+        const savedState = localStorage.getItem('book-filter-collapsed');
+        if (savedState === 'true') {
+            setFilterState(true);
+        }
+    });
+  </script>
+{% endblock %}

@@ -6,6 +6,139 @@
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/admin-custom.css' %}">
+<style>
+  /* ══════════════════════════════════════════
+     Filter Collapse/Expand — Global Admin
+     ══════════════════════════════════════════ */
+
+  /* Animate the filter's max-width only — don't touch layout */
+  #changelist-filter {
+    overflow: hidden;
+    transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity    0.25s ease;
+    max-width: 1200px; /* large enough; animates to 0 on collapse */
+  }
+
+  /* Close (×) button inside filter header */
+  #changelist-filter h2 {
+    position: relative !important;
+  }
+  .filter-close-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    cursor: pointer;
+    font-size: 19px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: sans-serif;
+    user-select: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .filter-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateY(-50%) scale(1.2);
+  }
+
+  /* RTL: close button on right */
+  [dir="rtl"] .filter-close-btn {
+    left: auto;
+    right: 10px;
+  }
+
+  /* ── Collapsed reveal bar ───────────────── */
+  #filter-reveal-bar {
+    display: none;           /* shown by JS when collapsed */
+    position: absolute;
+    top: 0;
+    width: 32px;
+    height: 100%;
+    min-height: 400px;
+    flex-direction: column;
+    align-items: center;
+    z-index: 60;
+    pointer-events: auto;
+  }
+
+  .fr-stripe {
+    position: absolute;
+    top: 0;
+    width: 7px;
+    height: 100%;
+    background: #1a5632;
+    border-radius: 3px;
+    transition: background 0.2s, width 0.2s;
+  }
+  #filter-reveal-bar:hover .fr-stripe {
+    background: #247a47;
+    width: 9px;
+  }
+
+  .fr-show-btn {
+    position: absolute;
+    top: 52px;
+    width: 27px;
+    background: #1a5632;
+    color: #fff;
+    border: none;
+    padding: 14px 4px;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .fr-show-btn:hover {
+    background: #c8a84e;
+    color: #1a5632;
+    font-weight: 700;
+  }
+
+  /* Reveal bar positioning: right side (filter usually on right in Django admin) */
+  #filter-reveal-bar.bar-right {
+    right: 0;
+    left: auto;
+  }
+  #filter-reveal-bar.bar-right .fr-stripe { right: 0; left: auto; }
+  #filter-reveal-bar.bar-right .fr-show-btn {
+    right: 2px; left: auto;
+    border-radius: 6px 0 0 6px;
+  }
+  #filter-reveal-bar.bar-right:hover .fr-show-btn {
+    transform: translateX(-3px);
+  }
+
+  /* Left side (RTL or left-side filters) */
+  #filter-reveal-bar.bar-left {
+    left: 0;
+    right: auto;
+  }
+  #filter-reveal-bar.bar-left .fr-stripe { left: 0; right: auto; }
+  #filter-reveal-bar.bar-left .fr-show-btn {
+    left: 2px; right: auto;
+    border-radius: 0 6px 6px 0;
+  }
+  #filter-reveal-bar.bar-left:hover .fr-show-btn {
+    transform: translateX(3px);
+  }
+
+  /* The changelist needs position:relative to contain the absolute bar */
+  #changelist {
+    position: relative !important;
+  }
+</style>
 {% endblock %}
 
 {% block branding %}
@@ -25,4 +158,117 @@
     <a href="{% url 'admin:books_book_changelist' %}" title="الكتب">📚 الكتب</a>
     <a href="{% url 'admin:books_category_changelist' %}" title="التصنيفات">📂 التصنيفات</a>
 </div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+(function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var filter     = document.getElementById('changelist-filter');
+    var changelist = document.getElementById('changelist');
+
+    // Only run on changelist pages that have a filter sidebar
+    if (!filter || !changelist) return;
+
+    var KEY      = 'fc:' + location.pathname;
+    var animating = false;
+
+    /* ── 1. Add × close button to filter header ─────────── */
+    var h2 = filter.querySelector('h2');
+    if (h2) {
+      var closeBtn       = document.createElement('span');
+      closeBtn.className = 'filter-close-btn';
+      closeBtn.innerHTML = '&times;';
+      closeBtn.title     = 'إخفاء الفلاتر';
+      h2.appendChild(closeBtn);
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        doCollapse();
+      });
+    }
+
+    /* ── 2. Create the reveal bar ───────────────────────── */
+    var bar       = document.createElement('div');
+    bar.id        = 'filter-reveal-bar';
+    bar.innerHTML =
+      '<div class="fr-stripe"></div>' +
+      '<button class="fr-show-btn" type="button" title="عرض الفلاتر">' +
+        '<span class="fr-arrow"></span><span>فلاتر</span>' +
+      '</button>';
+    changelist.appendChild(bar);
+
+    /* Detect which side the filter is on */
+    var filterRect     = filter.getBoundingClientRect();
+    var changelistRect = changelist.getBoundingClientRect();
+    var filterIsRight  = (filterRect.left + filterRect.width / 2) >
+                         (changelistRect.left + changelistRect.width / 2);
+
+    var arrowEl = bar.querySelector('.fr-arrow');
+    if (filterIsRight) {
+      bar.classList.add('bar-right');
+      if (arrowEl) arrowEl.textContent = '◀';
+    } else {
+      bar.classList.add('bar-left');
+      if (arrowEl) arrowEl.textContent = '▶';
+    }
+
+    bar.querySelector('.fr-show-btn').addEventListener('click', doExpand);
+
+    /* ── 3. Collapse / Expand functions ─────────────────── */
+    function doCollapse() {
+      if (animating) return;
+      animating = true;
+
+      filter.style.maxWidth = '0px';
+      filter.style.opacity  = '0';
+
+      setTimeout(function () {
+        filter.style.display = 'none';
+        bar.style.display    = 'flex';
+        animating = false;
+      }, 360);
+
+      localStorage.setItem(KEY, '1');
+    }
+
+    function doExpand() {
+      if (animating) return;
+      animating = true;
+
+      bar.style.display    = 'none';
+      filter.style.display = '';
+
+      /* Two rAFs: ensure browser lays out the element before starting transition */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          filter.style.maxWidth = '1200px';
+          filter.style.opacity  = '1';
+          setTimeout(function () { animating = false; }, 360);
+        });
+      });
+
+      localStorage.setItem(KEY, '0');
+    }
+
+    /* ── 4. Restore saved state instantly (no flash) ─────── */
+    if (localStorage.getItem(KEY) === '1') {
+      /* Disable transition briefly so the hidden state applies instantly */
+      filter.style.transition = 'none';
+      filter.style.display    = 'none';
+      filter.style.maxWidth   = '0px';
+      filter.style.opacity    = '0';
+      bar.style.display       = 'flex';
+      bar.style.opacity       = '1';
+
+      requestAnimationFrame(function () {
+        /* Re-enable transitions after browser paints the hidden state */
+        filter.style.transition = '';
+      });
+    }
+  });
+})();
+</script>
 {% endblock %}
