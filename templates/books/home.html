@@ -75,7 +75,7 @@
         <a href="{% url 'books:book_list' %}?category={{ cat.slug }}" class="block">
             <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100 hover:border-yellow-300/40 hover:shadow-md transition-all duration-300 card-hover h-full flex flex-col items-center justify-center">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-3 bg-gradient-to-br" style="background:linear-gradient(135deg,rgba(26,86,50,0.1),rgba(200,168,78,0.15));">
-                    <svg class="w-5 h-5" style="color:#1a5632;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="var(--color-stroke)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                 </div>
                 <div class="text-sm font-bold text-primary leading-tight">{{ cat.localized_name }}</div>
                 {% if cat.alternate_name %}
@@ -103,7 +103,7 @@
         {% empty %}
         <div class="col-span-full text-center py-16">
             <div class="text-5xl mb-4">📚</div>
-            <p class="text-gray-500">{% trans "Ba a sami littattafai ba tukuna. Ƙara littafi ta hanyar lohajar admin." %}</p>
+            <p class="text-gray-500">{% trans "Ba a sami littattafai ba tukuna." %}</p>
         </div>
         {% endfor %}
     </div>

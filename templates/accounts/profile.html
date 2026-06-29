@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n site_text %}
-{% block title %}{{ user.first_name|default:user.username }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block title %}{{ user.first_name|default:user.username }} - {{ site_name }}{% endblock %}
 {% block content %}
 <div class="max-w-4xl mx-auto px-4 py-8">
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8">

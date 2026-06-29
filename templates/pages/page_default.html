@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n site_text %}
 
-{% block title %}{{ page_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block title %}{{ page_title }} - {{ site_name }}{% endblock %}
 {% block meta_description %}{{ page.seo_description|default:page_title }}{% endblock %}
 
 {% block content %}

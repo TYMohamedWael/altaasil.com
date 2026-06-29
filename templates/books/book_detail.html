@@ -3,7 +3,7 @@
 {% load i18n %}
 {% get_current_language as CURRENT_LANG %}
 
-{% block title %}{{ book.localized_title }} - {% trans "Littattafan Hausa" %}{% endblock %}
+{% block title %}{{ book.localized_title }} - {{ site_name }}{% endblock %}
 {% block meta_description %}{{ book.seo_description|default:book.description|truncatewords:30 }}{% endblock %}
 {% block meta_keywords %}{{ book.tags|join:", " }}{% endblock %}
 

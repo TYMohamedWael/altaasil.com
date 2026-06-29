@@ -1,23 +1,23 @@
 {% load i18n site_text %}
 <!-- Footer -->
 <footer class="bg-primary text-white mt-16">
-    <div class="max-w-7xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 bg-gold rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+    <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div class="col-span-2 md:col-span-2">
+                <div class="flex items-center gap-3 mb-3 md:mb-4">
+                    <div class="h-10 bg-white rounded-lg flex items-center justify-center p-1 overflow-hidden">
+                        <img src="https://www.spacechanels.com/website/images/logo.png" alt="Logo" class="h-full w-auto object-contain">
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg">{% trans "Littattafan Hausa" %}</h3>
-                        <p class="text-xs text-gold">{% trans "Dakin Karatu na Ilimi na Musulunci" %}</p>
+                        <h3 class="font-bold text-base md:text-lg">{{ site_name }}</h3>
+                        <p class="text-[10px] md:text-xs text-gold">{% trans "Dakin Karatu na Ilimi na Musulunci" %}</p>
                     </div>
                 </div>
-                <p class="text-sm text-white/70 max-w-md">{% trans "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya." %}</p>
+                <p class="text-xs md:text-sm text-white/70 max-w-md leading-relaxed">{% trans "Manhajar littattafan Musulunci ta harshen Hausa. Muna tattara, fassara, da yada ilimin Musulunci cikin harshen Hausa zuwa duniya baki daya." %}</p>
             </div>
             <div>
-                <h4 class="font-semibold text-gold mb-3 text-sm uppercase tracking-wider">{% trans "Hanyoyi" %}</h4>
-                <nav class="flex flex-col gap-2 text-sm text-white/70" aria-label="{% trans 'Hanyoyin kafa' %}">
+                <h4 class="font-semibold text-gold mb-2 md:mb-3 text-xs md:text-sm uppercase tracking-wider">{% trans "Hanyoyi" %}</h4>
+                <nav class="flex flex-col gap-1.5 md:gap-2 text-xs md:text-sm text-white/70" aria-label="{% trans 'Hanyoyin kafa' %}">
                     {% if footer_menu %}
                     {% for item in footer_menu %}
                     <a href="{{ item.get_url }}" class="hover:text-white" {% if item.open_in_new_tab %}target="_blank"{% endif %}>{{ item.get_label }}</a>
@@ -30,8 +30,8 @@
                 </nav>
             </div>
             <div>
-                <h4 class="font-semibold text-gold mb-3 text-sm uppercase tracking-wider">{% trans "Rukunoni" %}</h4>
-                <nav class="flex flex-col gap-2 text-sm text-white/70" aria-label="{% trans 'Rukunoni' %}">
+                <h4 class="font-semibold text-gold mb-2 md:mb-3 text-xs md:text-sm uppercase tracking-wider">{% trans "Rukunoni" %}</h4>
+                <nav class="flex flex-col gap-1.5 md:gap-2 text-xs md:text-sm text-white/70" aria-label="{% trans 'Rukunoni' %}">
                     {% if footer_pages %}
                     {% for page in footer_pages %}
                     <a href="{{ page.get_absolute_url }}" class="hover:text-white">{{ page.title_hausa|default:page.title }}</a>
@@ -45,8 +45,8 @@
                 </nav>
             </div>
         </div>
-        <div class="border-t border-white/20 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-white/50">
-            <p>{% trans "&copy; 2026 Littattafan Hausa. Duk haƙƙoƙin an kiyaye su." %}</p>
+        <div class="border-t border-white/20 mt-6 pt-4 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs text-white/50">
+            <p>&copy; 2026 {{ site_name_base }}. {% trans "Duk haƙƙoƙin an kiyaye su." %}</p>
             <p class="mt-2 md:mt-0">{% trans "An gina da ❤️ don al'ummar Hausa" %}</p>
         </div>
     </div>
