@@ -119,52 +119,42 @@ class DynamicLanguagesList(list):
             if not apps.ready:
                 return self.fallback_list
             from django.db import connection
-            import re
             import django.conf.locale
 
             langs = []
             seen = set()
 
-            # Query distinct languages from the countries table
             with connection.cursor() as cursor:
-                cursor.execute("SELECT DISTINCT language FROM countries WHERE language IS NOT NULL AND language != ''")
+                cursor.execute(
+                    "SELECT code, name_native, name_english, direction FROM books_language "
+                    "WHERE is_active = 1 ORDER BY `order`"
+                )
                 rows = cursor.fetchall()
 
-            for row in rows:
-                lang_str = row[0]
-                if not lang_str:
+            for code, name_native, name_english, direction in rows:
+                if not code:
                     continue
-                # matches e.g. "('ps', _('Pashto'))" or "('en', _('English'))"
-                match = re.search(r"\(\s*'([^']+)'\s*,\s*(?:_\()?'([^']+)'(?:\))?\s*\)", lang_str)
-                if match:
-                    code = match.group(1).strip().lower()
-                    name = match.group(2).strip()
-                    if code not in seen:
-                        langs.append((code, name))
-                        seen.add(code)
-                        # Ensure language info is loaded in django locale mapping
-                        if code not in django.conf.locale.LANG_INFO:
-                            django.conf.locale.LANG_INFO[code] = {
-                                'bidi': code in ['ar', 'fa', 'ur', 'he', 'ps', 'sd'],
-                                'code': code,
-                                'name': name,
-                                'name_local': name,
-                            }
-            # Fallback list merge
-            for code, name in self.fallback_list:
+                code = code.strip().lower()
+                name = name_native or name_english or code
                 if code not in seen:
                     langs.append((code, name))
                     seen.add(code)
                     if code not in django.conf.locale.LANG_INFO:
                         django.conf.locale.LANG_INFO[code] = {
-                            'bidi': code in ['ar', 'fa', 'ur', 'he', 'ps', 'sd'],
+                            'bidi': direction == 'rtl',
                             'code': code,
-                            'name': str(name),
-                            'name_local': str(name),
+                            'name': name_english or name,
+                            'name_local': name,
                         }
-            if not langs:
-                return self.fallback_list
-            return langs
+
+            # Merge fallback entries not already in DB
+            for fb_code, fb_name in self.fallback_list:
+                fb_code = str(fb_code)
+                if fb_code not in seen:
+                    langs.append((fb_code, fb_name))
+                    seen.add(fb_code)
+
+            return langs if langs else self.fallback_list
         except Exception:
             return self.fallback_list
 
