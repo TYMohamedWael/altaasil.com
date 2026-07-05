@@ -2,11 +2,12 @@ import hashlib
 import logging
 import threading
 import time
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.db import transaction
 from django.core.cache import cache
 from .models import Book, Language
+
 
 logger = logging.getLogger(__name__)
 
@@ -64,3 +65,18 @@ def auto_provision_language(sender, instance, created, **kwargs):
         thread = threading.Thread(target=run_in_thread, name=f"provision_lang_{code}")
         thread.daemon = True
         transaction.on_commit(lambda: thread.start())
+
+
+@receiver(post_save, sender=Book)
+def invalidate_book_cache_on_save(sender, instance, **kwargs):
+    """Invalidate master books cache when a book is created or updated."""
+    from .services.cache import invalidate_book_caches
+    invalidate_book_caches()
+
+
+@receiver(post_delete, sender=Book)
+def invalidate_book_cache_on_delete(sender, instance, **kwargs):
+    """Invalidate master books cache when a book is deleted."""
+    from .services.cache import invalidate_book_caches
+    invalidate_book_caches()
+

@@ -283,6 +283,7 @@ class Book(models.Model):
     year = models.IntegerField(blank=True, null=True, verbose_name='سنة النشر')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft', verbose_name='الحالة')
     approved = models.BooleanField(default=False, verbose_name='موافق عليه علمياً')
+    is_master = models.BooleanField(default=False, verbose_name='كتاب أساسي (Master)')
     file = models.FileField(upload_to=book_file_path, blank=True, null=True, verbose_name='ملف الكتاب')
     drive_url = models.URLField(
         max_length=500,
@@ -302,7 +303,10 @@ class Book(models.Model):
     class Meta:
         verbose_name = 'الكتاب'
         verbose_name_plural = 'الكتب'
-        ordering = ['-created_at']
+        ordering = ['-is_master', '-created_at']
+        indexes = [
+            models.Index(fields=['is_master', 'status', '-created_at'], name='idx_book_master_status_created'),
+        ]
 
     def __str__(self):
         return self.title_hausa or self.title

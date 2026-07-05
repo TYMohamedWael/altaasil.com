@@ -21,7 +21,7 @@ class LanguageAdmin(admin.ModelAdmin):
     list_filter = ['direction', 'is_active']
     actions = ['provision_languages']
 
-    def response_add(self, request, obj, post_url_continue=None):
+     def response_add(self, request, obj, post_url_continue=None):
         import threading
         from django.core.cache import cache
 
@@ -54,7 +54,7 @@ class LanguageAdmin(admin.ModelAdmin):
         t.daemon = True
         t.start()
 
-        return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
+          return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
 
     @admin.action(description='🔧 إعداد ملفات الترجمة يدوياً')
     def provision_languages(self, request, queryset):
@@ -63,7 +63,7 @@ class LanguageAdmin(admin.ModelAdmin):
         from django.core.cache import cache
 
         for lang in queryset:
-            code = lang.code.strip().lower()
+             code = lang.code.strip().lower()
             cache.set(f"provision_progress_{code}", {
                 'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Manual trigger...'], 'errors': []
             }, timeout=7200)
@@ -163,10 +163,10 @@ class LanguageFilter(admin.SimpleListFilter):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_filter = ['status', 'approved', LanguageFilter, 'category']    
-    list_display = ['title_hausa', 'title', 'author', 'category', 'language', 'status', 'approved', 'ai_actions_list', 'view_count', 'created_at']
+    list_filter = ['status', 'approved', 'is_master', LanguageFilter, 'category']    
+    list_display = ['title_hausa', 'title', 'author', 'category', 'language', 'status', 'approved', 'is_master', 'ai_actions_list', 'view_count', 'created_at']
     search_fields = ['title', 'title_hausa', 'author', 'description']
-    list_editable = ['status', 'approved']
+    list_editable = ['status', 'approved', 'is_master']
     prepopulated_fields = {'seo_slug': ('title_hausa',)}
     readonly_fields = ['view_count', 'download_count', 'created_at', 'updated_at', 'ai_panel', 'pdf_editor_link']
     
@@ -192,7 +192,7 @@ class BookAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('الحالة', {
-            'fields': ('status', 'approved', 'related_books')
+            'fields': ('status', 'is_master', 'approved', 'related_books')
         }),
         ('الإحصائيات', {
             'fields': ('view_count', 'download_count', 'created_at', 'updated_at'),

@@ -58,6 +58,7 @@ def _build_drive_embed_url(url: str | None) -> str:
 
 
 def home(request):
+    from .services.cache import get_master_books
     content_language = get_content_language(request)
     categories = Category.objects.all().annotate(
         book_count=Count(
@@ -71,6 +72,7 @@ def home(request):
         ).filter(Q(language__code=content_language) | Q(language__isnull=True))
         .select_related('category', 'language', 'category__language')[:6]
     )
+    master_books = get_master_books(content_language)
     stats = {
         'total_books': Book.objects.count(),
         'total_authors': Book.objects.values('author').distinct().count(),
@@ -82,6 +84,7 @@ def home(request):
     return render(request, 'books/home.html', {
         'categories': categories,
         'latest_books': latest_books,
+        'master_books': master_books,
         'stats': stats,
         'content_language': content_language,
     })
@@ -122,7 +125,7 @@ def book_list(request):
                 default=Value(1),
                 output_field=IntegerField(),
             )
-        ).order_by('-search_rank', '-created_at')
+        ).order_by('-is_master', '-search_rank', '-created_at')
 
         SearchLog.objects.create(
             query=q, results_count=books.count(),
@@ -133,13 +136,13 @@ def book_list(request):
 
     if not q:
         if sort_value == 'most_viewed':
-            books = books.order_by('-view_count', '-created_at')
+            books = books.order_by('-is_master', '-view_count', '-created_at')
         elif sort_value == 'most_downloaded':
-            books = books.order_by('-download_count', '-created_at')
+            books = books.order_by('-is_master', '-download_count', '-created_at')
         elif sort_value == 'highest_rated':
-            books = books.annotate(average_rating=Avg('reviews__rating')).order_by('-average_rating', '-created_at')
+            books = books.annotate(average_rating=Avg('reviews__rating')).order_by('-is_master', '-average_rating', '-created_at')
         else:
-            books = books.order_by('-created_at')
+            books = books.order_by('-is_master', '-created_at')
     
     paginator = Paginator(books, 20)
     page_number = request.GET.get('page')
@@ -680,15 +683,3 @@ def profile_edit_view(request):
         form = ProfileEditForm(request.user)
 
     return render(request, 'accounts/profile_edit.html', {'form': form})
-
-
-def handler404(request, exception=None):
-    return render(request, 'errors/404.html', status=404)
-
-
-def handler500(request):
-    return render(request, 'errors/500.html', status=500)
-
-
-def handler403(request, exception=None):
-    return render(request, 'errors/403.html', status=403)

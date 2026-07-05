@@ -2,7 +2,7 @@
 {% load i18n %}
 {% get_current_language as CURRENT_LANG %}
 <a href="{% url 'books:book_detail' slug=book.seo_slug %}" class="block h-full">
-    <div class="bg-white rounded-xl border border-gray-100 overflow-hidden h-full flex flex-col card-scale hover:shadow-lg hover:border-yellow-300/40 group">
+    <div class="bg-white rounded-xl overflow-hidden h-full flex flex-col card-scale hover:shadow-lg group {% if book.is_master %}master-card{% else %}border border-gray-100 hover:border-yellow-300/40{% endif %}">
         <!-- Cover Image Area -->
         <div class="relative h-48 bg-gradient-to-br from-primary to-primary-light flex items-center justify-center overflow-hidden flex-shrink-0">
             {% if book.cover %}
@@ -20,10 +20,20 @@
                 {{ book.category.localized_name }}
             </div>
             {% endif %}
-            <!-- Language Badge (top-left, glass) -->
-            <div class="absolute top-3 left-3 glass text-white text-[10px] px-2.5 py-1 rounded-full flex items-center gap-1">
-                {% if book.language_flag %}<span>{{ book.language_flag }}</span>{% endif %}
-                <span>{{ book.language_label|default:_("Harshen da bai bayyana ba") }}</span>
+            <!-- Badges top-left -->
+            <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start z-10">
+                {% if book.is_master %}
+                <!-- Golden crown badge for master books -->
+                <div class="master-badge text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                    <span>👑</span>
+                    <span>{% trans "Jigo" %}</span>
+                </div>
+                {% endif %}
+                <!-- Language Badge (glass) -->
+                <div class="glass text-white text-[10px] px-2.5 py-1 rounded-full flex items-center gap-1">
+                    {% if book.language_flag %}<span>{{ book.language_flag }}</span>{% endif %}
+                    <span>{{ book.language_label|default:_("Harshen da bai bayyana ba") }}</span>
+                </div>
             </div>
         </div>
 
