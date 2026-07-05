@@ -32,31 +32,34 @@
 <script>
     const code = "{{ code }}";
     const url = "{% url 'admin:books_language_provision_progress_json' code %}";
+    let polls = 0;
+    const MAX_POLLS = 200; // ~5 minutes at 1.5s intervals
 
     function poll() {
+        if (polls++ > MAX_POLLS) {
+            document.getElementById('msg').innerText = '⏱ Timed out — the setup is taking too long. Check server logs.';
+            document.getElementById('errBox').style.display = 'block';
+            document.getElementById('errList').innerHTML = '<li>Setup did not complete within 5 minutes. The background thread may have crashed silently — check Django server logs for errors.</li>';
+            return;
+        }
+
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                // Progress bar
                 const pct = data.progress || 0;
                 document.getElementById('bar').style.width = pct + '%';
                 document.getElementById('pct').innerText = pct + '%';
-
-                // Status message
                 document.getElementById('msg').innerText = data.message || 'Processing…';
 
-                // Log
                 const logDiv = document.getElementById('log');
                 logDiv.innerHTML = (data.log || []).map(line => `<div>${line}</div>`).join('');
                 logDiv.scrollTop = logDiv.scrollHeight;
 
-                // Errors
                 if (data.errors && data.errors.length > 0) {
                     document.getElementById('errBox').style.display = 'block';
                     document.getElementById('errList').innerHTML = data.errors.map(e => `<li>${e}</li>`).join('');
                 }
 
-                // Done / Failed
                 if (data.status === 'completed') {
                     document.getElementById('doneBanner').style.display = 'block';
                     document.getElementById('msg').innerText = '✅ Done!';
@@ -66,9 +69,7 @@
                     setTimeout(poll, 1500);
                 }
             })
-            .catch(() => {
-                setTimeout(poll, 3000);
-            });
+            .catch(() => setTimeout(poll, 3000));
     }
     setTimeout(poll, 1000);
 </script>

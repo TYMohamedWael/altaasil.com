@@ -132,23 +132,35 @@ def _translate_json_file(source_path: Path, target_path: Path, target_lang_name:
         json.dump(target_data, f, ensure_ascii=False, indent=2)
     return True, ""
 
-def provision_language(language) -> dict:
-    code = language.code.strip().lower()
-    name_english = language.name_english or code
-    name_native = language.name_native or code
+def _normalize_locale_code(raw_code: str) -> str:
+    """Convert 'fr-FR' or 'fr-fr' → 'fr_FR' (Django/gettext standard)."""
+    parts = raw_code.strip().replace('_', '-').split('-')
+    if len(parts) == 1:
+        return parts[0].lower()
+    return f"{parts[0].lower()}_{parts[1].upper()}"
+
+
+def provision_language_from_data(lang_data: dict) -> dict:
+    """Provision a language from a plain dict (safe for background threads)."""
+    raw_code = lang_data['code']
+    code = raw_code.strip().lower()           # cache key: 'fr-fr'
+    locale_code = _normalize_locale_code(raw_code)   # filesystem: 'fr_FR'
+    name_english = lang_data.get('name_english') or code
+    name_native = lang_data.get('name_native') or code
+    direction = lang_data.get('direction', 'ltr')
 
     update_provision_progress(code, 5, "Starting language provisioning...", f"Initializing language setup for {name_native}")
     result = {"po_path": None, "mo_path": None, "po_created": False, "mo_ok": False, "settings_updated": False, "errors": []}
 
     locale_paths = getattr(settings, "LOCALE_PATHS", [])
     locale_root = Path(locale_paths[0]) if locale_paths else Path(settings.BASE_DIR) / "locale"
-    lc_dir = locale_root / code / "LC_MESSAGES"
+    lc_dir = locale_root / locale_code / "LC_MESSAGES"
     lc_dir.mkdir(parents=True, exist_ok=True)
 
     po_path = lc_dir / "django.po"
     mo_path = lc_dir / "django.mo"
-    result["po_path"] = po_path
-    result["mo_path"] = mo_path
+    result["po_path"] = str(po_path)
+    result["mo_path"] = str(mo_path)
 
     if not po_path.exists():
         try:
@@ -157,7 +169,7 @@ def provision_language(language) -> dict:
                 with open(source_po, 'r', encoding='utf-8') as f:
                     entries = _parse_po(f.read())
                 translated_map = _translate_po_entries(entries, name_english, code=code)
-                header = PO_HEADER_TEMPLATE.format(code=code, name_english=name_english)
+                header = PO_HEADER_TEMPLATE.format(code=locale_code, name_english=name_english)
                 with open(po_path, 'w', encoding='utf-8') as f:
                     f.write(header)
                     for e in entries:
@@ -174,42 +186,55 @@ def provision_language(language) -> dict:
         source_json = locale_root / "en.json"
         if source_json.exists():
             ok, err = _translate_json_file(source_json, json_path, name_english, code=code)
-            if not ok: 
+            if not ok:
                 result["errors"].append(err)
                 update_provision_progress(code, 90, "JSON translation failed", error_msg=err, status='failed')
 
     # Compile messages
     try:
-        update_provision_progress(code, 90, "Compiling message catalogs...")
-        subprocess.run([sys.executable, "manage.py", "compilemessages", "-l", code], cwd=settings.BASE_DIR, capture_output=True)
+        update_provision_progress(code, 90, f"Compiling message catalogs for {locale_code}...", f"Running compilemessages -l {locale_code}")
+        proc = subprocess.run(
+            [sys.executable, "manage.py", "compilemessages", "-l", locale_code],
+            cwd=settings.BASE_DIR, capture_output=True, text=True
+        )
+        if proc.returncode != 0 and proc.stderr:
+            update_provision_progress(code, 92, "compilemessages warning", error_msg=proc.stderr.strip())
         result["mo_ok"] = mo_path.exists()
     except Exception as e:
         result["errors"].append(str(e))
         update_provision_progress(code, 95, "Message compilation failed", error_msg=str(e))
 
-    # Update dynamically
+    # Update Django locale registry dynamically
     try:
         import django.conf.locale
-        if code not in django.conf.locale.LANG_INFO:
-            django.conf.locale.LANG_INFO[code] = {
-                'bidi': language.direction == 'rtl',
-                'code': code,
-                'name': name_english,
-                'name_local': name_native,
-            }
+        for key in (code, locale_code):
+            if key not in django.conf.locale.LANG_INFO:
+                django.conf.locale.LANG_INFO[key] = {
+                    'bidi': direction == 'rtl',
+                    'code': key,
+                    'name': name_english,
+                    'name_local': name_native,
+                }
 
-        # Clear translation cache
         from django.utils.translation import trans_real
         trans_real._translations = {}
         from django.utils import translation
         translation.deactivate_all()
-
-        # Clear URL resolver cache
         from django.urls import clear_url_caches
         clear_url_caches()
         result["settings_updated"] = True
     except Exception as e:
         logger.error("Failed to clear URL/translation caches: %s", e)
 
-    update_provision_progress(code, 100, "Done!", "Done!", status='completed')
+    update_provision_progress(code, 100, "Done!", "✅ Setup complete!", status='completed')
     return result
+
+
+def provision_language(language) -> dict:
+    """Wrapper that accepts a Django ORM Language instance."""
+    return provision_language_from_data({
+        'code': language.code,
+        'name_english': language.name_english or language.code,
+        'name_native': language.name_native or language.code,
+        'direction': language.direction,
+    })

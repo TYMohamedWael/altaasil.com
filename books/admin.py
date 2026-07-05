@@ -28,11 +28,27 @@ class LanguageAdmin(admin.ModelAdmin):
         code = obj.code.strip().lower()
         cache.set(f"provision_progress_{code}", {
             'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Language saved, starting setup...'], 'errors': []
-        })
+        }, timeout=7200)
 
-        def run():
-            from .services.language_setup import provision_language
-            provision_language(obj)
+        # Pass primitives to avoid Django closing the DB connection inside the thread
+        lang_data = {
+            'code': obj.code,
+            'name_english': obj.name_english or obj.code,
+            'name_native': obj.name_native or obj.code,
+            'direction': obj.direction,
+        }
+
+        def run(data=lang_data):
+            try:
+                from .services.language_setup import provision_language_from_data
+                provision_language_from_data(data)
+            except Exception as e:
+                from django.core.cache import cache as _cache
+                from .services.language_setup import update_provision_progress
+                update_provision_progress(
+                    data['code'].strip().lower(), 0,
+                    f'❌ Setup failed: {e}', error_msg=str(e), status='failed'
+                )
 
         t = threading.Thread(target=run)
         t.daemon = True
@@ -50,11 +66,26 @@ class LanguageAdmin(admin.ModelAdmin):
             code = lang.code.strip().lower()
             cache.set(f"provision_progress_{code}", {
                 'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Manual trigger...'], 'errors': []
-            })
+            }, timeout=7200)
 
-            def run(l=lang):
-                from .services.language_setup import provision_language
-                provision_language(l)
+            lang_data = {
+                'code': lang.code,
+                'name_english': lang.name_english or lang.code,
+                'name_native': lang.name_native or lang.code,
+                'direction': lang.direction,
+            }
+
+            def run(data=lang_data):
+                try:
+                    from .services.language_setup import provision_language_from_data
+                    provision_language_from_data(data)
+                except Exception as e:
+                    from django.core.cache import cache as _cache
+                    from .services.language_setup import update_provision_progress
+                    update_provision_progress(
+                        data['code'].strip().lower(), 0,
+                        f'❌ Setup failed: {e}', error_msg=str(e), status='failed'
+                    )
 
             t = threading.Thread(target=run)
             t.daemon = True
