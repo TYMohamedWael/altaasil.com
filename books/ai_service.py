@@ -23,14 +23,37 @@ try:
 except ImportError:
     HAS_GEMINI = False
 
+try:
+    import groq as _groq_module
+    HAS_GROQ = True
+except ImportError:
+    HAS_GROQ = False
+
 
 def get_ai_provider():
     """Detect which AI provider is available"""
+    if os.environ.get('GROQ_API_KEY') and HAS_GROQ:
+        return 'groq'
     if os.environ.get('OPENAI_API_KEY') and HAS_OPENAI:
         return 'openai'
     if os.environ.get('GEMINI_API_KEY') and HAS_GEMINI:
         return 'gemini'
     return None
+
+
+def call_groq(prompt: str, max_tokens: int = 4096) -> str:
+    client = _groq_module.Groq(api_key=os.environ['GROQ_API_KEY'])
+    response = client.chat.completions.create(
+        model=os.environ.get('GROQ_MODEL', 'llama-3.3-70b-versatile'),
+        messages=[
+            {"role": "system", "content": "You are an expert Islamic scholar and librarian. Always respond in valid JSON format."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=max_tokens,
+        temperature=0.3,
+        timeout=60,
+    )
+    return response.choices[0].message.content.strip()
 
 
 def call_openai(prompt: str, max_tokens: int = 2000) -> str:
@@ -61,12 +84,14 @@ def call_gemini(prompt: str) -> str:
 def call_ai(prompt: str) -> str:
     """Call whichever AI provider is available"""
     provider = get_ai_provider()
-    if provider == 'openai':
+    if provider == 'groq':
+        return call_groq(prompt)
+    elif provider == 'openai':
         return call_openai(prompt)
     elif provider == 'gemini':
         return call_gemini(prompt)
     else:
-        raise ValueError("No AI provider configured. Set OPENAI_API_KEY or GEMINI_API_KEY in .env")
+        raise ValueError("No AI provider configured. Set GROQ_API_KEY, OPENAI_API_KEY, or GEMINI_API_KEY in .env")
 
 
 def parse_json_response(text: str) -> dict:

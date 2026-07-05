@@ -163,6 +163,7 @@ def provision_language_from_data(lang_data: dict) -> dict:
     result["mo_path"] = str(mo_path)
 
     if not po_path.exists():
+        update_provision_progress(code, 8, "Translating .po strings...", f"Starting AI translation for {name_english}")
         try:
             source_po = locale_root / "en" / "LC_MESSAGES" / "django.po"
             if source_po.exists():
@@ -177,9 +178,13 @@ def provision_language_from_data(lang_data: dict) -> dict:
                         f.write(f'msgid "{_escape_po_str(e["msgid"])}"\n')
                         f.write(f'msgstr "{_escape_po_str(translated_map.get(e["msgid"], e["msgid"]))}"\n\n')
                 result["po_created"] = True
+            else:
+                update_provision_progress(code, 60, "No source .po found, skipping translation.", "locale/en/LC_MESSAGES/django.po not found — skipped")
         except Exception as e:
             result["errors"].append(str(e))
-            update_provision_progress(code, 90, "PO generation failed", error_msg=str(e), status='failed')
+            update_provision_progress(code, 60, "PO generation failed", error_msg=str(e))
+    else:
+        update_provision_progress(code, 60, ".po already exists, skipping translation.", f"Found existing {po_path.name}")
 
     json_path = locale_root / f"{code}.json"
     if not json_path.exists():
@@ -188,7 +193,9 @@ def provision_language_from_data(lang_data: dict) -> dict:
             ok, err = _translate_json_file(source_json, json_path, name_english, code=code)
             if not ok:
                 result["errors"].append(err)
-                update_provision_progress(code, 90, "JSON translation failed", error_msg=err, status='failed')
+                update_provision_progress(code, 85, "JSON translation failed", error_msg=err)
+    else:
+        update_provision_progress(code, 85, ".json already exists, skipping.", f"Found existing {json_path.name}")
 
     # Compile messages — use polib (no msgfmt required)
     try:
@@ -197,7 +204,7 @@ def provision_language_from_data(lang_data: dict) -> dict:
         po = polib.pofile(str(po_path), encoding='utf-8')
         po.save_as_mofile(str(mo_path))
         result["mo_ok"] = mo_path.exists()
-        update_provision_progress(code, 95, "Compilation done.", f"✅ django.mo created at {mo_path}")
+        update_provision_progress(code, 95, "Compilation done.", "✅ django.mo compiled successfully")
     except ImportError:
         # polib not available — fall back to compilemessages
         try:
