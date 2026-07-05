@@ -21,7 +21,7 @@ class LanguageAdmin(admin.ModelAdmin):
     list_filter = ['direction', 'is_active']
     actions = ['provision_languages']
 
-     def response_add(self, request, obj, post_url_continue=None):
+    def response_add(self, request, obj, post_url_continue=None):
         import threading
         from django.core.cache import cache
 
@@ -54,7 +54,7 @@ class LanguageAdmin(admin.ModelAdmin):
         t.daemon = True
         t.start()
 
-          return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
+        return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
 
     @admin.action(description='🔧 إعداد ملفات الترجمة يدوياً')
     def provision_languages(self, request, queryset):
@@ -63,7 +63,7 @@ class LanguageAdmin(admin.ModelAdmin):
         from django.core.cache import cache
 
         for lang in queryset:
-             code = lang.code.strip().lower()
+            code = lang.code.strip().lower()
             cache.set(f"provision_progress_{code}", {
                 'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Manual trigger...'], 'errors': []
             }, timeout=7200)
