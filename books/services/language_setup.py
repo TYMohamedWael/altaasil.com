@@ -190,16 +190,27 @@ def provision_language_from_data(lang_data: dict) -> dict:
                 result["errors"].append(err)
                 update_provision_progress(code, 90, "JSON translation failed", error_msg=err, status='failed')
 
-    # Compile messages
+    # Compile messages — use polib (no msgfmt required)
     try:
-        update_provision_progress(code, 90, f"Compiling message catalogs for {locale_code}...", f"Running compilemessages -l {locale_code}")
-        proc = subprocess.run(
-            [sys.executable, "manage.py", "compilemessages", "-l", locale_code],
-            cwd=settings.BASE_DIR, capture_output=True, text=True
-        )
-        if proc.returncode != 0 and proc.stderr:
-            update_provision_progress(code, 92, "compilemessages warning", error_msg=proc.stderr.strip())
+        update_provision_progress(code, 90, f"Compiling .mo for {locale_code}...", f"Compiling {po_path.name} → django.mo")
+        import polib
+        po = polib.pofile(str(po_path), encoding='utf-8')
+        po.save_as_mofile(str(mo_path))
         result["mo_ok"] = mo_path.exists()
+        update_provision_progress(code, 95, "Compilation done.", f"✅ django.mo created at {mo_path}")
+    except ImportError:
+        # polib not available — fall back to compilemessages
+        try:
+            proc = subprocess.run(
+                [sys.executable, "manage.py", "compilemessages", "-l", locale_code],
+                cwd=settings.BASE_DIR, capture_output=True, text=True
+            )
+            if proc.returncode != 0 and proc.stderr:
+                update_provision_progress(code, 92, "compilemessages warning", error_msg=proc.stderr.strip())
+            result["mo_ok"] = mo_path.exists()
+        except Exception as e:
+            result["errors"].append(str(e))
+            update_provision_progress(code, 95, "Message compilation failed", error_msg=str(e))
     except Exception as e:
         result["errors"].append(str(e))
         update_provision_progress(code, 95, "Message compilation failed", error_msg=str(e))
