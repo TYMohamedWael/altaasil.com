@@ -22,7 +22,22 @@ class LanguageAdmin(admin.ModelAdmin):
     actions = ['provision_languages']
 
     def response_add(self, request, obj, post_url_continue=None):
-        """After adding a new language, redirect to the provisioning progress page."""
+        import threading
+        from django.core.cache import cache
+
+        code = obj.code.strip().lower()
+        cache.set(f"provision_progress_{code}", {
+            'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Language saved, starting setup...'], 'errors': []
+        })
+
+        def run():
+            from .services.language_setup import provision_language
+            provision_language(obj)
+
+        t = threading.Thread(target=run)
+        t.daemon = True
+        t.start()
+
         return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
 
     @admin.action(description='🔧 إعداد ملفات الترجمة يدوياً')
