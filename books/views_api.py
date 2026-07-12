@@ -265,7 +265,7 @@ def ai_generate_view(request):
     provider = get_ai_provider()
     if not provider:
         return Response({
-            'error': 'No AI provider configured. Set OPENAI_API_KEY or GEMINI_API_KEY in .env'
+            'error': 'No AI provider configured. Set GROQ_API_KEY, OPENAI_API_KEY or GEMINI_API_KEY in .env'
         }, status=400)
 
     title = request.data.get('title', '')

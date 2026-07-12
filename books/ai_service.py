@@ -24,7 +24,7 @@ except ImportError:
     HAS_GEMINI = False
 
 try:
-    import groq as _groq_module
+    import groq
     HAS_GROQ = True
 except ImportError:
     HAS_GROQ = False
@@ -32,28 +32,22 @@ except ImportError:
 
 def get_ai_provider():
     """Detect which AI provider is available"""
-    if os.environ.get('GROQ_API_KEY') and HAS_GROQ:
+    # Reload environment variables from .env to detect any changes without restarting the server
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(override=True)
+    except ImportError:
+        pass
+
+    if os.environ.get('GROQ_API_KEY'):
+        if not HAS_GROQ:
+            raise ImportError("مكتبة 'groq' غير مثبتة في بيئة العمل الحالية. يرجى تثبيتها أولاً باستخدام الأمر: pip install groq")
         return 'groq'
     if os.environ.get('OPENAI_API_KEY') and HAS_OPENAI:
         return 'openai'
     if os.environ.get('GEMINI_API_KEY') and HAS_GEMINI:
         return 'gemini'
     return None
-
-
-def call_groq(prompt: str, max_tokens: int = 4096) -> str:
-    client = _groq_module.Groq(api_key=os.environ['GROQ_API_KEY'])
-    response = client.chat.completions.create(
-        model=os.environ.get('GROQ_MODEL', 'llama-3.3-70b-versatile'),
-        messages=[
-            {"role": "system", "content": "You are an expert Islamic scholar and librarian. Always respond in valid JSON format."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=max_tokens,
-        temperature=0.3,
-        timeout=60,
-    )
-    return response.choices[0].message.content.strip()
 
 
 def call_openai(prompt: str, max_tokens: int = 2000) -> str:
@@ -70,8 +64,6 @@ def call_openai(prompt: str, max_tokens: int = 2000) -> str:
     return response.choices[0].message.content.strip()
 
 
-#objects.get
-
 def call_gemini(prompt: str) -> str:
     genai.configure(api_key=os.environ['GEMINI_API_KEY'])
     model = genai.GenerativeModel(os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash'))
@@ -79,6 +71,48 @@ def call_gemini(prompt: str) -> str:
         f"You are an expert Islamic scholar and librarian who specializes in Hausa Islamic literature. Always respond in valid JSON format.\n\n{prompt}"
     )
     return response.text.strip()
+
+
+def call_groq(prompt: str) -> str:
+    """Call Groq API with fallback models when encountering rate limits or failures"""
+    api_key = os.environ.get('GROQ_API_KEY')
+    if not api_key:
+        raise ValueError("GROQ_API_KEY is not configured in environment variables.")
+
+    client = groq.Groq(api_key=api_key)
+
+    # قائمة الموديلات المتاحة مرتبة حسب الأولوية وتوافق الموديلات القديمة والجديدة
+    models_pool = [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-70b-versatile",
+        "llama3-70b-8192",
+        "llama-3.1-8b-instant",
+        "llama3-8b-8192",
+        "mixtral-8x7b-32768",
+        "mistral-7b-instruct",
+        "miatral-7b-instruct",  # الموديل بالاسم المذكور في البرومبت تحسباً لأي مطابقة
+        "gemma2-9b-it"
+    ]
+    last_error = None
+
+    for model in models_pool:
+        try:
+            logger.info(f"Attempting generation with Groq model: {model}")
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": "You are an expert Islamic scholar and librarian who specializes in Hausa Islamic literature. Always respond in valid JSON format."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            logger.warning(f"الموديل {model} واجه مشكلة أو استنفد حدوده. يتم التبديل للموديل التالي... الخطأ: {e}")
+            last_error = e
+            continue
+
+    raise Exception(f"فشلت العملية: جميع الموديلات المتاحة في Groq استنفدت حدود الاستخدام الحالية. الخطأ الأخير: {last_error}")
 
 
 def call_ai(prompt: str) -> str:
@@ -91,7 +125,7 @@ def call_ai(prompt: str) -> str:
     elif provider == 'gemini':
         return call_gemini(prompt)
     else:
-        raise ValueError("No AI provider configured. Set GROQ_API_KEY, OPENAI_API_KEY, or GEMINI_API_KEY in .env")
+        raise ValueError("No AI provider configured. Set GROQ_API_KEY, OPENAI_API_KEY or GEMINI_API_KEY in .env")
 
 
 def parse_json_response(text: str) -> dict:

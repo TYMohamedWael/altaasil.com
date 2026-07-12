@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import path, reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from .models import Category, Book, Feedback, Favorite, ReadingProgress, AudioVersion, SocialPost, SearchLog, SovereignGlossary, Language, SiteText
 
@@ -22,38 +22,7 @@ class LanguageAdmin(admin.ModelAdmin):
     actions = ['provision_languages']
 
     def response_add(self, request, obj, post_url_continue=None):
-        import threading
-        from django.core.cache import cache
-
-        code = obj.code.strip().lower()
-        cache.set(f"provision_progress_{code}", {
-            'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Language saved, starting setup...'], 'errors': []
-        }, timeout=7200)
-
-        # Pass primitives to avoid Django closing the DB connection inside the thread
-        lang_data = {
-            'code': obj.code,
-            'name_english': obj.name_english or obj.code,
-            'name_native': obj.name_native or obj.code,
-            'direction': obj.direction,
-        }
-
-        def run(data=lang_data):
-            try:
-                from .services.language_setup import provision_language_from_data
-                provision_language_from_data(data)
-            except Exception as e:
-                from django.core.cache import cache as _cache
-                from .services.language_setup import update_provision_progress
-                update_provision_progress(
-                    data['code'].strip().lower(), 0,
-                    f'❌ Setup failed: {e}', error_msg=str(e), status='failed'
-                )
-
-        t = threading.Thread(target=run)
-        t.daemon = True
-        t.start()
-
+        """After adding a new language, redirect to the provisioning progress page."""
         return redirect(reverse('admin:books_language_provision_progress', args=[obj.code]))
 
     @admin.action(description='🔧 إعداد ملفات الترجمة يدوياً')
@@ -66,26 +35,11 @@ class LanguageAdmin(admin.ModelAdmin):
             code = lang.code.strip().lower()
             cache.set(f"provision_progress_{code}", {
                 'status': 'pending', 'progress': 0, 'message': 'Starting...', 'log': ['Manual trigger...'], 'errors': []
-            }, timeout=7200)
+            })
 
-            lang_data = {
-                'code': lang.code,
-                'name_english': lang.name_english or lang.code,
-                'name_native': lang.name_native or lang.code,
-                'direction': lang.direction,
-            }
-
-            def run(data=lang_data):
-                try:
-                    from .services.language_setup import provision_language_from_data
-                    provision_language_from_data(data)
-                except Exception as e:
-                    from django.core.cache import cache as _cache
-                    from .services.language_setup import update_provision_progress
-                    update_provision_progress(
-                        data['code'].strip().lower(), 0,
-                        f'❌ Setup failed: {e}', error_msg=str(e), status='failed'
-                    )
+            def run(l=lang):
+                from .services.language_setup import provision_language
+                provision_language(l)
 
             t = threading.Thread(target=run)
             t.daemon = True
@@ -165,6 +119,7 @@ class LanguageFilter(admin.SimpleListFilter):
 class BookAdmin(admin.ModelAdmin):
     list_filter = ['status', 'approved', 'is_master', LanguageFilter, 'category']    
     list_display = ['title_hausa', 'title', 'author', 'category', 'language', 'status', 'approved', 'is_master', 'ai_actions_list', 'view_count', 'created_at']
+    actions = ['export_to_excel']
     search_fields = ['title', 'title_hausa', 'author', 'description']
     list_editable = ['status', 'approved', 'is_master']
     prepopulated_fields = {'seo_slug': ('title_hausa',)}
@@ -199,6 +154,118 @@ class BookAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+    @admin.action(description='📥 تصدير الكتب المحددة إلى Excel')
+    def export_to_excel(self, request, queryset):
+        try:
+            import openpyxl
+            from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+        except ImportError:
+            self.message_user(request, "❌ مكتبة openpyxl غير مثبتة. يرجى تشغيل الأمر: pip install openpyxl", level='error')
+            return
+
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = 'بيانات الكتب'
+        ws.sheet_view.rightToLeft = False  # LTR (من الشمال لليمين)
+
+        # ─── ألوان وتنسيقات ───────────────────────────────────────────
+        header_fill   = PatternFill('solid', fgColor='1A5632')   # أخضر داكن
+        alt_row_fill  = PatternFill('solid', fgColor='EAF4EC')   # أخضر فاتح
+        thin_border   = Border(
+            left=Side(style='thin', color='AAAAAA'),
+            right=Side(style='thin', color='AAAAAA'),
+            top=Side(style='thin', color='AAAAAA'),
+            bottom=Side(style='thin', color='AAAAAA'),
+        )
+
+        # ─── رؤوس الأعمدة ────────────────────────────────────────────
+        headers = [
+            ('اسم الكتاب (هوسا)',       'title_hausa',          30),
+            ('اسم الكتاب (عربي)',        'title',                30),
+            ('المؤلف',                   'author',               25),
+            ('المترجم',                  'translator',           22),
+            ('سنة النشر',               'year',                 12),
+            ('التصنيف',                  'category',             20),
+            ('التصنيف الفرعي',           'category_specific',    22),
+            ('لغة الكتاب',              'language',             14),
+            ('حالة الكتاب',             'status',               14),
+            ('الوصف',                   'description',          50),
+            ('فهرس المحتويات',          'table_of_contents',    50),
+            ('عنوان السيو',              'seo_title',            35),
+            ('وصف السيو',               'seo_description',      50),
+            ('الرابط الدائم (Slug)',     'seo_slug',             30),
+        ]
+
+        # كتابة رؤوس الأعمدة
+        for col_idx, (header_text, _, col_width) in enumerate(headers, start=1):
+            cell = ws.cell(row=1, column=col_idx, value=header_text)
+            cell.font      = Font(bold=True, color='FFFFFF', size=11, name='Calibri')
+            cell.fill      = header_fill
+            cell.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+            cell.border    = thin_border
+            ws.column_dimensions[
+                openpyxl.utils.get_column_letter(col_idx)
+            ].width = col_width
+
+        ws.row_dimensions[1].height = 30
+
+        # ─── تعيينات الحالة ──────────────────────────────────────────
+        STATUS_MAP = {
+            'draft':      'مسودة',
+            'processing': 'جاري المعالجة',
+            'published':  'منشور',
+        }
+
+        # ─── بيانات الكتب ────────────────────────────────────────────
+        for row_idx, book in enumerate(queryset.select_related('category', 'language'), start=2):
+            fill = alt_row_fill if row_idx % 2 == 0 else PatternFill()   # تبديل ألوان الصفوف
+
+            chapters = book.table_of_contents or []
+            chapters_text = '\n'.join(
+                f"{i+1}. {ch}" for i, ch in enumerate(chapters)
+            ) if chapters else ''
+
+            row_data = [
+                book.title_hausa or '',
+                book.title or '',
+                book.author or '',
+                book.translator or '',
+                book.year or '',
+                book.category.name_hausa if book.category else '',
+                book.category_specific or '',
+                book.language.name_native if book.language else '',
+                STATUS_MAP.get(book.status, book.status),
+                book.description or '',
+                chapters_text,
+                book.seo_title or '',
+                book.seo_description or '',
+                book.seo_slug or '',
+            ]
+
+            for col_idx, value in enumerate(row_data, start=1):
+                cell = ws.cell(row=row_idx, column=col_idx, value=value)
+                cell.fill      = fill
+                cell.border    = thin_border
+                cell.alignment = Alignment(
+                    horizontal='right',
+                    vertical='top',
+                    wrap_text=True
+                )
+                cell.font = Font(size=10, name='Calibri')
+
+            ws.row_dimensions[row_idx].height = max(15, min(120, len(chapters_text) // 3 + 15))
+
+        # ─── تجميد الصف الأول ────────────────────────────────────────
+        ws.freeze_panes = 'A2'
+
+        # ─── إرسال الملف كاستجابة HTTP ───────────────────────────────
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=books_export.xlsx'
+        wb.save(response)
+        return response
 
     def ai_actions_list(self, obj):
         if obj.pk:

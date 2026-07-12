@@ -361,14 +361,56 @@ class Book(models.Model):
         return round(result, 1) if result else None
 
     def save(self, *args, **kwargs):
+        modified_fields = []
+
         if not self.language:
             self.language = Language.default()
-        if not self.seo_slug and self.title_hausa:
-            self.seo_slug = self.title_hausa.lower().replace(' ', '-')
+            modified_fields.append('language')
+
+        # Clean/generate slug
+        if self.seo_slug:
+            self.seo_slug = self.seo_slug.lower().strip().replace(' ', '-')
+            modified_fields.append('seo_slug')
+        elif self.title_hausa:
+            self.seo_slug = self.title_hausa.lower().strip().replace(' ', '-')
+            modified_fields.append('seo_slug')
+
+        # Check for slug uniqueness
+        if self.seo_slug:
+            base_slug = self.seo_slug[:180]  # Avoid exceeding SlugField max_length (191)
+            slug = base_slug
+            queryset = Book.objects.exclude(pk=self.pk)
+            
+            if queryset.filter(seo_slug=slug).exists():
+                if self.pk:
+                    slug = f"{base_slug}-{self.pk}"
+                
+                counter = 1
+                while queryset.filter(seo_slug=slug).exists():
+                    slug = f"{base_slug}-{counter}"
+                    counter += 1
+            
+            if self.seo_slug != slug:
+                self.seo_slug = slug
+                if 'seo_slug' not in modified_fields:
+                    modified_fields.append('seo_slug')
+
         if not self.seo_title:
             self.seo_title = f"{self.title_hausa or self.title} - Littattafan Hausa"
+            modified_fields.append('seo_title')
+
         if not self.seo_description and self.description:
             self.seo_description = self.description[:200]
+            modified_fields.append('seo_description')
+
+        # If update_fields is passed, make sure all modified fields are included
+        if 'update_fields' in kwargs and kwargs['update_fields'] is not None:
+            update_fields = list(kwargs['update_fields'])
+            for f in modified_fields:
+                if f not in update_fields:
+                    update_fields.append(f)
+            kwargs['update_fields'] = update_fields
+
         super().save(*args, **kwargs)
 
 
